@@ -7,7 +7,7 @@ angular.module('student').config(['$stateProvider', '$urlRouterProvider',
       templateURL: TODO
     })
     .state('register',{
-      url:'register',
+      url:'/register',
       templateUrl:TODO
     })
 
