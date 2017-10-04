@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "meanstack",
-=======
   "name": "recruitmentapp",
->>>>>>> ce98c4423daf565135ad0dd1d2e14c7f6d22c2c3
   "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
   "homepage": "http://meanjs.org/",
   "license": "MIT",
