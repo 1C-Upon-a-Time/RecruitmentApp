@@ -4,15 +4,15 @@ angular.module('student').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home',{
       url:'/home',
-      templateURL: TODO
+      templateURL: 'index.html'
     })
     .state('register',{
       url:'/register',
-      templateUrl:TODO
+      templateUrl 'register.html'
     })
 
   }]);
-
+/*
 angular.module('employee').config(['$stateProvider', '$urlRouterProvider',{
     function($stateProvider){
       $stateProvider
@@ -94,4 +94,4 @@ angular.module('employee').config(['$stateProvider', '$urlRouterProvider',{
       }
     }
     ])
-}]);
+}]);*/
