@@ -11,12 +11,19 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       });
     });
 
-    // Home state routing
+    // Home state routing, Mean's default
     $stateProvider
     .state('home', {
       url: '/',
       templateUrl: 'modules/core/client/views/home.client.view.html'
     })
+
+    //This is our home page, but im keeping this here for now.
+    .state('realhome', {
+      url: '/realhome',
+      templateUrl: 'modules/core/client/views/index.client.view.html'
+    })
+
     .state('not-found', {
       url: '/not-found',
       templateUrl: 'modules/core/client/views/404.client.view.html',
