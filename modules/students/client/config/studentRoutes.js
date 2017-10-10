@@ -1,3 +1,4 @@
+"use strict"
 angular.module('student').config(['$stateProvider', '$urlRouterProvider',
 
   function($stateProvider){
@@ -8,8 +9,8 @@ angular.module('student').config(['$stateProvider', '$urlRouterProvider',
     })
     .state('register',{
       url:'/register',
-      templateUrl 'register.html'
-    })
+      templateUrl: 'register.html'
+    });
 
   }]);
 /*
