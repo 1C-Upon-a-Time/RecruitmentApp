@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
@@ -27,7 +27,7 @@ var studentSchema = new Schema({
     behavior:{
       type: Number,
       required: true
-    }, 
+    },
     communication:{
       type: Number,
       required: true
@@ -35,20 +35,20 @@ var studentSchema = new Schema({
     critThinking: {
       type: Number,
       required: true
-    }, 
-    techKnowledge: {    
+    },
+    techKnowledge: {
       type: Number,
       required: true
-    }, 
+    },
     candidacy: {
       type: Number,
       required: true
     },
     created_at: Date,
-    updated_at: Date 
+    updated_at: Date
   },
   created_at: Date,
-  updated_at: Date 
+  updated_at: Date
 });
 
 

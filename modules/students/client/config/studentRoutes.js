@@ -1,18 +1,19 @@
-"use strict"
+'use strict';
 angular.module('student').config(['$stateProvider', '$urlRouterProvider',
 
-  function($stateProvider){
+  function($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('home',{
-      url:'/home',
-      templateURL: 'index.html'
-    })
+      .state('index',{
+        url:'/index',
+        templateURL: 'index.html'
+      })
     .state('register',{
       url:'/register',
       templateUrl: 'register.html'
     });
 
   }]);
+
 /*
 angular.module('employee').config(['$stateProvider', '$urlRouterProvider',{
     function($stateProvider){
