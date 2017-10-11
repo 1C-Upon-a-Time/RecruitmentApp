@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
+    <body ng-app = "directive-app">
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -28,9 +28,10 @@
                     </div>
                     <div class="links">
                         <br>
-                        <a href="#" class="button">Submit Student Information 📄</a><br><br><br>
-                        <a href="#" class="button employee">Employee Login <i class="fa fa-sign-in" aria-hidden="true"></i></a>
-                        <a href="#" class="button employee">Employee Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                        <!-- changed to ui-sref to get access to the html files in students views -->
+                        <a ui-sref="studentsSubmit" class="button">Submit Student Information 📄</a><br><br><br>
+                        <a ui-sref="employeeLogin" class="button employee">Employee Login <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                        <a ui-sref="employeeSignup" class="button employee">Employee Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
