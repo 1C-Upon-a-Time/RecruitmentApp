@@ -37,6 +37,12 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     })
 
 
+    //TESTINGSSSSS
+    .state('test', {
+      url: '/test',
+      templateUrl: 'modules/core/client/views/studentsViews/testStudentsList.html'
+    })
+
 
     .state('not-found', {
       url: '/not-found',

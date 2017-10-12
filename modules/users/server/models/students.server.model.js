@@ -21,30 +21,35 @@ var studentSchema = new Schema({
   recruiterComments:{
     comments: String,
     leadership:{
-      type: Number,
-      required: true
-    },
+      type:Number,
+      required: true,
+      default: 0
+    }, 
     behavior:{
-      type: Number,
-      required: true
+      type:Number,
+      required: true,
+      default: 0
     }, 
     communication:{
-      type: Number,
-      required: true
-    },
-    critThinking: {
-      type: Number,
-      required: true
+      type:Number,
+      required: true,
+      default: 0
     }, 
-    techKnowledge: {    
-      type: Number,
-      required: true
+    critThinking:{
+      type:Number, 
+      required: true,
+      default: 0
     }, 
+    techKnowledge:{
+      type: Number,
+      required: true,
+      default: 0
+    },  
     candidacy: {
-      type: Number,
-      required: true
+      type:Number,
+      required: true,
+      default: 0
     },
-    created_at: Date,
     updated_at: Date 
   },
   created_at: Date,
@@ -54,6 +59,7 @@ var studentSchema = new Schema({
 
 studentSchema.pre('save', function(next) {
   var currentTime = new Date();
+  this.recruiterComments.updated_at = currentTime;
   this.updated_at = currentTime;
   if(!this.created_at)
   {
