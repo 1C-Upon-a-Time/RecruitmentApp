@@ -15,9 +15,10 @@ var studentSchema = new Schema({
     type: String,
     required: true
   },
-  gpa: Number,
+  minor: String,
   phone: String,
-  applyingFor: Number,
+  gpa: Number,
+  applyingFor: Boolean,
   recruiterComments:{
     comments: String,
     leadership:{

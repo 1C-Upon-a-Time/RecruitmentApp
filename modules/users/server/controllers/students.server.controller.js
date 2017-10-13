@@ -19,8 +19,6 @@ exports.create = function(req, res) {
   /* Instantiate a student */
   var student = new Student(req.body);
 
-
-
   /* Then save the student */
   student.save(function(err) {
     if(err) {
