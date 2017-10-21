@@ -44,8 +44,9 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
         Students.create(student)
         .then(function(response) {
-                //if the object is successfully saved redirect back to the home page
-                $state.go('/', { successMessage: 'Student succesfully created!' });
+                //go to the confirmation response page to say the info was
+                //successfully received and to see if they want to send in another response
+                $state.go('square.studentConfirmation', { successMessage: 'Student succesfully created!' });
               }, function(error) {
                 //otherwise display the error
                 $scope.error = 'Unable to save student!\n' + error;
