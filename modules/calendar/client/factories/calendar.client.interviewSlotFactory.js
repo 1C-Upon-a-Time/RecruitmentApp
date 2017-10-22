@@ -1,14 +1,14 @@
 "use strict";
-angular.module('students').factory('Students', ['$http', 
+angular.module('calendar').factory('InterviewSlots', ['$http', 
   function($http) {
     var methods = {
-      //Get all of the student's information and provide it into a listing
+      //Get all of the interviewSlot's information and provide it into a listing
       getAll: function() {
-        return $http.get("/api/employee/viewList");
+        return $http.get("/api/employee/viewInterviewSlots");
       },
-      //Create a new student into the database
-      create: function(student) {
-        return $http.post('/api/register', student);
+      //Create a new interviewSlot into the database
+      create: function(interviewSlot) {
+        return $http.post('/api/employee/interviewSlot', interviewSlot);
       }
 
       // read: function(id) {
