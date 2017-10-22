@@ -65,6 +65,15 @@
     "validator": "^3.41.2"
   },
   "devDependencies": {
+
+    /* Vic and Snash added these dependancies for auth purposes*/
+    
+    "npm intall jsonweboken --save": "8.1.0"
+    "npm install passport --save": "0.2.2"
+    "npm insall passport-local --save":
+    
+    /*end Vic and Snash auth dependancies*/
+
     "coveralls": "^2.11.4",
     "grunt-concurrent": "^2.0.0",
     "grunt-contrib-copy": "~0.8.0",
