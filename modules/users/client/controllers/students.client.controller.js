@@ -39,7 +39,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           major: $scope.major,
           minor: $scope.minor,
           gpa: $scope.gpa,
-          phone: $scope.phonenumber
+          phone: $scope.phonenumber,
+          fulltime: $scope.fulltime
         };
 
 

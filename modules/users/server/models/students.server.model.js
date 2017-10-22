@@ -18,7 +18,7 @@ var studentSchema = new Schema({
   minor: String,
   phone: String,
   gpa: Number,
-  applyingFor: Boolean,
+  fulltime : Boolean,
   recruiterComments:{
     comments: String,
     leadership:{

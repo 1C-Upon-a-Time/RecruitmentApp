@@ -11,21 +11,7 @@
                 $("#myTable").tablesorter();
         });
     </script>
-    <!-- Styling -->
-    <style>
-        th.headerSortUp {
-            background-image: url(/modules/core/client/img/asc.gif);
-            background-color: #3399FF;
-            background-repeat: no-repeat;
-            background-position: center right;
-        }
-        th.headerSortDown {
-            background-image: url(/modules/core/client/img/desc.gif);
-            background-color: #3399FF;
-            background-repeat: no-repeat;
-            background-position: center right;
-        }
-    </style>
+
 
 
 
@@ -36,6 +22,50 @@
   <!--Search bar -->
   <input type="search" class="light-table-filter" id = "myInput"  placeholder="search" ng-model = "query">
   <!-- filter options -->
+   <table class="table">
+        <thead>
+          <tr class="filters">
+            <th>Recruiting Season
+              <select id="assigned-user-filter" class="form-control">
+                <option>Current Season</option>
+                <option>Season 2014</option>
+                <option>Season 2015</option>
+                <option>Season 2016</option>
+                <option>Season 2017</option>
+                <option>Season 2019</option>
+              </select>
+            </th>
+            <th>Major
+              <select id="milestone-filter" class="form-control">
+                <option>Any</option>
+                <option>Computer Science</option>
+                <option>Computer Engineer</option>
+                <option>Electrical Engineer</option>
+                <option>DAS</option>
+                <option>Mechanical Engineer</option>
+              </select>
+            </th>
+            <th>Minor
+              <select id="priority-filter" class="form-control">
+                <option>Any</option>
+                <option>Computer Science</option>
+                <option>Computer Engineer</option>
+                <option>Electrical Engineer</option>
+                <option>DAS</option>
+                <option>Mechanical Engineer</option>
+              </select>
+            </th>
+            <th>Position Type
+              <select id="tags-filter" class="form-control">
+                <option>Any</option>
+                <option>Internship/Co-op</option>
+                <option>Full Time</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    
   <!-- sorting options -->
  
 
