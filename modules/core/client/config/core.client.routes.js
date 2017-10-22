@@ -37,35 +37,35 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     })
 
     // Auth
-    .state('square.employeeLogin', {
-      url: '/login',
-      templateUrl: 'modules/core/client/views/auth/login.html'
-    })
-    .state('square.employeeSignup', {
-      url: '/signup',
-      templateUrl: 'modules/core/client/views/auth/signup.html'
-    })
-    .state('square.employeeForgot', {
-      url: '/forgot',
-      templateUrl: 'modules/core/client/views/auth/forgot.html'
-    })
+    // .state('square.employeeLogin', {
+    //   url: '/login',
+    //   templateUrl: 'modules/core/client/views/auth/login.html'
+    // })
+    // .state('square.employeeSignup', {
+    //   url: '/signup',
+    //   templateUrl: 'modules/core/client/views/auth/signup.html'
+    // })
+    // .state('square.employeeForgot', {
+    //   url: '/forgot',
+    //   templateUrl: 'modules/core/client/views/auth/forgot.html'
+    // })
     // .state('employeeForgot', {
     //   url: '/reset/:key',
     //   templateUrl: 'modules/core/client/views/auth/forgot.html'
     // })
 
-    .state('full.employeeDashboard', {
-      url: '/dashboard',
-      templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
-    })
-    .state('full.employeeCandidateList', {
-      url: '/candidates',
-      templateUrl: 'modules/core/client/views/employeeViews/candidateList.html'
-    })
-    .state('full.employeeInterviewList', {
-      url: '/interviews',
-      templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
-    })
+    // .state('full.employeeDashboard', {
+    //   url: '/dashboard',
+    //   templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
+    // })
+    // .state('full.employeeCandidateList', {
+    //   url: '/candidates',
+    //   templateUrl: 'modules/core/client/views/employeeViews/candidateList.html'
+    // })
+    // .state('full.employeeInterviewList', {
+    //   url: '/interviews',
+    //   templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
+    // })
 
     .state('bad-request', {
       url: '/400',
