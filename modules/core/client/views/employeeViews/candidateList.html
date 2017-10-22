@@ -21,12 +21,38 @@
   <p>Here are the candidates:</p>
   <!--Search bar -->
   <input type="search" class="light-table-filter" id = "myInput"  placeholder="search" ng-model = "query">
+   <!-- Sorting options -->
+   <tr class = "sortingTypes">
+    <th><b>Sort By:</b>
+          <select>
+            <option>Default</option>
+            <option>Name</option>
+            <option>GPA</option>
+            <option>TimeStamp</option>
+            <option>Major</option>
+          </select>
+    </th>
+   </tr>
+   <!-- Show a certain amount of entries of candiates at a time -->
+   <!--
+   <tr class = "sortingTypes">
+    <th><b>Show </b>
+          <select>
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+    </th>
+    <th><b> entries</b></th>
+   </tr>
+   -->
   <!-- filter options -->
    <table class="table">
         <thead>
           <tr class="filters">
             <th>Recruiting Season
-              <select id="assigned-user-filter" class="form-control">
+              <select id="recruiting-season-filter" class="form-control">
                 <option>Current Season</option>
                 <option>Season 2014</option>
                 <option>Season 2015</option>
@@ -36,7 +62,7 @@
               </select>
             </th>
             <th>Major
-              <select id="milestone-filter" class="form-control">
+              <select id="major-filter" class="form-control">
                 <option>Any</option>
                 <option>Computer Science</option>
                 <option>Computer Engineer</option>
@@ -46,7 +72,7 @@
               </select>
             </th>
             <th>Minor
-              <select id="priority-filter" class="form-control">
+              <select id="minor-filter" class="form-control">
                 <option>Any</option>
                 <option>Computer Science</option>
                 <option>Computer Engineer</option>
@@ -56,17 +82,19 @@
               </select>
             </th>
             <th>Position Type
-              <select id="tags-filter" class="form-control">
+              <select id="positiontype-filter" class="form-control">
                 <option>Any</option>
                 <option>Internship/Co-op</option>
+                <div ng-show = "fulltime">
                 <option>Full Time</option>
+                </div>
               </select>
             </th>
           </tr>
         </thead>
       </table>
     
-  <!-- sorting options -->
+ 
  
 
         <!-- Candidates table -->

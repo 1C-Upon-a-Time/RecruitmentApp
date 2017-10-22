@@ -16,11 +16,15 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
     };
 
-    //Future reference, not needed but just to let us debug things
-    // $http.get("/api/employee/viewList").then(function(response){
-    //   $scope.listings = response.data;
-    // });
-    // console.log($scope.listings);
+  //filtering function
+  $scope.myFilter = function(){
+
+  };
+
+  //sorting function
+  $scope.mySort = function(){
+
+  };
 
   $scope.create = function(isValid) {
         $scope.error = null;
