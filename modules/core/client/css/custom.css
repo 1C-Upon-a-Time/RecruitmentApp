@@ -1,0 +1,48 @@
+.app-header.navbar .navbar-brand {
+    display: inline-block;
+    width: 155px;
+    height: 55px;
+    padding: 0.5rem 1rem;
+    margin-right: 0;
+    background-color: #fff;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70px auto;
+    border-bottom: 1px solid #c2cfd6; }
+
+@media (min-width: 992px) {
+  .brand-minimized .app-header.navbar .navbar-brand {
+    width: 50px;
+    background-color: #fff;
+    background-image: none;
+    background-size: 24px;
+    border-bottom: 1px solid #c2cfd6; } }
+
+.custom-blue {
+    color: #0D47A1;
+}
+.custom-red {
+    color: #B71C1C;
+}
+
+.logo {
+    font-size: 0.63em;
+}
+
+.navbar-brand .logo {
+    font-size: 1em;
+}
+
+.brand:focus, .brand:hover {
+    text-decoration: none; 
+}
+
+.brand h1 {
+    padding-bottom: .2em;
+}
+
+.col-height-buffer {
+    padding-top: 4em;
+    padding-bottom: 4em;
+}

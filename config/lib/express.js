@@ -253,5 +253,12 @@ module.exports.init = function (db) {
   // Configure Socket.io
   app = this.configureSocketIO(app, db);
 
+
+
+  /* go to homepage for all routes not specified */ 
+  // app.all('/*', function(req, res) {
+  //   res.sendFile(path.resolve('/../../client/views/index.client.view.html'));
+  // });
+
   return app;
 };

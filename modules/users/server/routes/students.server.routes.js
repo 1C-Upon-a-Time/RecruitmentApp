@@ -2,16 +2,16 @@
 
 module.exports = function (app) {
   // User Routes
-  var students = require('C:/Users/Stephanie/Documents/mean/modules/users/server/controllers/students.server.controller.js'),
+  var students = require('../controllers/students.server.controller.js'),
     express = require('express');
 
-  app.route('/register').post(students.create);
-  app.route('/employee/viewList').get(students.list);
-  app.route('/employee/:studentID')
+  app.route('/api/register').post(students.create);
+  app.route('/api/employee/viewList').get(students.list);
+  app.route('/api/employee/:studentID')
     .get(students.read)
-    .put(students.update)
+    //.put(students.update)
     .delete(students.delete);
 
   // Finish by binding the user middleware
-  app.param('studentId', students.studentById);
+  // app.param('Student', studentID);
 };

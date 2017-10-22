@@ -1,5 +1,5 @@
 {
-  "name": "recruitmentapp",
+  "name": "easyrecruit",
   "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
   "version": "0.4.2",
   "meanjs-version": "0.4.2",
@@ -17,7 +17,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false"
+    "postinstall": "bower install"
   },
   "dependencies": {
     "acl": "~0.4.4",

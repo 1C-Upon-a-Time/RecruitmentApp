@@ -2,7 +2,7 @@
 
 "use strict";
 var mongoose = require('mongoose'), 
-  Student = require('C:/Users/Stephanie/Documents/mean/modules/users/server/models/students.server.model.js');
+  Student = require('../models/students.server.model.js');
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update students.
@@ -18,8 +18,6 @@ exports.create = function(req, res) {
 
   /* Instantiate a student */
   var student = new Student(req.body);
-
-
 
   /* Then save the student */
   student.save(function(err) {
@@ -38,25 +36,9 @@ exports.read = function(req, res) {
   res.json(req.student);
 };
 
-/* Update a student */
-exports.update = function(req, res) {
-  var student = req.student;
-
- 
-  /* save the coordinates (located in req.results if there is an address property) */
 
 
-  /* Save the article */
-  student.save(function(err) {
-    if(err) {
-      console.log(err);
-      res.status(400).send(err);
-    } else {
-      res.json(student);
-    }
-  });
-};
-
+  
 /* Delete a student */
 exports.delete = function(req, res) {
   var student = req.student;
@@ -74,8 +56,7 @@ exports.delete = function(req, res) {
 
 /* Retreive all the directory students, sorted alphabetically by student code */
 exports.list = function(req, res) {
-  var student = req.student;
-  student.find().sort('code').exec(function(err, students) {
+  Student.find().exec(function(err, students) {
     if(err) {
       res.status(400).send(err);
     } else {
@@ -93,7 +74,7 @@ exports.list = function(req, res) {
  */
 exports.studentByID = function(req, res, next, id) {
   var student = req.student;
-  student.findById(id).exec(function(err, student) {
+  Student.findById(id).exec(function(err, student) {
     if(err) {
       res.status(400).send(err);
     } else {
