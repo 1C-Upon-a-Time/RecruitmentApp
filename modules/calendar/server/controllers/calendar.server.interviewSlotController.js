@@ -57,7 +57,7 @@ exports.delete = function(req, res) {
 
 /* Retreive all the directory interviewSlots, sorted alphabetically by interviewSlot code */
 exports.list = function(req, res) {
-  interviewSlot.find().exec(function(err, interviewSlots) {
+  InterviewSlot.find().exec(function(err, interviewSlots) {
     if(err) {
       res.status(400).send(err);
     } else {
@@ -75,7 +75,7 @@ exports.list = function(req, res) {
  */
 exports.interviewSlotByID = function(req, res, next, id) {
   var interviewSlot = req.interviewSlot;
-  interviewSlot.findById(id).exec(function(err, interviewSlot) {
+  Interview.findById(id).exec(function(err, interviewSlot) {
     if(err) {
       res.status(400).send(err);
     } else {
