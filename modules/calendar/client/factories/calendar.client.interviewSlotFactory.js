@@ -2,7 +2,7 @@
 angular.module('calendar').factory('InterviewSlots', ['$http', 
   function($http) {
     var methods = {
-      //Get all of the interviewSlot's information and provide it into a listing
+      //Get all of the interviewSlot's information and provide it into object of listings
       getAll: function() {
         return $http.get("/api/employee/viewInterviewSlots");
       },

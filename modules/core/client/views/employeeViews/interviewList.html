@@ -1,5 +1,6 @@
 <div class="animated fadeIn" ng-controller="SlotsController">
 	<button ng-click="populateDaySlots()">Click me</button>
+	<button ng-click="test()">Click me2</button>
 	<!-- Interview Slots table -->
 	<div class="tableWrapper">
 		<table class="table table-striped table-hover" table id = "table" id = "myTable" >
@@ -11,7 +12,7 @@
 		    </tr>
 		    <tr>
 		    	<th scope="row">08:00</th>
-		    	<td> open goes here </td>
+		    	<td>{{hours[0]}}</td>
 		    	<td> open goes here </td>
 		    	<td> open goes here </td>
 		    </tr>

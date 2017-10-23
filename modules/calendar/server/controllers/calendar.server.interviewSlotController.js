@@ -75,7 +75,7 @@ exports.list = function(req, res) {
  */
 exports.interviewSlotByID = function(req, res, next, id) {
   var interviewSlot = req.interviewSlot;
-  Interview.findById(id).exec(function(err, interviewSlot) {
+  InterviewSlot.findById(id).exec(function(err, interviewSlot) {
     if(err) {
       res.status(400).send(err);
     } else {

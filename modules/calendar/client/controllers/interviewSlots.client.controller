@@ -1,7 +1,10 @@
 'use strict';
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots',
   function($scope, $location, $stateParams, $state, $http, InterviewSlots){
-
+    $scope.hours = ["8:00","9:00","10:00","11:00","1:00","2:00","3:00"];
+    $scope.test = function(){
+      console.log("test test");
+    }
 
 
     // Gets all the interview slots.
@@ -25,27 +28,25 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     // });
     // console.log($scope.listings);
 
-  $scope.populateDaySlots = function() {
-        $scope.error = null;
+    $scope.populateDaySlots = function() {
+      $scope.error = null;
 
-    
-        //More important to save what is required
-        for (var i = 0; i < 10; i++)
+  
+      //More important to save what is required
+      for (var i = 0; i < 10; i++)
+      {
+        for (var j = 1; j < 4; j++)
         {
-          for (var j = 1; j < 4; j++)
-          {
-            var interviewSlot = {
-              date: new Date(),
-              slot = j
-            };
+          var interviewSlot = {
+            date: new Date(),
+            slot = j
+          };
 
-            InterviewSlots.create(interviewSlot);
-          }
+          InterviewSlots.create(interviewSlot);
+          console.log(interviewSlot + " created");
         }
-
-
-      
-      };
+      }
+    };
 
 
 
