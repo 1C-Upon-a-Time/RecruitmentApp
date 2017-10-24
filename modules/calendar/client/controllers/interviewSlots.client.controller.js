@@ -1,8 +1,12 @@
 'use strict';
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots',
   function($scope, $location, $stateParams, $state, $http, InterviewSlots){
-
-
+    $scope.lol = "lol";
+    $scope.hours = [8,9,10,11,13,14,15,16];
+    $scope.slots = [1,2,3];
+    $scope.numRecruiters = 3;
+    // NEED TO GET INTERVIEW DAY FROM SOMEWHERE -- ADMIN SHOULD SET INTERVIEW DATE, AND THAT WILL BE REFLECTED HERE
+    $scope.day = new Date(2017,9,3);
 
     // Gets all the interview slots.
     // $scope.find = function() {
@@ -24,19 +28,29 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     //   $scope.listings = response.data;
     // });
     // console.log($scope.listings);
+    $scope.selectInterview = function(hour, slot) {
 
-  $scope.create = function(isValid) {
-        $scope.error = null;
+    };
 
-    
-        //More important to save what is required
-        var interviewSlot = {
-        };
+    // THIS METHOD SHOULD BE PART OF THE ADMIN CONTROLLER
+    $scope.createDayInterviewSlots = function(day, numRecruiters, hours) {
+        // SET GLOBAL "DAY" VARIABLE
+
+        for (var i = 0; i < hours.length; i++)
+        {
+            for (var j = 0; j < numRecruiters; j++)
+            {
+                var interviewSlot = {
+                    date: day.setHours(hours[i]),
+                    slot: j+1,
+                };
 
 
-        InterviewSlots.create(interviewSlot);
-      
-      };
+                InterviewSlots.create(interviewSlot);
+                console.log("Slot created!");
+            }
+        }
+    };
 
 
 
