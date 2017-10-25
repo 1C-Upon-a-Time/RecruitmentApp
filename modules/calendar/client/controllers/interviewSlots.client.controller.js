@@ -1,12 +1,13 @@
 'use strict';
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots',
   function($scope, $location, $stateParams, $state, $http, InterviewSlots){
-    $scope.listings = "";
+    $scope.interviews = "";
     $scope.hours = [8,9,10,11,13,14,15,16];
     $scope.slots = [1,2,3];
     $scope.numRecruiters = 3;
     // NEED TO GET INTERVIEW DAY FROM SOMEWHERE -- ADMIN SHOULD SET INTERVIEW DATE, AND THAT WILL BE REFLECTED HERE
     $scope.day = new Date(2017,9,3);
+    $scope.interviewArrays = [];
 
     // Gets all the interview slots.
     $scope.getInterviews = function() {
@@ -23,6 +24,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Interview Slots!\n' + error;
       });
+
     };
 
     //Future reference, not needed but just to let us debug things

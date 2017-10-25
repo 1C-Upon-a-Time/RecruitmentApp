@@ -8,12 +8,12 @@
 		     	<td></td>
 		        <th ng-repeat="slot in slots" scope="col" style = "width:10%;">Recruiter {{slot}}</th>
 		    </tr>
-			    <tr ng-repeat="hour in hours">
-			    	<th scope="row">{{hour}}:00</th>
-			    	<td ng-repeat="interview in interviews | filter:{interview.slot:'1'}" ng-click="selectInterview(hour, slot)">Slot {{interview.slot}}</td>
-			    	<td ng-repeat="interview in interviews | filter:{interview.slot:'2'}" ng-click="selectInterview(hour, slot)">Slot {{interview.slot}}</td>
-			    	<td ng-repeat="interview in interviews | filter:{interview.slot:'3'}" ng-click="selectInterview(hour, slot)">Slot {{interview.slot}}</td>
-			    </tr>
+		    <tr ng-repeat="hour in hours">
+		    	<th scope="row">{{hour}}:00</th>
+		    	<td ng-repeat="interview in interviews | filter: { slot: '1' }" ng-click="selectInterview(hour, slot)">
+		    		Slot {{interview.slot}}</td>
+		    	
+		    </tr>
 		 </thead>
 		   <tbody>
 		        
