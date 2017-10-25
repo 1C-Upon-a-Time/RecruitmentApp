@@ -17,9 +17,7 @@ angular.module('users').config(['$stateProvider',
         abstract: true,
         url: '/settings',
         templateUrl: 'modules/users/client/views/settings/settings.client.view.html',
-        data: {
-          roles: ['user', 'admin']
-        }
+        parent: 'layout-full'
       })
       .state('settings.profile', {
         url: '/profile',
@@ -40,7 +38,8 @@ angular.module('users').config(['$stateProvider',
       .state('authentication', {
         abstract: true,
         url: '/authentication',
-        templateUrl: 'modules/users/client/views/authentication/authentication.client.view.html'
+        template: '<ui-view/>',
+        parent: 'layout-square',
       })
       .state('authentication.signup', {
         url: '/signup',
@@ -53,7 +52,8 @@ angular.module('users').config(['$stateProvider',
       .state('password', {
         abstract: true,
         url: '/password',
-        template: '<ui-view/>'
+        template: '<ui-view/>',
+        parent: 'layout-square'
       })
       .state('password.forgot', {
         url: '/forgot',

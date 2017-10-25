@@ -2,7 +2,7 @@
 
 module.exports = {
   secure: {
-    ssl: false,
+    ssl: true,
     privateKey: './config/sslcerts/key.pem',
     certificate: './config/sslcerts/cert.pem'
   },
@@ -99,7 +99,5 @@ module.exports = {
         roles: ['user', 'admin']
       }
     }
-	
-  },
-  sessionSecret: process.env.SESSION_SECRET || 'super amazing secret'
+  }
 };

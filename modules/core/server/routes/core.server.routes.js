@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (app) {
-	// Root routing
+  // Root routing
   var core = require('../controllers/core.server.controller');
 
   // Define error pages

@@ -1,0 +1,24 @@
+<div ng-controller="HeaderController as vm">
+<!-- Navbar -->
+<div ng-include="'/modules/core/client/views/components/component.navbar.client.view.html'" include-replace></div>
+<div class="app-body">
+  <!-- Navigation -->
+  <div ng-include="'/modules/core/client/views/components/component.sidebar-nav.client.view.html'" include-replace></div>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb" breadcrumb>
+      <ncy-breadcrumb></ncy-breadcrumb>
+
+    </ol>
+    <div class="container-fluid">
+      <ui-view></ui-view>
+    </div>
+    <!-- /.conainer-fluid -->
+  </main>
+
+</div>
+
+<!-- Footer -->
+<div ng-include="'/modules/core/client/views/components/component.footer.client.view.html'" include-replace></div>
+</div>
