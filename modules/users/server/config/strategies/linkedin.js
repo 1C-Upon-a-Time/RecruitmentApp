@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Module dependencies
+ * Module dependencies.
  */
 var passport = require('passport'),
   LinkedInStrategy = require('passport-linkedin').Strategy,
@@ -14,11 +14,7 @@ module.exports = function (config) {
     consumerSecret: config.linkedin.clientSecret,
     callbackURL: config.linkedin.callbackURL,
     passReqToCallback: true,
-    profileFields: ['id', 'first-name', 'last-name', 'email-address', 'picture-url'],
-    scope: [
-      'r_basicprofile',
-      'r_emailaddress'
-    ]
+    profileFields: ['id', 'first-name', 'last-name', 'email-address', 'picture-url']
   },
   function (req, accessToken, refreshToken, profile, done) {
     // Set the provider data and include tokens

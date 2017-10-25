@@ -3,8 +3,7 @@
 /**
  * Module dependencies.
  */
-var _ = require('lodash'),
-  config = require('../config'),
+var config = require('../config'),
   chalk = require('chalk'),
   path = require('path'),
   mongoose = require('mongoose');
@@ -20,31 +19,28 @@ module.exports.loadModels = function (callback) {
 };
 
 // Initialize Mongoose
-module.exports.connect = function (callback) {
-  mongoose.Promise = config.db.promise;
+module.exports.connect = function (cb) {
+  var _this = this;
 
-  var options = _.merge(config.db.options || {}, { useMongoClient: true });
+  var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
+    // Log Error
+    if (err) {
+      console.error(chalk.red('Could not connect to MongoDB!'));
+      console.log(err);
+    } else {
 
-  mongoose
-    .connect(config.db.uri, options)
-    .then(function (connection) {
       // Enabling mongoose debug mode if required
       mongoose.set('debug', config.db.debug);
 
       // Call callback FN
-      if (callback) callback(connection.db);
-    })
-    .catch(function (err) {
-      console.error(chalk.red('Could not connect to MongoDB!'));
-      console.log(err);
-    });
-
+      if (cb) cb(db);
+    }
+  });
 };
 
 module.exports.disconnect = function (cb) {
-  mongoose.connection.db
-    .close(function (err) {
-      console.info(chalk.yellow('Disconnected from MongoDB.'));
-      return cb(err);
-    });
+  mongoose.disconnect(function (err) {
+    console.info(chalk.yellow('Disconnected from MongoDB.'));
+    cb(err);
+  });
 };
