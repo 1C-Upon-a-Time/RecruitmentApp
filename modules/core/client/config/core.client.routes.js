@@ -17,6 +17,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     .state('full', {
       abstract: true,
       templateUrl: 'modules/core/client/views/layouts/full.html'
+
     })
     .state('square', {
       abstract: true,
@@ -54,18 +55,18 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     //   templateUrl: 'modules/core/client/views/auth/forgot.html'
     // })
 
-    // .state('full.employeeDashboard', {
-    //   url: '/dashboard',
-    //   templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
-    // })
-    // .state('full.employeeCandidateList', {
-    //   url: '/candidates',
-    //   templateUrl: 'modules/core/client/views/employeeViews/candidateList.html'
-    // })
-    // .state('full.employeeInterviewList', {
-    //   url: '/interviews',
-    //   templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
-    // })
+    .state('full.employeeDashboard', {
+      url: '/dashboard',
+      templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
+    })
+    .state('full.employeeCandidateList', {
+      url: '/candidates',
+      templateUrl: 'modules/core/client/views/employeeViews/candidateList.html'
+    })
+    .state('full.employeeInterviewList', {
+      url: '/interviews',
+      templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
+    })
 
     .state('bad-request', {
       url: '/400',

@@ -5,6 +5,14 @@ angular.module('users').config(['$stateProvider',
   function ($stateProvider) {
     // Users state routing
     $stateProvider
+      .state('dashboard', {
+        abstract: true,
+        url: '/dashboard',
+        templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
+        // data: {
+        //   roles: ['user', 'admin']
+        // }
+      })
       .state('settings', {
         abstract: true,
         url: '/settings',
@@ -13,18 +21,6 @@ angular.module('users').config(['$stateProvider',
           roles: ['user', 'admin']
         }
       })
-      .state('settings.dashboard', {
-          url: '/dashboard',
-          templateUrl: 'modules/users/client/views/settings/dashboard.html'
-        })
-        .state('settings.canidateList', {
-            url: '/cl',
-            templateUrl: 'modules/users/client/views/settings/canidateList.html'
-          })
-          .state('settings.interviewList', {
-              url: '/il',
-              templateUrl: 'modules/users/client/views/settings/interviewList.html'
-            })
       .state('settings.profile', {
         url: '/profile',
         templateUrl: 'modules/users/client/views/settings/edit-profile.client.view.html'
