@@ -5,6 +5,14 @@ angular.module('users').config(['$stateProvider',
   function ($stateProvider) {
     // Users state routing
     $stateProvider
+      .state('dashboard', {
+        abstract: true,
+        url: '/dashboard',
+        templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
+        // data: {
+        //   roles: ['user', 'admin']
+        // }
+      })
       .state('settings', {
         abstract: true,
         url: '/settings',
