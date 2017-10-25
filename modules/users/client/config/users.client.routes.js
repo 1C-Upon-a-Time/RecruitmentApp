@@ -5,14 +5,8 @@ angular.module('users').config(['$stateProvider',
   function ($stateProvider) {
     // Users state routing
     $stateProvider
-      .state('dashboard', {
-        abstract: true,
-        url: '/dashboard',
-        templateUrl: 'modules/core/client/views/employeeViews/dashboard.html'
-        // data: {
-        //   roles: ['user', 'admin']
-        // }
-      })
+      
+      // Settings Views
       .state('settings', {
         abstract: true,
         url: '/settings',
@@ -35,6 +29,8 @@ angular.module('users').config(['$stateProvider',
         url: '/picture',
         templateUrl: 'modules/users/client/views/settings/change-profile-picture.client.view.html'
       })
+
+      // Authentication Views
       .state('authentication', {
         abstract: true,
         url: '/authentication',
@@ -49,6 +45,8 @@ angular.module('users').config(['$stateProvider',
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/signin.client.view.html'
       })
+
+      // Password Reset Views
       .state('password', {
         abstract: true,
         url: '/password',

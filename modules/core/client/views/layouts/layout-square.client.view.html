@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 col-height-buffer">
-        <a class="brand text-center" ui-sref="square.studentLanding">
+        <a class="brand text-center" ui-sref="home">
           <h1>
             <span class="fa-stack logo">
               <i class="fa fa-circle fa-stack-2x custom-red"></i>
@@ -13,7 +13,9 @@
             </span>
           </h1>
         </a>
-        <ui-view></ui-view>
+        <div class="card mx-4">
+          <ui-view></ui-view>
+        </div>
       </div>
     </div>
   </div>

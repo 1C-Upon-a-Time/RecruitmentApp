@@ -64,7 +64,7 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
         .then(function(response) {
                 //go to the confirmation response page to say the info was
                 //successfully received and to see if they want to send in another response
-                $state.go('square.studentConfirmation', { successMessage: 'Student succesfully created!' });
+                $state.go('form.confirmation', { successMessage: 'Student succesfully created!' });
               }, function(error) {
                 //otherwise display the error
                 $scope.error = 'Unable to save student!\n' + error;
