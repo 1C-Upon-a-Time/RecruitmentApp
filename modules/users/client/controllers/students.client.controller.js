@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
+angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     //gets all of the students
     $scope.find = function() {
@@ -25,6 +25,12 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
   //arrow it should continue down the list
   $scope.currentPage = 1;
   $scope.pageSize = "10";
+//   .filter('startFrom', function(){
+//   return function(data,start){
+//     start = 0 + start;
+//     return data.slice(start);
+//   }
+// })
 
 
 
@@ -74,6 +80,12 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
 
 
   }//end of function
-]);
+]).filter('startFrom', function(){
+  return function(data,start){
+    start = 0 + start;
+    return data.slice(start);
+  }
+});
+
 
 

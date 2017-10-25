@@ -102,7 +102,7 @@
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: query | limitTo: pageSize">
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: query |startFrom:(currentPage -1) *pageSize| limitTo: pageSize ">
                     <tr>
                         <td>{{student.name}}</td>
                         <td>{{student.gpa}}</td>
@@ -113,6 +113,7 @@
               </tbody>
             </table>
           </div>
+            <!-- startFrom:(currentPage -1) *pageSize -->
 
 
 
