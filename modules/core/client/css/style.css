@@ -6964,7 +6964,8 @@ base-chart.chart {
   background: #f0f3f5;
   flex-wrap: wrap;
   align-items: center;
-  border-top: 1px solid #c2cfd6; }
+  border-top: 1px solid #c2cfd6; 
+}
 
 .row.row-equal {
   padding-right: 7.5px;

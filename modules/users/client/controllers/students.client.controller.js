@@ -1,5 +1,5 @@
 'use strict';
-angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
+var app = angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     //gets all of the students
     $scope.find = function() {
@@ -16,11 +16,27 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
     };
 
-    //Future reference, not needed but just to let us debug things
-    // $http.get("/api/employee/viewList").then(function(response){
-    //   $scope.listings = response.data;
-    // });
-    // console.log($scope.listings);
+  //set the sort filter to it's default first
+  $scope.sort = "-created_at";
+
+  //pagination of candidates
+    //sets default value of current entries to 10
+  //currently missing a slicing page option, so that when you click on the next
+  //arrow it should continue down the list
+  $scope.currentPage = 1;
+  $scope.pageSize = "10";
+
+
+
+
+  //filtering function
+  $scope.filter = function(student){
+    //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet 
+    return (student.major === $scope.major);
+  };
+
+
+
 
   $scope.create = function(isValid) {
         $scope.error = null;
@@ -39,7 +55,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           major: $scope.major,
           minor: $scope.minor,
           gpa: $scope.gpa,
-          phone: $scope.phonenumber
+          phone: $scope.phonenumber,
+          fulltime: $scope.fulltime
         };
 
 
@@ -58,3 +75,5 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
   }//end of function
 ]);
+
+

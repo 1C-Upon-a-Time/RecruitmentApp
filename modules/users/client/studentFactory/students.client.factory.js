@@ -1,3 +1,4 @@
+"use strict";
 angular.module('students').factory('Students', ['$http', 
   function($http) {
     var methods = {
