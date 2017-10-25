@@ -36,6 +36,7 @@
 
 .brand:focus, .brand:hover {
     text-decoration: none; 
+    cursor: default;
 }
 
 .brand h1 {
