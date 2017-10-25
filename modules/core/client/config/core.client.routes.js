@@ -38,18 +38,18 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     })
 
     // Auth
-    // .state('square.employeeLogin', {
-    //   url: '/login',
-    //   templateUrl: 'modules/core/client/views/auth/login.html'
-    // })
-    // .state('square.employeeSignup', {
-    //   url: '/signup',
-    //   templateUrl: 'modules/core/client/views/auth/signup.html'
-    // })
-    // .state('square.employeeForgot', {
-    //   url: '/forgot',
-    //   templateUrl: 'modules/core/client/views/auth/forgot.html'
-    // })
+    .state('square.employeeLogin', {
+      url: '/login',
+      templateUrl: 'modules/core/client/views/auth/login.html'
+    })
+    .state('square.employeeSignup', {
+      url: '/signup',
+      templateUrl: 'modules/core/client/views/auth/signup.html'
+    })
+    .state('square.employeeForgot', {
+      url: '/forgot',
+      templateUrl: 'modules/core/client/views/auth/forgot.html'
+    })
     // .state('employeeForgot', {
     //   url: '/reset/:key',
     //   templateUrl: 'modules/core/client/views/auth/forgot.html'
