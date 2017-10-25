@@ -13,6 +13,18 @@ angular.module('users').config(['$stateProvider',
           roles: ['user', 'admin']
         }
       })
+      .state('settings.dashboard', {
+          url: '/dashboard',
+          templateUrl: 'modules/users/client/views/settings/dashboard.html'
+        })
+        .state('settings.canidateList', {
+            url: '/cl',
+            templateUrl: 'modules/users/client/views/settings/canidateList.html'
+          })
+          .state('settings.interviewList', {
+              url: '/il',
+              templateUrl: 'modules/users/client/views/settings/interviewList.html'
+            })
       .state('settings.profile', {
         url: '/profile',
         templateUrl: 'modules/users/client/views/settings/edit-profile.client.view.html'

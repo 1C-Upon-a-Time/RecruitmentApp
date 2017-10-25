@@ -1,0 +1,67 @@
+    <!-- jQuery -->
+    <script  src="https://code.jquery.com/jquery-3.2.1.min.js"  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="  crossorigin="anonymous"></script>
+    <!-- Bootstrap 4.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!-- TableSorter -->
+    <script src="/modules/core/client/js/tablesorter.js"></script>
+    <!-- Initializing TableSorter -->
+    <script>
+        $(document).ready( function () {
+                $("#myTable").tablesorter();
+        });
+    </script>
+    <!-- Styling -->
+    <style>
+        th.headerSortUp {
+            background-image: url(/modules/core/client/img/asc.gif);
+            background-color: #3399FF;
+            background-repeat: no-repeat;
+            background-position: center right;
+        }
+        th.headerSortDown {
+            background-image: url(/modules/core/client/img/desc.gif);
+            background-color: #3399FF;
+            background-repeat: no-repeat;
+            background-position: center right;
+        }
+    </style>
+
+
+
+<!--added StudentController, don't delete the ng-init find since it is needed to get all of the students-->
+<div class="animated fadeIn" ng-controller = "StudentsController" ng-init ="find()">
+
+  <p>Here are the candidates:</p>
+  <!--Search bar -->
+  <input type="search" class="light-table-filter" id = "myInput"  placeholder="search" ng-model = "query">
+  <!-- filter options -->
+  <!-- sorting options -->
+
+
+        <!-- Candidates table -->
+         <div class="tableWrapper">
+            <table class="table table-striped table-hover" table id = "table" id = "myTable" >
+              <thead class = "thead-inverse">
+                 <tr>
+                    <th style = "width:10%;">Name</th>
+                    <th style = "width:10%;">GPA</th>
+                    <th style = "width:10%;">Major</th>
+                    <th style = "width:10%;">Minor</th>
+                    <th style = "width:10%;">Recruiting Season</th>
+                </tr>
+             </thead>
+               <tbody ng-repeat = "student in listings | filter:query">
+                    <tr id = "list"'>
+                        <td>{{student.name}}</td>
+                        <td>{{student.gpa}}</td>
+                        <td>{{student.major}}</td>
+                        <td>{{student.minor}}</td>
+                        <td>{{student.email}}</td>
+                     </tr>
+              </tbody>
+            </table>
+          </div>
+</div>
+
+</script>
