@@ -1,17 +1,8 @@
 /* Dependencies */
 
-"use strict";
+'use strict';
 var mongoose = require('mongoose'), 
   InterviewSlot = require('../models/calendar.server.interviewSlotModel.js');
-
-/*
-  In this file, you should use Mongoose queries in order to retrieve/add/remove/update interviewSlots.
-  On an error you should send a 404 status code, as well as the error message. 
-  On success (aka no error), you should send the interviewSlot(s) as JSON in the response.
-
-  HINT: if you are struggling with implementing these functions, refer back to this tutorial 
-  from assignment 3 https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
- */
 
 /* Create an interviewSlot */
 exports.create = function(req, res) {
@@ -37,8 +28,23 @@ exports.read = function(req, res) {
   res.json(req.interviewSlot);
 };
 
+exports.update = function(req, res) {
+  var interviewSlot = req.interviewSlot;
 
+  interviewSlot.date = req.body.date;
+  interviewSlot.slot = req.body.slot;
+  interviewSlot.isAvailable = req.body.isAvailable;
 
+  /* Save the article */
+  interviewSlot.save(function(err) {
+    if(err) {
+      console.log(err);
+      res.status(400).send(err);
+    } else {
+      res.json(interviewSlot);
+    }
+  });
+};
   
 /* Delete a interviewSlot */
 exports.delete = function(req, res) {
@@ -55,7 +61,7 @@ exports.delete = function(req, res) {
   });
 };
 
-/* Retreive all the directory interviewSlots, sorted alphabetically by interviewSlot code */
+/* Retreive all the directory interviewSlots */
 exports.list = function(req, res) {
   InterviewSlot.find().exec(function(err, interviewSlots) {
     if(err) {
@@ -69,11 +75,8 @@ exports.list = function(req, res) {
 /* 
   Middleware: find a interviewSlot by its ID, then pass it to the next request handler. 
 
-  HINT: Find the interviewSlot using a mongoose query, 
-        bind it to the request object as the property 'interviewSlot', 
-        then finally call next
  */
-exports.interviewSlotByID = function(req, res, next, id) {
+exports.interviewByID = function(req, res, next, id) {
   var interviewSlot = req.interviewSlot;
   InterviewSlot.findById(id).exec(function(err, interviewSlot) {
     if(err) {

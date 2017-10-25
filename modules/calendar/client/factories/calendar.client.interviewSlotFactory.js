@@ -9,6 +9,9 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
       //Create a new interviewSlot into the database
       create: function(interviewSlot) {
         return $http.post('/api/employee/interviewSlot', interviewSlot);
+      },
+      update: function(id, interviewSlot) {
+        return $http.put('/api/employee/slot/' + id, interviewSlot);
       }
 
       // read: function(id) {
