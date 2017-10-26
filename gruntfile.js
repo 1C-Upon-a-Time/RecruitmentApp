@@ -52,13 +52,13 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      clientCSS: {
-        files: defaultAssets.client.css,
-        tasks: ['csslint'],
-        options: {
-          livereload: true
-        }
-      },
+      // clientCSS: {
+      //   files: defaultAssets.client.css,
+      //   tasks: ['csslint'],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
       clientSCSS: {
         files: defaultAssets.client.sass,
         tasks: ['sass', 'csslint'],

@@ -5,7 +5,32 @@ angular.module('users').config(['$stateProvider',
   function ($stateProvider) {
     // Users state routing
     $stateProvider
-      
+
+
+      // Dashboard
+      .state('layout-full', {
+        abstract: true,
+        templateUrl: '/modules/core/client/views/layouts/layout-full.client.view.html',
+        data: {
+          roles: ['user', 'admin']
+        }
+      })
+      .state('employeeDashboard', {
+        url: '/dashboard',
+        templateUrl: 'modules/core/client/views/employeeViews/dashboard.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.employeeCandidateList', {
+        url: '/dashboard/candidates',
+        templateUrl: 'modules/core/client/views/employeeViews/candidateList.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.employeeInterviewList', {
+        url: '/dashboard/interviews',
+        templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
+        parent: 'layout-full'
+      })
+
       // Settings Views
       .state('settings', {
         abstract: true,

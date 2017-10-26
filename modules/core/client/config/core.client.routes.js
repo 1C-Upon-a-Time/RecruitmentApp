@@ -14,13 +14,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
 
     // Templates
-    .state('layout-full', {
-      abstract: true,
-      templateUrl: '/modules/core/client/views/layouts/layout-full.client.view.html',
-      data: {
-        roles: ['user', 'admin']
-      }
-    })
+
     .state('layout-square', {
       abstract: true,
       templateUrl: '/modules/core/client/views/layouts/layout-square.client.view.html'
