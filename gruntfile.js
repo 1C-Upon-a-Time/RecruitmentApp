@@ -59,20 +59,20 @@ module.exports = function (grunt) {
       //     livereload: true
       //   }
       // },
-      clientSCSS: {
-        files: defaultAssets.client.sass,
-        tasks: ['sass', 'csslint'],
-        options: {
-          livereload: true
-        }
-      },
-      clientLESS: {
-        files: defaultAssets.client.less,
-        tasks: ['less', 'csslint'],
-        options: {
-          livereload: true
-        }
-      }
+      // clientSCSS: {
+      //   files: defaultAssets.client.sass,
+      //   tasks: ['sass', 'csslint'],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
+      // clientLESS: {
+      //   files: defaultAssets.client.less,
+      //   tasks: ['less', 'csslint'],
+      //   options: {
+      //     livereload: true
+      //   }
+      // }
     },
     nodemon: {
       dev: {
@@ -297,8 +297,8 @@ module.exports = function (grunt) {
   });
 
   // Lint CSS and JavaScript files.
-  grunt.registerTask('lint', ['sass', 'less', 'jshint', 'eslint', 'csslint']);
-
+  // grunt.registerTask('lint', ['sass', 'less', 'jshint', 'eslint', 'csslint']);
+  grunt.registerTask('lint', 'jshint');
   // Lint project files and minify them into two production files.
   grunt.registerTask('build', ['env:dev', 'lint', 'ngAnnotate', 'uglify', 'cssmin']);
 
