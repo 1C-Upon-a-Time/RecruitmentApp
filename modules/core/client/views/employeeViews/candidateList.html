@@ -109,7 +109,7 @@
                     <th style = "width:10%;">Recruiting Season</th>
                 </tr>
              </thead>
-               <tbody ng-repeat = "student in listings | filter:query">
+               <tbody ng-repeat = "student in listings | filter:query" ui-sref="full.employeeStudentDetails({ studentId: student._id})">
                     <tr id = "list"'>
                         <td>{{student.name}}</td>
                         <td>{{student.gpa}}</td>

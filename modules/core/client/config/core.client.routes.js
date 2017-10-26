@@ -66,7 +66,14 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       url: '/interviews',
       templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
     })
-
+    .state('full.employeeStudentDetails', {
+      url: '/:studentId', 
+      templateUrl: 'modules/core/client/views/employeeViews/studentDetails.html'
+    })
+    .state('full.studentUpdateForm',{
+      url:'/update/:studentId',
+      templateUrl: 'modules/core/client/views/employeeViews/studentUpdateForm.html'
+    })
     .state('bad-request', {
       url: '/400',
       templateUrl: 'modules/core/client/views/errors/400.html',
