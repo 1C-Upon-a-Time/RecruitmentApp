@@ -30,6 +30,11 @@ angular.module('users').config(['$stateProvider',
         templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
         parent: 'layout-full'
       })
+      .state('employeeDashboard.selectForInterview', {
+        url: '/dashboard/interviews/:studentId',
+        templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
+        parent: 'layout-full'
+      })
       .state('employeeDashboard.studentProfile', {
         url: '/:studentId', 
         templateUrl: 'modules/core/client/views/employeeViews/studentDetails.html',

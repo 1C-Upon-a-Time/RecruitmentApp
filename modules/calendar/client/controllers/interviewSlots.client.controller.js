@@ -32,10 +32,10 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         return function(interview)
         {
             var interviewHour = new Date(interview.date).getHours();
-            return hour==interviewHour;
-        }
+            return hour===interviewHour;
+        };
 
-    }
+    };
 
     // $scope.formatInterviewDates = function(){
     //     console.log($scope.interviews.length);
@@ -53,6 +53,10 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
 
     $scope.selectInterview = function(interview) {
         console.log(interview._id);
+        if ($stateParams.studentId)
+        {
+            console.log("student: " + $stateParams.studentId);
+        }
         $scope.update(interview);
     };
 
