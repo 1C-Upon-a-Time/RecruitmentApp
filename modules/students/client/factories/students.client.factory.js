@@ -1,4 +1,3 @@
-"use strict";
 angular.module('students').factory('Students', ['$http', 
   function($http) {
     var methods = {
@@ -9,19 +8,18 @@ angular.module('students').factory('Students', ['$http',
       //Create a new student into the database
       create: function(student) {
         return $http.post('/api/register', student);
+      },
+
+      read: function(id) {
+         return $http.get('/api/employee/student/' + id);
+       }, 
+    delete: function(id) {
+       return $http.delete('/api/employee/student/' + id);
+     },
+
+      update: function(id, student) {
+        return $http.put('/api/employee/student/' + id, student);
       }
-
-      // read: function(id) {
-      //   return $http.get('/api/listings/' + id);
-      // }, 
-
-      // update: function(id, listing) {
-      //   return $http.put('/api/listings/' + id, listing);
-      // }, 
-
-      // delete: function(id) {
-      //   return $http.delete('/api/listings/' + id);
-      // }
     };
 
     return methods;

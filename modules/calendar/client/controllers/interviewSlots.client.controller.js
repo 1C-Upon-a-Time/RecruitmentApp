@@ -18,41 +18,32 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
       InterviewSlots.getAll().then(function(response) {
         $scope.loading = false; //remove loader
         $scope.interviews = response.data;
-        console.log("Successfully retrieved slots!");
-        console.log($scope.interviews);
+        // console.log("Successfully retrieved slots!");
+        // console.log($scope.interviews);
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Interview Slots!\n' + error;
       });
 
+
     };
 
-    //Future reference, not needed but just to let us debug things
-    // $http.get("/api/employee/viewList").then(function(response){
-    //   $scope.listings = response.data;
-    // });
-    // console.log($scope.listings);
+    // $scope.formatInterviewDates = function(){
+    //     console.log($scope.interviews.length);
+    //   for (var i = 0; i < $scope.interviews.length; i++)
+    //   {
+    //     console.log("test 1");
+    //     var date = new Date($scope.interviews[i].date);
+    //     //$scope.interviews[i].date = date;
+    //     $scope.interviews[i].hour = date.getHours();
+    //     console.log("test 2");
+    //     console.log("a " + $scope.interviews[i].date.getHours());
+    //   }
+    // }
 
-    $scope.selectInterview = function(hour, slot) {
-        var interviewSlot;
-        // Find the interview slot that corresponds to that time and slot #
-        for (var i = 0; i < $scope.interviews.length; i++){
 
-            var interview = $scope.interviews[i];
-            // Get a date object so we can get hour from the stored date string
-            var date = new Date(interview.date);
-
-            if (date.hour === hour && interview.slot === slot){
-                interviewSlot = interview;
-                break;
-            }
-            else if (i === $scope.interviews.length-1){
-                console.log("Could not find an interview slot corresponding to that date and time!");
-                return;
-            }
-        }
-
-        $scope.update(interviewSlot);
+    $scope.selectInterview = function(interviewId) {
+   
 
     };
 

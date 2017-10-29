@@ -102,8 +102,9 @@
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: query | limitTo: pageSize">
-                    <tr>
+
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: query | limitTo: pageSize" ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">
+                    <tr id = "list">
                         <td>{{student.name}}</td>
                         <td>{{student.gpa}}</td>
                         <td>{{student.major}}</td>
