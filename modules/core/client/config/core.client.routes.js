@@ -11,50 +11,42 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       });
     });
 
-    // Home state routing, Mean's default
     $stateProvider
-    // .state('home', {
-    //   url: '/',
-    //   templateUrl: 'modules/core/client/views/home.client.view.html'
-    // })
 
-    //This is our home page.
+    // Templates
+
+    .state('layout-square', {
+      abstract: true,
+      templateUrl: '/modules/core/client/views/layouts/layout-square.client.view.html'
+    })
+
+    // Views
     .state('home', {
       url: '/',
-      templateUrl: 'modules/core/client/views/index.client.view.html'
-    })
-    .state('studentsSubmit', {
-      url: '/studentRegister',
-      templateUrl: 'modules/core/client/views/studentsViews/register.html'
-    })
-    .state('employeeLogin', {
-      url: '/login',
-      templateUrl: 'modules/core/client/views/studentsViews/login.html'
-    })
-    .state('employeeSignup', {
-      url: '/signup',
-      templateUrl: 'modules/core/client/views/studentsViews/signup.html'
+      templateUrl: 'modules/core/client/views/home.client.view.html',
+      parent: 'layout-square'
     })
 
-
-
+    // Errors
     .state('not-found', {
-      url: '/not-found',
-      templateUrl: 'modules/core/client/views/404.client.view.html',
+      url: '/404',
+      templateUrl: 'modules/core/client/views/errors/404.client.view.html',
+
       data: {
         ignoreState: true
       }
     })
     .state('bad-request', {
-      url: '/bad-request',
-      templateUrl: 'modules/core/client/views/400.client.view.html',
+      url: '/400',
+      templateUrl: 'modules/core/client/views/errors/400.client.view.html',
+
       data: {
         ignoreState: true
       }
     })
     .state('forbidden', {
-      url: '/forbidden',
-      templateUrl: 'modules/core/client/views/403.client.view.html',
+      url: '/403',
+      templateUrl: 'modules/core/client/views/errors/403.client.view.html',
       data: {
         ignoreState: true
       }

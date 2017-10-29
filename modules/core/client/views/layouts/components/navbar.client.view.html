@@ -1,0 +1,30 @@
+<header ng-controller="HeaderController" class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">&#9776;</button>
+  <a class="navbar-brand" ui-sref="employeeDashboard">
+    <span class="fa-stack logo">
+      <i class="fa fa-circle fa-stack-2x custom-red"></i>
+      <i class="fa fa-handshake-o fa-stack-1x fa-inverse"></i>
+    </span>
+    <span class="custom-blue">
+      Easy<strong>Recruit</strong>
+    </span>
+  </a>
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <img ng-src="{{authentication.user.profileImageURL}}" class="img-avatar" alt="{{authentication.user.displayName}}">
+        <span class="d-md-down-none" ng-bind="authentication.user.displayName"></span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-header text-center">
+          <strong>Settings</strong>
+        </div>
+        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+    </li>
+  </ul>
+</header>
