@@ -25,8 +25,17 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         $scope.error = 'Unable to retrieve Interview Slots!\n' + error;
       });
 
-
     };
+
+    $scope.slotFilter = function(hour)
+    {
+        return function(interview)
+        {
+            var interviewHour = new Date(interview.date).getHours();
+            return hour==interviewHour;
+        }
+
+    }
 
     // $scope.formatInterviewDates = function(){
     //     console.log($scope.interviews.length);
@@ -42,9 +51,9 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     // }
 
 
-    $scope.selectInterview = function(interviewId) {
-   
-
+    $scope.selectInterview = function(interview) {
+        console.log(interview._id);
+        $scope.update(interview);
     };
 
     // THIS METHOD SHOULD BE PART OF THE ADMIN CONTROLLER

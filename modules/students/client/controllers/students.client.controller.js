@@ -72,7 +72,7 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
       };
 
     $scope.findOne = function() {
-      debugger;
+      //debugger;
       $scope.loading = true;
 
       var id = $stateParams.studentId;
@@ -88,7 +88,7 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
     };
 
     $scope.update = function(isValid) {
-      debugger;
+      //debugger;
       $scope.loading = true;
       var id = $stateParams.studentId;
 
@@ -118,7 +118,7 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
 
     Students.update(id,updatedStudent).then(function(reponse){
       $scope.loading=false;
-      $state.go('full.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
+      $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
     }, function(error) {
               //otherwise display the error
               $scope.loading=false;
@@ -132,14 +132,14 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
         Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise, 
         display the error. 
         */
-        debugger;
+        //debugger;
         $scope.loading = true;
 
         var id = $stateParams.studentId;
         Students.delete(id)
         .then(function(response) {
           $scope.loading = false;
-          $state.go('full.employeeCandidateList', {sucessMessage: 'Student successfully deleted!'});
+          $state.go('employeeDashboard.employeeCandidateList', {sucessMessage: 'Student successfully deleted!'});
         }, function(error) {  
           $scope.error = 'Unable to delete student with id "' + id + '"\n' + error;
           $scope.loading = false;

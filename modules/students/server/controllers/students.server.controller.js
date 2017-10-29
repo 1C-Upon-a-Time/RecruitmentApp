@@ -49,13 +49,13 @@ exports.update = function(req, res) {
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
-      student.recruiterComments.comments = req.body.recruiterComments.comments,
-      student.recruiterComments.leadership = req.body.recruiterComments.leadership,
-      student.recruiterComments.behavior = req.body.recruiterComments.behavior,
-      student.recruiterComments.communication = req.body.recruiterComments.communication,
-      student.recruiterComments.critThinking = req.body.recruiterComments.critThinking,
-      student.recruiterComments.techKnowledge = req.body.recruiterComments.techKnowledge,
-      student.recruiterComments.candidacy = req.body.recruiterComments.candidacy
+      student.recruiterComments.comments = req.body.recruiterComments.comments;
+      student.recruiterComments.leadership = req.body.recruiterComments.leadership;
+      student.recruiterComments.behavior = req.body.recruiterComments.behavior;
+      student.recruiterComments.communication = req.body.recruiterComments.communication;
+      student.recruiterComments.critThinking = req.body.recruiterComments.critThinking;
+      student.recruiterComments.techKnowledge = req.body.recruiterComments.techKnowledge;
+      student.recruiterComments.candidacy = req.body.recruiterComments.candidacy;
     }
   
 

@@ -1,9 +1,8 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="getInterviews()">
 	Interviews for {{day}}
-	<button ng-click="update(interviews[0])">CLICK</button>
 	<!-- Interview Slots table -->
 	<div class="tableWrapper">
-		<!--
+
 		<table class="table table-striped table-hover" table id = "table" id = "myTable" >
 		     <tr>
 		     	<td></td>
@@ -11,22 +10,20 @@
 		    </tr>
 		    <tr ng-repeat="hour in hours">
 		    	<th scope="row">{{hour}}:00</th>
-		    	<td ng-repeat="interview in interviews | filter: { slot: '1' }" ng-click="selectInterview(hour, slot)">
-		    		Slot {{interview.slot}}</td>
+		    	<td ng-repeat="interview in interviews |filter: slotFilter(hour)" ng-click="selectInterview(interview)">
+		    		{{interview.isAvailable}}</td>
 		    	
 		    </tr>
 		 </thead>
 		   <tbody>
 		        
 		  </tbody>
-		</table>
-		-->
-		<table class="table table-striped table-hover" table id = "table" id = "myTable" >
+<!-- 		</table>		<table class="table table-striped table-hover" table id = "table" id = "myTable" >
 			<tr ng-repeat="interview in interviews">
 				<td>{{interview._id}}</td>
 				<td>{{interview.hour}}</td>
 		   	</tr>
-		</table>
+		</table> -->
 
 	</div>
   
