@@ -1,10 +1,10 @@
 {
-  "name": "easyrecruit",
-  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
+  "name": "meanjs",
+  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
   "version": "0.4.2",
   "meanjs-version": "0.4.2",
   "private": false,
-  "author": "1cUponATime",
+  "author": "https://github.com/meanjs/mean/graphs/contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,9 +15,9 @@
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "start": "grunt",
+    "start": "grunt --force",
     "test": "grunt test",
-    "postinstall": "bower install"
+    "postinstall": "bower install --config.interactive=false"
   },
   "dependencies": {
     "acl": "~0.4.4",

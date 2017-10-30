@@ -4,7 +4,7 @@ var defaultEnvConfig = require('./default');
 
 module.exports = {
   db: {
-    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://kimnguyen416:3600Aleks@ds155674.mlab.com:55674/easyrecruit',
+    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://admin:onceuponatime@ds149934.mlab.com:49934/students-dev',
     options: {
       user: '',
       pass: ''
@@ -23,7 +23,7 @@ module.exports = {
       //  directoryPath: process.cwd(),
       //  fileName: 'access.log',
       //  rotatingLogs: { // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-      //    active: false, // activate to use rotating logs 
+      //    active: false, // activate to use rotating logs
       //    fileName: 'access-%DATE%.log', // if rotating logs are active, this fileName setting will be used
       //    frequency: 'daily',
       //    verbose: false

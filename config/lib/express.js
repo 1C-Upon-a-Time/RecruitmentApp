@@ -139,10 +139,10 @@ module.exports.initModulesConfiguration = function (app, db) {
 module.exports.initHelmetHeaders = function (app) {
   // Use helmet to secure Express headers
   var SIX_MONTHS = 15778476000;
-  app.use(helmet.xframe());
+  app.use(helmet.frameguard());
   app.use(helmet.xssFilter());
-  app.use(helmet.nosniff());
-  app.use(helmet.ienoopen());
+  app.use(helmet.noSniff());
+  app.use(helmet.ieNoOpen());
   app.use(helmet.hsts({
     maxAge: SIX_MONTHS,
     includeSubdomains: true,
@@ -252,13 +252,6 @@ module.exports.init = function (db) {
 
   // Configure Socket.io
   app = this.configureSocketIO(app, db);
-
-
-
-  /* go to homepage for all routes not specified */ 
-  // app.all('/*', function(req, res) {
-  //   res.sendFile(path.resolve('/../../client/views/index.client.view.html'));
-  // });
 
   return app;
 };

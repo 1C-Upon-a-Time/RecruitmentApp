@@ -5,13 +5,38 @@ angular.module('users').config(['$stateProvider',
   function ($stateProvider) {
     // Users state routing
     $stateProvider
+
+
+      // Dashboard
+      .state('layout-full', {
+        abstract: true,
+        templateUrl: '/modules/core/client/views/layouts/layout-full.client.view.html',
+        data: {
+          roles: ['user', 'admin']
+        }
+      })
+      .state('employeeDashboard', {
+        url: '/dashboard',
+        templateUrl: 'modules/core/client/views/employeeViews/dashboard.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.employeeCandidateList', {
+        url: '/dashboard/candidates',
+        templateUrl: 'modules/core/client/views/employeeViews/candidateList.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.employeeInterviewList', {
+        url: '/dashboard/interviews',
+        templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
+        parent: 'layout-full'
+      })
+
+      // Settings Views
       .state('settings', {
         abstract: true,
         url: '/settings',
         templateUrl: 'modules/users/client/views/settings/settings.client.view.html',
-        data: {
-          roles: ['user', 'admin']
-        }
+        parent: 'layout-full'
       })
       .state('settings.profile', {
         url: '/profile',
@@ -29,10 +54,13 @@ angular.module('users').config(['$stateProvider',
         url: '/picture',
         templateUrl: 'modules/users/client/views/settings/change-profile-picture.client.view.html'
       })
+
+      // Authentication Views
       .state('authentication', {
         abstract: true,
         url: '/authentication',
-        templateUrl: 'modules/users/client/views/authentication/authentication.client.view.html'
+        template: '<ui-view/>',
+        parent: 'layout-square',
       })
       .state('authentication.signup', {
         url: '/signup',
@@ -42,10 +70,13 @@ angular.module('users').config(['$stateProvider',
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/signin.client.view.html'
       })
+
+      // Password Reset Views
       .state('password', {
         abstract: true,
         url: '/password',
-        template: '<ui-view/>'
+        template: '<ui-view/>',
+        parent: 'layout-square'
       })
       .state('password.forgot', {
         url: '/forgot',
