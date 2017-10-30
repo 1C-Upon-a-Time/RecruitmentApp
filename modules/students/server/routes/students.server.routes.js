@@ -7,11 +7,11 @@ module.exports = function (app) {
 
   app.route('/api/register').post(students.create);
   app.route('/api/employee/viewList').get(students.list);
-  app.route('/api/employee/:studentID')
+  app.route('/api/employee/student/:studentID')
     .get(students.read)
-    //.put(students.update)
+    .put(students.update)
     .delete(students.delete);
 
   // Finish by binding the user middleware
-  // app.param('Student', studentID);
+  app.param('studentID', students.studentByID);
 };

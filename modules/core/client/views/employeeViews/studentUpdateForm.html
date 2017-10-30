@@ -1,0 +1,84 @@
+<!-- Fill in this file to create a UI view for editing student entries. -->
+<div class="row" ng-controller="StudentsController" ng-init="findOne()">
+  <div class="col-md-offset-1 col-md-10 formWrapper">
+    <div class="page-header">
+      <h3>Edit student</h3>
+      <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
+        <fieldset>
+          <div class="form-group" show-errors>
+            <label for="name">Name</label>
+            <input name="name" type="text" ng-model="student.name" id="name" class="form-control" placeholder="Name" required>
+            <div ng-messages="studentUpdateForm.name.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Please provide the student's name.</p>
+            </div>
+          </div>
+          <div class="form-group" show-errors>
+            <label for="email">mail</label>
+            <input name="email" type="text" ng-model="student.email" id="email" class="form-control" placeholder="email" required>
+            <div ng-messages="studentUpdateForm.email.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Please provide the student's email.</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="major">Major</label>
+            <input name="major" type="text" ng-model="student.major" id="major" class="form-control" placeholder="major">
+          </div>
+
+          <div class="form-group">
+            <label for="minor">Minor</label>
+            <input name="minor" type="text" ng-model="student.minor" id="minor" class="form-control" placeholder="minor">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input name="phone" type="text" ng-model="student.phone" id="phone" class="form-control" placeholder="phone">
+          </div>
+          <div class="form-group">
+            <label for="gpa">gpa</label>
+            <input name="gpa" type="text" ng-model="student.gpa" id="gpa" class="form-control" placeholder="gpa">
+          </div>
+          <div class="form-group">
+            <label for="fulltime">fulltime</label>
+            <input name="fulltime" type="text" ng-model="student.fulltime" id="fulltime" class="form-control" placeholder="fulltime">
+          </div>
+          <div class="form-group">
+            <label for="comments">comments</label>
+            <input name="comments" type="text" ng-model="student.recruiterComments.comments" id="comments" class="form-control" placeholder="comments">
+          </div>
+          <div class="form-group">
+            <label for="leadership">leadership</label>
+            <input name="leadership" type="text" ng-model="student.recruiterComments.leadership" id="leadership" class="form-control" placeholder="leadership">
+          </div>
+          <div class="form-group">
+            <label for="behavior">behavior</label>
+            <input name="behavior" type="text" ng-model="student.recruiterComments.behavior" id="behavior" class="form-control" placeholder="behavior">
+          </div>
+          <div class="form-group">
+            <label for="communication">communication</label>
+            <input name="communication" type="text" ng-model="student.recruiterComments.communication" id="communication" class="form-control" placeholder="communication">
+          </div>
+          <div class="form-group">
+            <label for="critThinking">critThinking</label>
+            <input name="critThinking" type="text" ng-model="student.recruiterComments.critThinking" id="critThinking" class="form-control" placeholder="critThinking">
+          </div>
+          <div class="form-group">
+            <label for="techKnowledge">techKnowledge</label>
+            <input name="techKnowledge" type="text" ng-model="student.recruiterComments.techKnowledge" id="techKnowledge" class="form-control" placeholder="techKnowledge">
+          </div>
+          <div class="form-group">
+            <label for="candidacy">candidacy</label>
+            <input name="candidacy" type="text" ng-model="student.recruiterComments.candidacy" id="candidacy" class="form-control" placeholder="candidacy">
+          </div>
+
+
+          <div class="form-group">
+            <input type="submit" class="btn btn-default">
+          </div>
+          <div ng-show="error" class="text-danger">
+            <strong ng-bind="error"></strong>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

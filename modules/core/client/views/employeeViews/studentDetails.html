@@ -1,0 +1,37 @@
+<div class="row" ng-controller="StudentsController" ng-init="findOne()">
+  <div class="col-md-offset-1 col-md-10">
+    <div ng-show="error" class="text-danger">
+      <strong ng-bind="error"></strong>
+    </div>
+    <div class="jumbotron">
+      <img id="loader" ng-show="loading" src="/../../img/484.gif">
+      <div ng-show="student">
+        <h2>{{student.name}}</h2>
+        <h2>{{student.email}}</h2>
+        <h2>{{student.major}}</h2> 
+        <h2>{{student.minor}}</h2>
+        <h2>{{student.phone}}</h2>
+        <h2>{{student.gpa}}</h2>
+        <h2>{{student.fulltime}}</h2>
+        <h2>{{student.recruiterComments.comments}}</h2>
+        <h2>{{student.recruiterComments.leadership}}</h2>
+        <h2>{{student.recruiterComments.behavior}}</h2>
+        <h2>{{student.recruiterComments.communication}}</h2>
+        <h2>{{student.recruiterComments.critThinking}}</h2>
+        <h2>{{student.recruiterComments.techKnowledge}}</h2>
+        <h2>{{student.recruiterComments.candidacy}}</h2>
+        <p></p>
+        <p></p>
+        <a class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
+          <i class="glyphicon glyphicon-edit"></i>
+          Edit
+        </a>
+        <a class="btn btn-danger" ng-click="remove();" >
+          <i class="glyphicon glyphicon-trash"></i>
+          Remove
+        </a>
+        <button ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">Select for Interview</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -31,15 +31,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
     .state('not-found', {
       url: '/404',
       templateUrl: 'modules/core/client/views/errors/404.client.view.html',
-
-      data: {
-        ignoreState: true
-      }
     })
     .state('bad-request', {
       url: '/400',
       templateUrl: 'modules/core/client/views/errors/400.client.view.html',
-
       data: {
         ignoreState: true
       }

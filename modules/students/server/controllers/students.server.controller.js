@@ -31,18 +31,49 @@ exports.create = function(req, res) {
 };
 
 /* Show the current student */
-exports.read = function(req, res) {
-  /* send back the student as json from the request */
+exports.read = function (req, res) {
   res.json(req.student);
 };
 
-
-
-  
-/* Delete a student */
-exports.delete = function(req, res) {
+exports.update = function(req, res) {
   var student = req.student;
 
+  /* Replace the article's properties with the new properties found in req.body */
+  student.name = req.body.name;
+  student.email = req.body.email;
+  student.major = req.body.major;
+  student.minor = req.body.minor;
+  student.phone = req.body.phone;
+  student.gpa = req.body.gpa;
+  student.fulltime = req.body.fulltime;
+
+  /* save the coordinates (located in req.results if there is an address property) */
+  if(req.body.recruiterComments) {
+      student.recruiterComments.comments = req.body.recruiterComments.comments;
+      student.recruiterComments.leadership = req.body.recruiterComments.leadership;
+      student.recruiterComments.behavior = req.body.recruiterComments.behavior;
+      student.recruiterComments.communication = req.body.recruiterComments.communication;
+      student.recruiterComments.critThinking = req.body.recruiterComments.critThinking;
+      student.recruiterComments.techKnowledge = req.body.recruiterComments.techKnowledge;
+      student.recruiterComments.candidacy = req.body.recruiterComments.candidacy;
+    }
+  
+
+  /* Save the article */
+  student.save(function(err) {
+    if(err) {
+      console.log(err);
+      res.status(400).send(err);
+    } else {
+      res.json(student);
+    }
+  });
+};
+
+
+/* Delete a listing */
+exports.delete = function(req, res) {
+  var student = req.student;
   /* Remove the article */
   student.remove(function(err) {
     if(err) {
@@ -73,7 +104,6 @@ exports.list = function(req, res) {
         then finally call next
  */
 exports.studentByID = function(req, res, next, id) {
-  var student = req.student;
   Student.findById(id).exec(function(err, student) {
     if(err) {
       res.status(400).send(err);
