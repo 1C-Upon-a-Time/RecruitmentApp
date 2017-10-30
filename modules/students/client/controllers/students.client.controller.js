@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
+angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     //gets all of the students
     $scope.find = function() {
@@ -21,20 +21,37 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
 
   //pagination of candidates
     //sets default value of current entries to 10
-  //currently missing a slicing page option, so that when you click on the next
-  //arrow it should continue down the list
   $scope.currentPage = 1;
   $scope.pageSize = "10";
 
 
 
-
   //filtering function
-  $scope.filter = function(student){
+    //sets it to any by default for the any option
+  $scope.filter = "any";
+  $scope.customFilter = function(student){
     //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet 
-    return (student.major === $scope.major);
+    //Case insensitive
+    //checks if the search bar is currently null. If so, just load everything in the 
+    //student database anyways
+    if(!$scope.query){
+      return true;
+    }
+    else if($scope.filter === "any"){
+      return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
+             (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
+    }
+    else if($scope.filter == "name"){
+      return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+    }
+    else if($scope.filter === "major"){
+      return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+    }
   };
 
+  function isEmpty(str){
+    return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
+  }
 
 
 
@@ -74,6 +91,12 @@ var app = angular.module('students').controller('StudentsController', ['$scope',
 
 
   }//end of function
-]);
+]).filter('startFrom', function(){
+  return function(data,start){
+    start = 0 + start;
+    return data.slice(start);
+  }
+});
+
 
 
