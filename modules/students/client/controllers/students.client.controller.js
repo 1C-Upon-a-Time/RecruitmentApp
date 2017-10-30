@@ -41,7 +41,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
              (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
     }
-    else if($scope.filter == "name"){
+    else if($scope.filter === "name"){
       return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
     }
     else if($scope.filter === "major"){
@@ -173,7 +173,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   return function(data,start){
     start = 0 + start;
     return data.slice(start);
-  }
+  };
 });
 
 
