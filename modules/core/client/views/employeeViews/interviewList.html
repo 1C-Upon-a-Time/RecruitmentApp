@@ -1,4 +1,5 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="getInterviews()">
+	<div ng-if="selectingStudentInterview">Selecting interview for {{$stateParams.studentId}} </div>
 	Interviews for {{day}}
 	<!-- Interview Slots table -->
 	<div class="tableWrapper">
