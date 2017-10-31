@@ -33,15 +33,15 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     };
 
     // Hacky filter for table so that it displays the slots in the correct time
-    $scope.slotFilter = function(hour)
-    {
-        return function(interview)
-        {
-            var interviewHour = new Date(interview.date).getHours();
-            return hour===interviewHour;
-        };
+    // $scope.slotFilter = function(hour)
+    // {
+    //     return function(interview)
+    //     {
+    //         var interviewHour = new Date(interview.date).getHours();
+    //         return hour===interviewHour;
+    //     };
 
-    };
+    // };
 
     // $scope.formatInterviewDates = function(){
     //     console.log($scope.interviews.length);
