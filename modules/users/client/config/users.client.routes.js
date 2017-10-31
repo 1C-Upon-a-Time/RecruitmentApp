@@ -30,6 +30,26 @@ angular.module('users').config(['$stateProvider',
         templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
         parent: 'layout-full'
       })
+      .state('employeeDashboard.appSettings', {
+        url: '/dashboard/appSettings',
+        templateUrl: 'modules/core/client/views/employeeViews/appSettings.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.selectForInterview', {
+        url: '/dashboard/interviews/:studentId',
+        templateUrl: 'modules/core/client/views/employeeViews/interviewList.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.studentProfile', {
+        url: '/:studentId', 
+        templateUrl: 'modules/core/client/views/employeeViews/studentDetails.html',
+        parent: 'layout-full'
+      })
+      .state('employeeDashboard.studentUpdateForm',{
+        url:'/update/:studentId',
+        templateUrl: 'modules/core/client/views/employeeViews/studentUpdateForm.html',
+        parent: 'layout-full'
+      })
 
       // Settings Views
       .state('settings', {

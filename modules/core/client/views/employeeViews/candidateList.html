@@ -53,32 +53,12 @@
                 <option>Season 2019</option>
               </select>
             </th>
-            <th>Major
-              <select id="major-filter" class="form-control" ng-model="filterMajor">
-                <option value = "">Any</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Electrical Engineering</option>
-                <option>DAS</option>
-                <option>Mechanical Engineer</option>
-              </select>
-            </th>
-            <!-- Probably not important so I'm not going to bother with it -->
-            <th>Minor
-              <select id="minor-filter" class="form-control" ng-model="minor">
-                <option value = "">Any</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Electrical Engineering</option>
-                <option>DAS</option>
-                <option>Mechanical Engineer</option>
-              </select>
-            </th>
-            <th>Position Type
-              <select id="positiontype-filter" class="form-control" ng-model="filterPositionType">
-                <option value = "">Any</option>
-                <option>Internship/Co-op</option>
-                <option>Full Time</option>
+            <!-- Called it filter instead of customFilter so that we can get a separate access to each of the variables inside of it. Helps with if,else statements -->
+            <th>Filters
+              <select id="major-filter" class="form-control" ng-model="filter">
+                <option value = "any">Any</option>
+                <option value = "name">Name</option>
+                <option value = "major">Major</option>
               </select>
             </th>
           </tr>
@@ -102,7 +82,7 @@
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: query | limitTo: pageSize">
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize" ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">
                     <tr>
                         <td>{{student.name}}</td>
                         <td>{{student.gpa}}</td>
@@ -113,6 +93,7 @@
               </tbody>
             </table>
           </div>
+            <!-- startFrom:(currentPage -1) *pageSize -->
 
 
 
