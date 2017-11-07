@@ -1,7 +1,6 @@
 'use strict';
 
-//API key for sendgrid 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
-
+//API key for sendgrid 
 var defaultEnvConfig = require('./default');
 
 module.exports = {
