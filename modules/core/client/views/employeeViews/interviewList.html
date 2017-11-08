@@ -1,14 +1,21 @@
-<div class="animated fadeIn" ng-controller="SlotsController" ng-init="getInterviews()">
+<div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
 
-	<div ng-if="selectingStudentInterview">Selecting interview for {{$stateParams.studentId}} </div>
+	<div ng-if="selectingStudentInterview">Selecting interview for {{student.name}} </div>
 	Interviews for {{day | date}}
 	<!-- Interview Slots list -->
-	<div class="list-group">
-		<a class="list-group-item list-group-item-action" ng-repeat="interview in interviews | orderBy:'date'">
+	<div class="list-group" ng-if="selectingStudentInterview">
+
+		<a class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'date' | filter:{isAvailable : true}">
 			{{interview.date | date:'shortTime'}}
 		</a>
-
+		
 	</div>
-  
 
+	<div class="list-group" ng-if="!selectingStudentInterview">
+
+		<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'date'">
+			{{interview.date | date:'shortTime'}} {{interview.isAvailable}}
+		</a>
+		
+	</div>
 </div>
