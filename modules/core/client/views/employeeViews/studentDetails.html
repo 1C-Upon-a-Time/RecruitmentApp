@@ -6,31 +6,40 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="student">
-        <h2>{{student.name}}</h2>
-        <h2>{{student.email}}</h2>
-        <h2>{{student.major}}</h2> 
-        <h2>{{student.minor}}</h2>
-        <h2>{{student.phone}}</h2>
-        <h2>{{student.gpa}}</h2>
-        <h2>{{student.fulltime}}</h2>
-        <h2>{{student.recruiterComments.comments}}</h2>
-        <h2>{{student.recruiterComments.leadership}}</h2>
-        <h2>{{student.recruiterComments.behavior}}</h2>
-        <h2>{{student.recruiterComments.communication}}</h2>
-        <h2>{{student.recruiterComments.critThinking}}</h2>
-        <h2>{{student.recruiterComments.techKnowledge}}</h2>
-        <h2>{{student.recruiterComments.candidacy}}</h2>
+        <h2>Name: {{student.name}}</h2>
+        <h2>Email: {{student.email}}</h2>
+        <h2>Major: {{student.major}}</h2>
+        <h2>Minor: {{student.minor}}</h2>
+        <h2>Phone: {{student.phone}}</h2>
+        <h2>GPA: {{student.gpa}}</h2>
+        <h2>Position: {{student.fulltime}}</h2>
+        <h2>Comments: {{student.recruiterComments.comments}}</h2>
+        <h2>Leadership: {{student.recruiterComments.leadership}}</h2>
+        <h2>Behavior: {{student.recruiterComments.behavior}}</h2>
+        <h2>Communication: {{student.recruiterComments.communication}}</h2>
+        <h2>Critical Thinking: {{student.recruiterComments.critThinking}}</h2>
+        <h2>Technology Knowledge: {{student.recruiterComments.techKnowledge}}</h2>
+        <h2>Candidacy: {{student.recruiterComments.candidacy}}</h2>
         <p></p>
         <p></p>
         <a class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
           <i class="glyphicon glyphicon-edit"></i>
           Edit
         </a>
+        <a class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
+          <i class="glyphicon glyphicon-envelope"></i>
+          Mail
+        </a>
+
+        <a class="btn btn-primary" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
+          <i class="glyphicon glyphicon-user"></i>
+          Interview
+        </a>
         <a class="btn btn-danger" ng-click="remove();" >
           <i class="glyphicon glyphicon-trash"></i>
           Remove
         </a>
-        <button ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">Select for Interview</button>
+
       </div>
     </div>
   </div>
