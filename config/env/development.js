@@ -1,5 +1,6 @@
 'use strict';
 
+//API key for sendgrid
 var defaultEnvConfig = require('./default');
 
 module.exports = {
