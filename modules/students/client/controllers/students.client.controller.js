@@ -25,7 +25,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   $scope.pageSize = "10";
 
 
-
   //filtering function
     //sets it to any by default for the any option
   $scope.filter = "any";

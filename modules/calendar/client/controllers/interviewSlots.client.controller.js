@@ -18,7 +18,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     $scope.init = function(){
         $scope.getInterviews();
         if ($scope.selectingStudentInterview) {
-            $scope.findOne();
+            $scope.getStudent();
         }
     };
     
@@ -40,7 +40,8 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
 
     };
 
-    $scope.findOne = function() {
+    // Find student information
+    $scope.getStudent = function() {
       //debugger;
       $scope.loading = true;
 
@@ -67,7 +68,6 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         }
     };
 
-    // THIS METHOD SHOULD BE PART OF THE ADMIN CONTROLLER
     $scope.createDayInterviewSlots = function() {
         // SET GLOBAL "DAY" VARIABLE
         var day = new Date(2017,11,4);
@@ -95,17 +95,35 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     // Reverses the availability of the slot selected
     $scope.update = function(interview) {
         var interviewSlot = interview;
-        var id = interviewSlot._id;
-        interviewSlot.isAvailable = !interviewSlot.isAvailable;
+        var slot_id = interviewSlot._id;
 
+        var updatedStudent = $scope.student;
+        var student_id = updatedStudent._id;
+
+        interviewSlot.isAvailable = !interviewSlot.isAvailable;
+        interviewSlot.student = student_id;
+
+        updatedStudent.interview = slot_id;
+        updatedStudent.int_id = slot_id;
+        
+        console.log("I " +interviewSlot.student);
+        console.log("S " +updatedStudent.interview);
         /* Save the article using the Listings factory */
-        InterviewSlots.update(id, interviewSlot)
+        InterviewSlots.update(slot_id, interviewSlot)
         .then(function(response) {
-            console.log("successfully updated");
+            console.log("Slot updated!");
         }, function(error) {
         //otherwise display the error
             $scope.error = 'Unable to update slot!\n' + error;
         });
+
+        Students.update(student_id,updatedStudent)
+        .then(function(reponse){
+            console.log("Interview assigned to student!");
+        }, function(error) {
+          //otherwise display the error
+          $scope.error = 'Unable to update student!\n' + error;
+      });
     };
   }
 ]);
