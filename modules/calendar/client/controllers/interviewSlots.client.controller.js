@@ -20,7 +20,8 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         if ($scope.selectingStudentInterview) {
             $scope.findOne();
         }
-    }
+    };
+    
     // Gets all the interview slots.
     $scope.getInterviews = function() {
       /* set loader*/
