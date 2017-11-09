@@ -19,7 +19,8 @@ var interviewSlotSchema = new Schema({
   },
   student:{
     type: Schema.Types.ObjectId,
-    ref: 'Student'
+    ref: 'Student',
+    default: null
   },
   created_at: Date,
   updated_at: Date 

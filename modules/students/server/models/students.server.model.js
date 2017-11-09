@@ -20,9 +20,9 @@ var studentSchema = new Schema({
   gpa: Number,
   interview: {
     type: Schema.Types.ObjectId,
-    ref: 'InterviewSlot'
+    ref: 'InterviewSlot',
+    default: null
   },
-  int_id : String,
   fulltime : Boolean,
   recruiterComments:{
     comments: String,

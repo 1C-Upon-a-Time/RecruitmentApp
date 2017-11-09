@@ -1,6 +1,6 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
 
-	<div ng-if="selectingStudentInterview">Selecting interview for {{student.name}} </div>
+	<div ng-if="selectingStudentInterview">Selecting interview for {{student.name}}</div>
 	Interviews for {{day | date}}
 	<!-- Interview Slots list -->
 	<div class="list-group" ng-if="selectingStudentInterview">
@@ -14,7 +14,7 @@
 	<div class="list-group" ng-if="!selectingStudentInterview">
 
 		<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'date'">
-			{{interview.date | date:'shortTime'}} {{interview.isAvailable}}
+			{{interview.date | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
 		</a>
 		
 	</div>

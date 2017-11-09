@@ -27,7 +27,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
       /* set loader*/
       $scope.loading = true;
 
-      /* Get all the Students, then bind it to the scope */
+      /* Get all the Slots, then bind it to the scope */
       InterviewSlots.getAll().then(function(response) {
         $scope.loading = false; //remove loader
         $scope.interviews = response.data;
@@ -92,20 +92,22 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         }
     };
 
-    // Reverses the availability of the slot selected
+    // Updates objects with references to each other
     $scope.update = function(interview) {
         var interviewSlot = interview;
-        var slot_id = interviewSlot._id;
-
         var updatedStudent = $scope.student;
+
+        var slot_id = interviewSlot._id;
         var student_id = updatedStudent._id;
 
+        // Slot is no longer available
         interviewSlot.isAvailable = !interviewSlot.isAvailable;
-        interviewSlot.student = student_id;
+        // Set slot's scheduled student
+        interviewSlot.student = $scope.student._id;
 
-        updatedStudent.interview = slot_id;
-        updatedStudent.int_id = slot_id;
-        
+        updatedStudent.interview = interviewSlot._id;
+        updatedStudent.name = "Bronny Jhavo";
+
         console.log("I " +interviewSlot.student);
         console.log("S " +updatedStudent.interview);
         /* Save the article using the Listings factory */

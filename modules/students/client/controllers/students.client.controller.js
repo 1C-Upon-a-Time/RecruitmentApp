@@ -1,6 +1,8 @@
 'use strict';
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
+
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
