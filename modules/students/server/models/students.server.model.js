@@ -18,6 +18,11 @@ var studentSchema = new Schema({
   minor: String,
   phone: String,
   gpa: Number,
+  interview: {
+    type: Schema.Types.ObjectId,
+    ref: 'InterviewSlot',
+    default: null
+  },
   fulltime : Boolean,
   recruiterComments:{
     comments: String,
