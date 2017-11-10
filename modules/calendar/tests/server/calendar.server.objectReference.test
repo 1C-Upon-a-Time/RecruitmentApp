@@ -1,0 +1,100 @@
+'use strict';
+
+/**
+ * Module dependencies.
+ */
+var should = require('should'),
+  mongoose = require('mongoose'),
+  InterviewSlot = require('../../server/models/calendar.server.interviewSlotModel.js'),
+  Student = require('../../../students/server/models/students.server.model.js'),
+  config = require('../../../../config/env/development');
+
+/**
+ * Globals
+ */
+var slot1, student1, slot_id, student_id;
+var sl_id, st_id;
+slot1 = {
+  date: new Date(),
+  slot: 2,
+  available: true
+};
+
+var student1 = {
+  name: "Luke Bicks",
+  email: "luke@Bickell.com",
+  major: "Comp Sci",
+
+}
+/**
+ * Unit tests
+ */
+describe('Interview/Student Object reference tests', function() {
+
+  before(function(done) {
+    mongoose.connect(config.db.uri);
+    done();
+  });
+
+  describe('Objects save to DB', function() {
+    /*
+      Mocha's default timeout for tests is 2000ms. To ensure that the tests do not fail 
+      prematurely, we can increase the timeout setting with the method this.timeout()
+     */
+    this.timeout(10000);
+
+    it('should save without error', function(done){
+      new InterviewSlot({
+        date: slot1.date,
+        slot: slot1.slot,
+        available: slot1.available
+      }).save(function(err, slot1){
+        should.not.exist(err);
+        sl_id = slot1._id;
+        done();
+      });
+    });
+
+    it('should save without error', function(done){
+      new Student({
+        name: student1.name,
+        email: student1.email,
+        major: student1.major,
+        interview: sl_id
+      }).save(function(err, student1){
+        should.not.exist(err);
+        st_id = student1._id;
+        done();
+      });
+    });
+
+    it('should populate and find name of object', function(done){
+      var stud;
+      Student.
+        findOne({ name: 'Luke Bicks' }).
+        exec(function (err, student) {
+          should.not.exist(err);
+          should.exist(student);
+          stud = student;
+        });
+
+      console.log(stud);
+
+
+      done();
+    });
+
+    // after(function(done){
+    //   if(sl_id) 
+    //   {
+    //     InterviewSlot.remove({ _id: sl_id }).exec();
+    //   }
+    //   if(st_id) 
+    //   {
+    //     Student.remove({ _id: st_id }).exec();
+    //   }
+    //   done();
+    // });
+  });
+
+});

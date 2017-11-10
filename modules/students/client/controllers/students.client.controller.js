@@ -2,7 +2,6 @@
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     $scope.listings = [];
-
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -38,7 +37,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     //sets default value of current entries to 10
   $scope.currentPage = 1;
   $scope.pageSize = "10";
-
 
 
   //filtering function

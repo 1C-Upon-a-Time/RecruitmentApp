@@ -46,6 +46,7 @@ exports.update = function(req, res) {
   student.phone = req.body.phone;
   student.gpa = req.body.gpa;
   student.fulltime = req.body.fulltime;
+  student.interview = req.body.interview;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
@@ -87,7 +88,8 @@ exports.delete = function(req, res) {
 
 /* Retreive all the directory students, sorted alphabetically by student code */
 exports.list = function(req, res) {
-  Student.find().exec(function(err, students) {
+  Student.find().populate('interview')
+  .exec(function(err, students) {
     if(err) {
       res.status(400).send(err);
     } else {
@@ -104,7 +106,8 @@ exports.list = function(req, res) {
         then finally call next
  */
 exports.studentByID = function(req, res, next, id) {
-  Student.findById(id).exec(function(err, student) {
+  Student.findById(id).populate('interview')
+  .exec(function(err, student) {
     if(err) {
       res.status(400).send(err);
     } else {
