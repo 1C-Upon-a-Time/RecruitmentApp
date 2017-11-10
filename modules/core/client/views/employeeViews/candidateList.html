@@ -86,13 +86,13 @@
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize" ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
                     <tr>
-                        <td>{{student.name}}</td>
-                        <td>{{student.gpa}}</td>
-                        <td>{{student.major}}</td>
-                        <td>{{student.minor}}</td>
-                        <td>{{student.email}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
+                        <td> <input type="checkbox" ng-value="true" ng-model="selected"> {{student.email}}</td>
                      </tr>
               </tbody>
             </table>
