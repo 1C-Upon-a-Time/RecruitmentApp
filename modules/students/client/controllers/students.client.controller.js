@@ -1,6 +1,8 @@
 'use strict';
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
+    $scope.listings = [];
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -10,10 +12,23 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       Students.getAll().then(function(response) {
         $scope.loading = false; //remove loader
         $scope.listings = response.data;
+
+        //Season's filter
+        $scope.seasons = []; //array of seasons
+        for(var i = 0; i < $scope.listings.length;i++){
+          //if it doesnt exist inside of the seasons, add it to seasons
+          if($scope.listings[i].season && $scope.seasons.indexOf($scope.listings[i].season) === -1){
+            $scope.seasons.push($scope.listings[i].season);
+          }
+        }
+        //testing
+        console.log($scope.seasons);
+        $scope.filterSeason = $scope.seasons[0];
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
       });
+
     };
 
   //set the sort filter to it's default first
@@ -34,19 +49,22 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     //Case insensitive
     //checks if the search bar is currently null. If so, just load everything in the 
     //student database anyways
-    if(!$scope.query){
-      return true;
-    }
-    else if($scope.filter === "any"){
-      return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
-             (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
-    }
-    else if($scope.filter === "name"){
-      return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
-    }
-    else if($scope.filter === "major"){
-      return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
-    }
+    if($scope.filterSeason && $scope.filterSeason.toUpperCase() === student.season.toUpperCase()){
+        if(!$scope.query){
+          return true;
+        }
+        else if($scope.filter === "any"){
+          return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
+                 (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
+        }
+        else if($scope.filter === "name"){
+          return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+        }
+        else if($scope.filter === "major"){
+          return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+        }
+     }
+
   };
 
   function isEmpty(str){
@@ -65,6 +83,18 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           return false;
         }
 
+        //Season attachment to student when they are created
+        var season;
+        var date = new Date();
+
+        if (date.getMonth() <= 5){
+          season = 'Spring ' + date.getFullYear(); //spring
+        }
+        else{
+          season = 'Fall ' + date.getFullYear(); //fall
+        }
+
+
         //More important to save what is required
         var student = {
           name: $scope.name, 
@@ -73,7 +103,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           minor: $scope.minor,
           gpa: $scope.gpa,
           phone: $scope.phonenumber,
-          fulltime: $scope.fulltime
+          fulltime: $scope.fulltime,
+          season : season
         };
 
 
