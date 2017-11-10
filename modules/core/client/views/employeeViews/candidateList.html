@@ -78,21 +78,26 @@
                     <th style = "width:10%;">Major</th>
                     <th style = "width:10%;">Minor</th>
                     <th style = "width:10%;">
+                  <!--  <input type="checkbox" ng-value="true" ng-model="selected"> -->
+                      <input type="checkbox" ng-model="all" id="abc" value="hmmm">
+                      Email
                       <a href="" target="_top" id="xyz">
                       <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope"></i>
                     </a>
-                      Email</th>
+                  </th>
                 </tr>
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
                <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
+
                     <tr>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
-                        <td> <input type="checkbox" ng-value="true" ng-model="selected"> {{student.email}}</td>
+                        <td> <input type="checkbox" ng-checked="all">{{student.email}}</td>
+            <!--   <input type="checkbox" ng-value="true" ng-model="selected"> {{student.email}}</td> -->
                      </tr>
               </tbody>
             </table>
