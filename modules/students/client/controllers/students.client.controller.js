@@ -23,7 +23,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
         //testing
         console.log($scope.seasons);
-        $scope.filterSeason = $scope.seasons[0];
+        $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
@@ -44,6 +44,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   //filtering function
     //sets it to any by default for the any option
   $scope.filter = "any";
+
   $scope.customFilter = function(student){
     //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet 
     //Case insensitive
@@ -204,6 +205,11 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   return function(data,start){
     start = 0 + start;
     return data.slice(start);
+  };
+})
+.filter('reverse', function(){
+  return function(items){
+    return items.slice().reverse();
   };
 });
 
