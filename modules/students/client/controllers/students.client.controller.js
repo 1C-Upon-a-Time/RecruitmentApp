@@ -27,12 +27,12 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   $scope.bulkEmail = function(){
    var demo = "";
     for(var q = 0; q < $scope.listings.length; q++){
-      //if($scope.selected) //this doesnt work
+    //  if($scope.listings.selected) //this doesnt work
       demo += $scope.listings[q].email + ",";
     }
     console.log(demo);
     var a = document.getElementById("xyz");
-    a.href="mailto:" + demo;
+    a.href="mailto:?bcc=" + demo;
   };
 
   //filtering function
