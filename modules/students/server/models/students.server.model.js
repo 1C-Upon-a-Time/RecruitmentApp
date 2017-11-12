@@ -24,6 +24,7 @@ var studentSchema = new Schema({
     default: null
   },
   fulltime : Boolean,
+  season : String,
   recruiterComments:{
     comments: String,
     leadership:{
