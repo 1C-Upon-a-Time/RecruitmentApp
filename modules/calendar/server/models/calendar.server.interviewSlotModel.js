@@ -22,6 +22,11 @@ var interviewSlotSchema = new Schema({
     ref: 'Student',
     default: null
   },
+  recruiter: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
   created_at: Date,
   updated_at: Date 
 });
