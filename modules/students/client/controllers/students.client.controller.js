@@ -70,6 +70,27 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
   }
 
+  $scope.changeSeasons = function(student){
+       // var date = new Date();
+       // var tempSeasonYear = date.getFullYear();
+       // var updatedSeason;
+
+       //Get what the current season information is for the student
+       var currentSeason = $scope.student.season;
+       var date = new Date();
+       var newDate = date.getFullYear() + 1;
+       var parseArray = currentSeason.split(" ");
+
+
+       if(parseArray[0] == "Fall"){
+          $scope.student.season = "Spring " + newDate;
+       }
+       else{
+          $scope.student.season = "Fall " + parseArray[1];
+       }
+
+  };
+
 
 
   $scope.create = function(isValid) {

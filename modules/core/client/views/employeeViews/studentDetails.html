@@ -20,6 +20,7 @@
         <h2>Critical Thinking: {{student.recruiterComments.critThinking}}</h2>
         <h2>Technology Knowledge: {{student.recruiterComments.techKnowledge}}</h2>
         <h2>Candidacy: {{student.recruiterComments.candidacy}}</h2>
+        <h2>Recruiting Season : {{student.season}}</h2>
         <p></p>
         <p></p>
         <a class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
@@ -39,6 +40,7 @@
           <i class="glyphicon glyphicon-trash"></i>
           Remove
         </a>
+        <button ng-click = "changeSeasons()"> Change Season </button>
 
       </div>
     </div>
