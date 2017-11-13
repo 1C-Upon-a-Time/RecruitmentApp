@@ -27,7 +27,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   $scope.bulkEmail = function(){
    var emails = "";
     for(var q = 0; q < $scope.listings.length; q++){
-      if($scope.listings[q].selected) //this doesnt work
+      if($scope.listings[q].selected || $scope.listings.all)
         emails += $scope.listings[q].email + ",";
     }
     console.log(emails);
