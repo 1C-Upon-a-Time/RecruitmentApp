@@ -26,6 +26,7 @@ exports.update = function (req, res) {
   user.lastName = req.body.lastName;
   user.displayName = user.firstName + ' ' + user.lastName;
   user.roles = req.body.roles;
+  user.interviews = req.body.interviews;
 
   user.save(function (err) {
     if (err) {
@@ -59,7 +60,11 @@ exports.delete = function (req, res) {
  * List of Users
  */
 exports.list = function (req, res) {
-  User.find({}, '-salt -password').sort('-created').populate('user', 'displayName').exec(function (err, users) {
+  User.find({}, '-salt -password')
+  .sort('-created')
+  .populate('user', 'displayName')
+  .populate('interviews')
+  .exec(function (err, users) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,7 +85,9 @@ exports.userByID = function (req, res, next, id) {
     });
   }
 
-  User.findById(id, '-salt -password').exec(function (err, user) {
+  User.findById(id, '-salt -password')
+  .populate('interviews')
+  .exec(function (err, user) {
     if (err) {
       return next(err);
     } else if (!user) {

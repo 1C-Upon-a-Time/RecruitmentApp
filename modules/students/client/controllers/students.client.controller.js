@@ -38,15 +38,37 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   $scope.currentPage = 1;
   $scope.pageSize = "10";
 
+  $scope.bulkEmail = function(){
+   var emails = "";
+
+
+   if($scope.all){
+     for(var q=0 ; q <$scope.listings.length; q++){
+       emails += $scope.listings[q].email + ",";
+     }
+   }
+
+   else{
+
+    for(var q = 0; q < $scope.listings.length; q++){
+      if($scope.listings[q].selected)
+        emails += $scope.listings[q].email + ",";
+    }
+  }
+    console.log(emails);
+    var a = document.getElementById("xyz");
+    a.href="mailto:?bcc=" + emails;
+  };
 
   //filtering function
     //sets it to any by default for the any option
   $scope.filter = "any";
   $scope.customFilter = function(student){
-    //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet 
+    //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet
     //Case insensitive
-    //checks if the search bar is currently null. If so, just load everything in the 
+    //checks if the search bar is currently null. If so, just load everything in the
     //student database anyways
+
     if($scope.filterSeason && $scope.filterSeason.toUpperCase() === student.season.toUpperCase()){
         if(!$scope.query){
           return true;
@@ -62,7 +84,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
         }
      }
-
   };
 
   function isEmpty(str){
@@ -74,7 +95,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   $scope.create = function(isValid) {
         $scope.error = null;
 
-      
+
         if (!isValid) {
           $scope.$broadcast('show-errors-check-validity', 'registerForm');
 
@@ -95,7 +116,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
         //More important to save what is required
         var student = {
-          name: $scope.name, 
+          name: $scope.name,
           email: $scope.email,
           major: $scope.major,
           minor: $scope.minor,
@@ -127,7 +148,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       .then(function(response) {
         $scope.student = response.data;
         $scope.loading = false;
-      }, function(error) {  
+      }, function(error) {
         $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
         $scope.loading = false;
       });
@@ -143,26 +164,9 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
-      var updatedStudent = {
-        name: $scope.student.name, 
-        email: $scope.student.email, 
-        major: $scope.student.major,
-        minor: $scope.student.minor,
-        phone: $scope.student.phone,
-        gpa: $scope.student.gpa,
-        fulltime: $scope.student.fulltime,
-        recruiterComments:{
-          comments: $scope.student.recruiterComments.comments, 
-          leadership: $scope.student.recruiterComments.leadership,
-          behavior: $scope.student.recruiterComments.behavior,
-          communication: $scope.student.recruiterComments.communication,
-          critThinking: $scope.student.recruiterComments.critThinking,
-          techKnowledge: $scope.student.recruiterComments.techKnowledge,
-          candidacy: $scope.student.recruiterComments.candidacy
-      }
-    };
 
-    Students.update(id,updatedStudent).then(function(reponse){
+    Students.update(id, $scope.student).then(function(reponse){
+
       $scope.loading=false;
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
     }, function(error) {
@@ -175,8 +179,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     $scope.remove = function() {
       /*
-        Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise, 
-        display the error. 
+        Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise,
+        display the error.
         */
         //debugger;
         $scope.loading = true;
@@ -186,7 +190,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         .then(function(response) {
           $scope.loading = false;
           $state.go('employeeDashboard.employeeCandidateList', {sucessMessage: 'Student successfully deleted!'});
-        }, function(error) {  
+        }, function(error) {
           $scope.error = 'Unable to delete student with id "' + id + '"\n' + error;
           $scope.loading = false;
         });
@@ -204,6 +208,3 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     return data.slice(start);
   };
 });
-
-
-

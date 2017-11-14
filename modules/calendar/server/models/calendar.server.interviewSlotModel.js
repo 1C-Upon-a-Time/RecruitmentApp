@@ -7,6 +7,11 @@ var interviewSlotSchema = new Schema({
     type: Date,
     required: true
   },
+  duration:{
+    type: Number,
+    required: true,
+    default: 60
+  },
   slot:{
     type: Number,
     enum: [1,2,3,4,5,6],
@@ -20,6 +25,11 @@ var interviewSlotSchema = new Schema({
   student:{
     type: Schema.Types.ObjectId,
     ref: 'Student',
+    default: null
+  },
+  recruiter: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     default: null
   },
   created_at: Date,
