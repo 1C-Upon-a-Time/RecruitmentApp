@@ -72,3 +72,6 @@ mongod
 *.ntvs*
 *.njsproj
 *.sln
+
+#dropbox
+/config/env/dropboxinfo.js

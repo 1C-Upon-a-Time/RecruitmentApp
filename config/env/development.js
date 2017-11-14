@@ -35,6 +35,11 @@ module.exports = {
   app: {
     title: defaultEnvConfig.app.title + ' - Development Environment'
   },
+  //connects to the dropbox
+  dropbox: {
+    clientID: process.env.DROPBOX_ID,
+    clientSecret: process.env.DROPBOX_SECRET
+  },
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
     clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
