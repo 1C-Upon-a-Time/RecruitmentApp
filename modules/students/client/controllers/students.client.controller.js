@@ -22,6 +22,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
         //testing
         console.log($scope.seasons);
+        $scope.seasons.sort();
+        console.log($scope.seasons);
         $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
       }, function(error) {
         $scope.loading = false;
@@ -37,6 +39,30 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     //sets default value of current entries to 10
   $scope.currentPage = 1;
   $scope.pageSize = "10";
+
+  //button function to change the season to the next one
+  $scope.changeSeasons = function(){
+    var date = new Date();
+    var newSeason = date.getFullYear() + 1;
+    var currentSeason = $scope.student.season;
+    var parseCurrentSeason = currentSeason.split(" ");
+
+
+    //if it was originally fall, then make it to spring but increase the year by 1
+    //TODO: make it save the student's new season
+    if(parseCurrentSeason[0] === "Fall"){
+         $scope.student.season = "Spring " + newSeason; 
+         $scope.student.season.update(); 
+    }
+    //if it is spring, just change it to fall but keep the current year
+    else{
+      $scope.student.season = "Fall " + date.getFullYear();
+    }
+
+  };
+  
+
+
 
   $scope.bulkEmail = function(){
    var emails = "";
@@ -63,7 +89,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   //filtering function
     //sets it to any by default for the any option
   $scope.filter = "any";
-
   $scope.customFilter = function(student){
     //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet
     //Case insensitive
@@ -91,30 +116,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
   }
 
-  $scope.changeSeasons = function(student){
-       // var date = new Date();
-       // var tempSeasonYear = date.getFullYear();
-       // var updatedSeason;
-
-       //Get what the current season information is for the student
-       var currentSeason = $scope.student.season;
-       var date = new Date();
-       var newDate = date.getFullYear() + 1;
-       var parseArray = currentSeason.split(" ");
-
-
-       if(parseArray[0] === "Fall"){
-          $scope.student.season = "Spring " + newDate;
-          $scope.update(true);
-       }
-       else{
-          $scope.student.season = "Fall " + parseArray[1];
-          $scope.update(true);
-       }
-
-
-
-  };
 
 
 
@@ -131,11 +132,13 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         //Season attachment to student when they are created
         var season;
         var date = new Date();
+        //for later testing
+        // var date = new Date("July 21, 1983 01:15:00");
 
         if (date.getMonth() <= 5){
           season = 'Spring ' + date.getFullYear(); //spring
         }
-        else{
+        else if(date.getMonth() >=6){
           season = 'Fall ' + date.getFullYear(); //fall
         }
 
@@ -189,27 +192,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         $scope.$broadcast('show-errors-check-validity', 'articleForm');
         return false;
       }
-
-
-      var updatedStudent = {
-        name: $scope.student.name, 
-        email: $scope.student.email, 
-        major: $scope.student.major,
-        minor: $scope.student.minor,
-        phone: $scope.student.phone,
-        gpa: $scope.student.gpa,
-        fulltime: $scope.student.fulltime,
-        recruiterComments:{
-          comments: $scope.student.recruiterComments.comments, 
-          leadership: $scope.student.recruiterComments.leadership,
-          behavior: $scope.student.recruiterComments.behavior,
-          communication: $scope.student.recruiterComments.communication,
-          critThinking: $scope.student.recruiterComments.critThinking,
-          techKnowledge: $scope.student.recruiterComments.techKnowledge,
-          candidacy: $scope.student.recruiterComments.candidacy
-        },
-        interview: $scope.student.interview
-      };
 
 
     Students.update(id, $scope.student).then(function(reponse){

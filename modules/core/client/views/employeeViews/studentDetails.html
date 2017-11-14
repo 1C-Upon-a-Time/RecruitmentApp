@@ -20,7 +20,7 @@
         <h2>Critical Thinking: {{student.recruiterComments.critThinking}}</h2>
         <h2>Technology Knowledge: {{student.recruiterComments.techKnowledge}}</h2>
         <h2>Candidacy: {{student.recruiterComments.candidacy}}</h2>
-        <h2>Recruiting Season : {{student.season}}</h2>
+        <h2 ng-model = "cSeason">Recruiting Season : {{student.season}}</h2>
         <div ng-if="student.interview">
           <h2>
             Interview: {{student.interview.date | date:'short'}}
@@ -48,8 +48,8 @@
           <i class="glyphicon glyphicon-trash"></i>
           Remove
         </a>
-        <button ng-click = "changeSeasons()"> Change Season </button>
-
+        <button ng-click = "changeSeasons()"> Change to Next Season </button>
+        <button ui-sref = "employeeDashboard.employeeCandidateList">Back</button>
       </div>
     </div>
   </div>
