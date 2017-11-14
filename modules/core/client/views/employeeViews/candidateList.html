@@ -45,12 +45,7 @@
             <!-- Can't really work on this now since we don't have any seasons -->
             <th>Recruiting Season
               <select id="recruiting-season-filter" class="form-control" ng-model="filterSeason">
-                <option value = "">Current Season</option>
-                <option>Season 2014</option>
-                <option>Season 2015</option>
-                <option>Season 2016</option>
-                <option>Season 2017</option>
-                <option>Season 2019</option>
+                <option ng-repeat = "season in seasons">{{season}}</option>
               </select>
             </th>
             <!-- Called it filter instead of customFilter so that we can get a separate access to each of the variables inside of it. Helps with if,else statements -->
