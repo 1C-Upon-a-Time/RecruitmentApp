@@ -73,27 +73,24 @@
                     <th style = "width:10%;">Major</th>
                     <th style = "width:10%;">Minor</th>
                     <th style = "width:10%;">
-                      <!-- <p id="demo"></p>
-                      <script>
-                       student.email.forEach(function(element) {
-                         demo += element + ","
-                     });
-                      </script> -->
-                      <a href="mailto:demo" target="_top">
-                      <i class="glyphicon glyphicon-envelope"></i>
+                      <input type="checkbox" ng-model="all" >
+                      Email
+                      <a href="" target="_top" id="xyz">
+                      <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope"></i>
                     </a>
-                      Email</th>
+                  </th>
                 </tr>
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize" ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
+
                     <tr>
-                        <td>{{student.name}}</td>
-                        <td>{{student.gpa}}</td>
-                        <td>{{student.major}}</td>
-                        <td>{{student.minor}}</td>
-                        <td>{{student.email}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
+                        <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
                      </tr>
               </tbody>
             </table>
