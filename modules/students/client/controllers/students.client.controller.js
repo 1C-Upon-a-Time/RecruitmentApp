@@ -82,12 +82,16 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
        var parseArray = currentSeason.split(" ");
 
 
-       if(parseArray[0] == "Fall"){
+       if(parseArray[0] === "Fall"){
           $scope.student.season = "Spring " + newDate;
+          $scope.update(true);
        }
        else{
           $scope.student.season = "Fall " + parseArray[1];
+          $scope.update(true);
        }
+
+
 
   };
 
