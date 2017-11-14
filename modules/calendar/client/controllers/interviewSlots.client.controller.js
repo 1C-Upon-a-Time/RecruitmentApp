@@ -106,10 +106,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         interviewSlot.student = $scope.student._id;
 
         updatedStudent.interview = interviewSlot._id;
-        updatedStudent.name = "Bronny Jhavo";
-
-        console.log("I " +interviewSlot.student);
-        console.log("S " +updatedStudent.interview);
+        
         /* Save the article using the Listings factory */
         InterviewSlots.update(slot_id, interviewSlot)
         .then(function(response) {

@@ -143,26 +143,27 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
-      var updatedStudent = {
-        name: $scope.student.name, 
-        email: $scope.student.email, 
-        major: $scope.student.major,
-        minor: $scope.student.minor,
-        phone: $scope.student.phone,
-        gpa: $scope.student.gpa,
-        fulltime: $scope.student.fulltime,
-        recruiterComments:{
-          comments: $scope.student.recruiterComments.comments, 
-          leadership: $scope.student.recruiterComments.leadership,
-          behavior: $scope.student.recruiterComments.behavior,
-          communication: $scope.student.recruiterComments.communication,
-          critThinking: $scope.student.recruiterComments.critThinking,
-          techKnowledge: $scope.student.recruiterComments.techKnowledge,
-          candidacy: $scope.student.recruiterComments.candidacy
-      }
-    };
+      // var updatedStudent = {
+      //   name: $scope.student.name, 
+      //   email: $scope.student.email, 
+      //   major: $scope.student.major,
+      //   minor: $scope.student.minor,
+      //   phone: $scope.student.phone,
+      //   gpa: $scope.student.gpa,
+      //   fulltime: $scope.student.fulltime,
+      //   recruiterComments:{
+      //     comments: $scope.student.recruiterComments.comments, 
+      //     leadership: $scope.student.recruiterComments.leadership,
+      //     behavior: $scope.student.recruiterComments.behavior,
+      //     communication: $scope.student.recruiterComments.communication,
+      //     critThinking: $scope.student.recruiterComments.critThinking,
+      //     techKnowledge: $scope.student.recruiterComments.techKnowledge,
+      //     candidacy: $scope.student.recruiterComments.candidacy
+      //   },
+      //   interview: $scope.student.interview
+      // };
 
-    Students.update(id,updatedStudent).then(function(reponse){
+    Students.update(id, $scope.student).then(function(reponse){
       $scope.loading=false;
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
     }, function(error) {
