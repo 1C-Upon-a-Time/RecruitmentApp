@@ -90,6 +90,10 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
   }
 
+  $scope.createSeason = function(){
+    
+  }
+
 
 
   $scope.create = function(isValid) {
