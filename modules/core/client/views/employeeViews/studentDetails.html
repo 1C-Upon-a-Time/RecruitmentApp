@@ -21,6 +21,14 @@
         <h2>Technology Knowledge: {{student.recruiterComments.techKnowledge}}</h2>
         <h2>Candidacy: {{student.recruiterComments.candidacy}}</h2>
         <h2>Recruiting Season : {{student.season}}</h2>
+        <div ng-if="student.interview">
+          <h2>
+            Interview: {{student.interview.date | date:'short'}}
+          </h2>
+          <h2>
+            Recruiter: {{student.interview.recruiter}}
+          </h2>
+        </div>
         <p></p>
         <p></p>
         <a class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
@@ -32,7 +40,7 @@
           Mail
         </a>
 
-        <a class="btn btn-primary" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
+        <a class="btn btn-primary" ng-if="!student.interview" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
           <i class="glyphicon glyphicon-user"></i>
           Interview
         </a>

@@ -70,6 +70,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'modules/users/client/img/profile/default.png'
   },
+  interviews: [{
+    type: Schema.Types.ObjectId,
+    ref: 'InterviewSlot'
+  }],
   provider: {
     type: String,
     required: 'Provider is required'
@@ -79,7 +83,7 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin', 'other']
+      enum: ['user', 'admin', 'recruiter', 'other']
     }],
     default: ['other'],
     required: 'Please provide at least one role'

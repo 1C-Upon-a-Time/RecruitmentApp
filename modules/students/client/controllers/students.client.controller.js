@@ -185,10 +185,11 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           critThinking: $scope.student.recruiterComments.critThinking,
           techKnowledge: $scope.student.recruiterComments.techKnowledge,
           candidacy: $scope.student.recruiterComments.candidacy
-      }
-    };
+        },
+        interview: $scope.student.interview
+      };
 
-    Students.update(id,updatedStudent).then(function(reponse){
+    Students.update(id, $scope.student).then(function(reponse){
       $scope.loading=false;
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
     }, function(error) {
