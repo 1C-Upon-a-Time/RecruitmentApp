@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+
 var studentSchema = new Schema({
   name:{
     type:String,
@@ -31,36 +32,36 @@ var studentSchema = new Schema({
       type:Number,
       required: true,
       default: 0
-    }, 
+    },
     behavior:{
       type:Number,
       required: true,
       default: 0
-    }, 
+    },
     communication:{
       type:Number,
       required: true,
       default: 0
-    }, 
+    },
     critThinking:{
-      type:Number, 
+      type:Number,
       required: true,
       default: 0
-    }, 
+    },
     techKnowledge:{
       type: Number,
       required: true,
       default: 0
-    },  
+    },
     candidacy: {
       type:Number,
       required: true,
       default: 0
     },
-    updated_at: Date 
+    updated_at: Date
   },
   created_at: Date,
-  updated_at: Date 
+  updated_at: Date
 });
 
 
