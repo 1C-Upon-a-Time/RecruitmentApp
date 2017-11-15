@@ -20,10 +20,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             $scope.seasons.push($scope.listings[i].season);
           }
         }
-        //testing
-        console.log($scope.seasons);
-        $scope.seasons.sort();
-        console.log($scope.seasons);
         $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
       }, function(error) {
         $scope.loading = false;
@@ -42,25 +38,56 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
   //button function to change the season to the next one
   $scope.changeSeasons = function(){
-    var date = new Date();
-    var newSeason = date.getFullYear() + 1;
     var currentSeason = $scope.student.season;
     var parseCurrentSeason = currentSeason.split(" ");
-
+    var newYear = parseCurrentSeason[1];
+    var nYear = parseInt(newYear) + 1;
+    var sYear = String(nYear);
 
     //if it was originally fall, then make it to spring but increase the year by 1
-    //TODO: make it save the student's new season
     if(parseCurrentSeason[0] === "Fall"){
-         $scope.student.season = "Spring " + newSeason; 
-         $scope.student.season.update(); 
+         $scope.student.season = "Spring " + nYear; 
     }
     //if it is spring, just change it to fall but keep the current year
     else{
-      $scope.student.season = "Fall " + date.getFullYear();
+      $scope.student.season = "Fall " + parseCurrentSeason[1];
     }
+
+    //updates the change properly
+    Students.update($scope.student._id, $scope.student).then(function(reponse){
+      //Season is successfully changed
+    }, function(error) {
+              //otherwise display the error
+              $scope.error = 'Unable to save student!\n' + error;
+    });
 
   };
   
+   //button to go back by one season
+   $scope.goBackSeasons = function(){
+    var currentSeason = $scope.student.season;
+    var parseCurrentSeason = currentSeason.split(" ");
+    //console.log(parseCurrentSeason[1] - 1);
+    var newYear = parseCurrentSeason[1] - 1;
+
+    //if it was originally fall, then make it to spring but decrease the year by 1
+    if(parseCurrentSeason[0] === "Fall"){
+         $scope.student.season = "Spring " + parseCurrentSeason[1]; 
+    }
+    //if it is spring, just change it to fall but keep the current year
+    else{
+      $scope.student.season = "Fall " + newYear;
+    }
+
+    //updates the change properly
+    Students.update($scope.student._id, $scope.student).then(function(reponse){
+      //Season is successfully changed
+    }, function(error) {
+              //otherwise display the error
+              $scope.error = 'Unable to save student!\n' + error;
+    });
+
+  };
 
 
 
@@ -133,7 +160,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         var season;
         var date = new Date();
         //for later testing
-        // var date = new Date("July 21, 1983 01:15:00");
+        //var date = new Date("February, 20, 2017 01:15:00");
 
         if (date.getMonth() <= 5){
           season = 'Spring ' + date.getFullYear(); //spring
