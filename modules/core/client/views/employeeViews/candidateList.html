@@ -33,7 +33,7 @@
     </th>
     <th><b> entries</b></th>
    </tr>
-   
+
 
 
 
@@ -45,12 +45,7 @@
             <!-- Can't really work on this now since we don't have any seasons -->
             <th>Recruiting Season
               <select id="recruiting-season-filter" class="form-control" ng-model="filterSeason">
-                <option value = "">Current Season</option>
-                <option>Season 2014</option>
-                <option>Season 2015</option>
-                <option>Season 2016</option>
-                <option>Season 2017</option>
-                <option>Season 2019</option>
+                <option ng-repeat = "season in seasons">{{season}}</option>
               </select>
             </th>
             <!-- Called it filter instead of customFilter so that we can get a separate access to each of the variables inside of it. Helps with if,else statements -->
@@ -64,9 +59,9 @@
           </tr>
         </thead>
       </table>
-    
- 
- 
+
+
+
 
         <!-- Candidates table -->
          <div class="tableWrapper">
@@ -77,18 +72,26 @@
                     <th style = "width:10%;">GPA</th>
                     <th style = "width:10%;">Major</th>
                     <th style = "width:10%;">Minor</th>
-                    <th style = "width:10%;">Recruiting Season</th>
+                    <th style = "width:10%;">
+
+                      <input type="checkbox" ng-model="all" >
+                      Email
+                      <a href="" target="_top" id="xyz">
+                      <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope">Send</i>
+                    </a>
+                  </th>
                 </tr>
              </thead>
              <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
              <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize" ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">
+               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
+
                     <tr>
-                        <td>{{student.name}}</td>
-                        <td>{{student.gpa}}</td>
-                        <td>{{student.major}}</td>
-                        <td>{{student.minor}}</td>
-                        <td>{{student.email}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
+                        <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
                      </tr>
               </tbody>
             </table>

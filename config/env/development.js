@@ -1,10 +1,11 @@
 'use strict';
 
+//API key for sendgrid
 var defaultEnvConfig = require('./default');
 
 module.exports = {
   db: {
-    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://admin:onceuponatime@ds149934.mlab.com:49934/students-dev',
+    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://developer:abcdABCD1234@ds243325.mlab.com:43325/easyrec',
     options: {
       user: '',
       pass: ''
