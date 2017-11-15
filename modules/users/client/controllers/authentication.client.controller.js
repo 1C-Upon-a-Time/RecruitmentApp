@@ -10,7 +10,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 
     // If user is signed in then redirect back home
     if ($scope.authentication.user) {
-      $location.path('/');
+      $location.path('/dashboard');
     }
 
     $scope.signup = function (isValid) {
