@@ -1,10 +1,9 @@
-<div class="sidebar">
+<div class="sidebar" ng-controller="SettingsController">
   <nav class="sidebar-nav">
     <ul class="nav">
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" ui-sref-active="active" ui-sref="employeeDashboard"><i class="icon-speedometer"></i> Dashboard</a>
-      </li>
-
+      </li> -->
       <li class="divider"></li>
       <li class="nav-title">
         Menu
@@ -18,6 +17,16 @@
       <li class="nav-item">
         <a class="nav-link" ui-sref-active="active" ui-sref="employeeDashboard.appSettings"><i class="icon-settings"></i> App Settings</a>
       </li>
+
+      <div ng-show="user.roles.includes('admin')">
+        <li class="divider"></li>
+        <li class="nav-title">
+          Admin
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" ui-sref-active="active" ui-sref="admin.users"><i class="icon-people"></i> Users</a>
+        </li>
+      </div>
 
     </ul>
   </nav>
