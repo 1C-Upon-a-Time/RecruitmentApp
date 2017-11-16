@@ -203,6 +203,41 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
       Students.read(id)
       .then(function(response) {
+        
+        if(response.data.fulltime == true)
+          response.data.fulltime = 'Fulltime';       
+        else if(response.data.fulltime == false)
+          response.data.fulltime = 'Internship';
+        $scope.student = response.data;
+        $scope.loading = false;
+      }, function(error) {  
+        $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
+        $scope.loading = false;
+      });
+    };
+    $scope.updateOne = function() {
+      //debugger;
+      $scope.loading = true;
+
+      var id = $stateParams.studentId;
+
+      Students.read(id)
+      .then(function(response) {
+        var fulltime = response.data.fulltime;
+        var leadership =response.data.recruiterComments.leadership;
+        var behavior =response.data.recruiterComments.behavior;
+        var communication =response.data.recruiterComments.communication;
+        var critThinking =response.data.recruiterComments.critThinking;
+        var techKnowledge =response.data.recruiterComments.techKnowledge;
+        var candidacy =response.data.recruiterComments.candidacy;
+        
+        $('input[name=fulltimeRadios][value='+fulltime+']').prop('checked',true);
+        $('input[name=leadershipRadios][value='+leadership+']').prop('checked',true);
+        $('input[name=behaviorRadios][value='+behavior+']').prop('checked',true);
+        $('input[name=communicationRadios][value='+communication+']').prop('checked',true);
+        $('input[name=critThinkingRadios][value='+critThinking+']').prop('checked',true);
+        $('input[name=techKnowledgeRadios][value='+techKnowledge+']').prop('checked',true);
+        $('input[name=candidacyRadios][value='+candidacy+']').prop('checked',true);
         $scope.student = response.data;
         $scope.loading = false;
       }, function(error) {
@@ -212,7 +247,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     };
 
     $scope.update = function(isValid) {
-      //debugger;
+      //debugger;candidacy
       $scope.loading = true;
       var id = $stateParams.studentId;
 
@@ -221,6 +256,33 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
+      var time = ((document.querySelector('input[name=fulltimeRadios]:checked')==null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      var lead = ((document.querySelector('input[name=leadershipRadios]:checked')==null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      var beh  = ((document.querySelector('input[name=behaviorRadios]:checked')==null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      var comm = ((document.querySelector('input[name=communicationRadios]:checked')==null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      var crit = ((document.querySelector('input[name=critThinkingRadios]:checked')==null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      var know = ((document.querySelector('input[name=techKnowledgeRadios]:checked')==null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      var cand = ((document.querySelector('input[name=candidacyRadios]:checked')==null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+      
+    
+      var updatedStudent = {
+        name: $scope.student.name, 
+        email: $scope.student.email, 
+        major: $scope.student.major,
+        minor: $scope.student.minor,
+        phone: $scope.student.phone,
+        gpa: $scope.student.gpa,
+        fulltime:time,
+        recruiterComments:{
+          comments: $scope.student.recruiterComments.comments, 
+          leadership: lead,
+          behavior:beh ,
+          communication:comm ,
+          critThinking: crit,
+          techKnowledge:know,
+          candidacy: cand
+      }
+    };
 
     Students.update(id, $scope.student).then(function(reponse){
 
@@ -232,7 +294,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
               $scope.error = 'Unable to save student!\n' + error;
       });
   };
-
 
     $scope.remove = function() {
       /*

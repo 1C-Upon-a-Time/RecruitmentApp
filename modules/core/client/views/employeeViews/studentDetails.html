@@ -6,6 +6,7 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="student">
+
         <h2>Name: {{student.name}}</h2>
         <h2>Email: {{student.email}}</h2>
         <h2>Major: {{student.major}}</h2>
@@ -48,9 +49,11 @@
           <i class="glyphicon glyphicon-trash"></i>
           Remove
         </a>
+
         <button ng-click = "changeSeasons()"> Change to Next Season </button>
         <button ng-click = "goBackSeasons()"> Go Back One Season </button>
         <button ui-sref = "employeeDashboard.employeeCandidateList">Back</button>
+
       </div>
     </div>
   </div>
