@@ -1,15 +1,15 @@
 /* Dependencies */
 
 "use strict";
-var mongoose = require('mongoose'), 
+var mongoose = require('mongoose'),
   Student = require('../models/students.server.model.js');
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update students.
-  On an error you should send a 404 status code, as well as the error message. 
+  On an error you should send a 404 status code, as well as the error message.
   On success (aka no error), you should send the student(s) as JSON in the response.
 
-  HINT: if you are struggling with implementing these functions, refer back to this tutorial 
+  HINT: if you are struggling with implementing these functions, refer back to this tutorial
   from assignment 3 https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
  */
 
@@ -46,6 +46,8 @@ exports.update = function(req, res) {
   student.phone = req.body.phone;
   student.gpa = req.body.gpa;
   student.fulltime = req.body.fulltime;
+  student.interview = req.body.interview;
+  student.season = req.body.season;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
@@ -57,7 +59,7 @@ exports.update = function(req, res) {
       student.recruiterComments.techKnowledge = req.body.recruiterComments.techKnowledge;
       student.recruiterComments.candidacy = req.body.recruiterComments.candidacy;
     }
-  
+
 
   /* Save the article */
   student.save(function(err) {
@@ -87,24 +89,30 @@ exports.delete = function(req, res) {
 
 /* Retreive all the directory students, sorted alphabetically by student code */
 exports.list = function(req, res) {
-  Student.find().exec(function(err, students) {
+  Student.find().populate('interview')
+  .exec(function(err, students) {
     if(err) {
       res.status(400).send(err);
     } else {
       res.json(students);
     }
   });
+  //student.email.forEach(function(element) {
+      // $scope.demo += element + ",";
+
+   //});
 };
 
-/* 
-  Middleware: find a student by its ID, then pass it to the next request handler. 
+/*
+  Middleware: find a student by its ID, then pass it to the next request handler.
 
-  HINT: Find the student using a mongoose query, 
-        bind it to the request object as the property 'student', 
+  HINT: Find the student using a mongoose query,
+        bind it to the request object as the property 'student',
         then finally call next
  */
 exports.studentByID = function(req, res, next, id) {
-  Student.findById(id).exec(function(err, student) {
+  Student.findById(id).populate('interview')
+  .exec(function(err, student) {
     if(err) {
       res.status(400).send(err);
     } else {
