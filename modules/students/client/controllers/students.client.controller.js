@@ -20,9 +20,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             $scope.seasons.push($scope.listings[i].season);
           }
         }
-        //testing
-        console.log($scope.seasons);
-        $scope.filterSeason = $scope.seasons[0];
+        $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
@@ -37,6 +35,61 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     //sets default value of current entries to 10
   $scope.currentPage = 1;
   $scope.pageSize = "10";
+
+  //button function to change the season to the next one
+  $scope.changeSeasons = function(){
+    var currentSeason = $scope.student.season;
+    var parseCurrentSeason = currentSeason.split(" ");
+    var newYear = parseCurrentSeason[1];
+    var nYear = parseInt(newYear) + 1;
+    var sYear = String(nYear);
+
+    //if it was originally fall, then make it to spring but increase the year by 1
+    if(parseCurrentSeason[0] === "Fall"){
+         $scope.student.season = "Spring " + nYear; 
+    }
+    //if it is spring, just change it to fall but keep the current year
+    else{
+      $scope.student.season = "Fall " + parseCurrentSeason[1];
+    }
+
+    //updates the change properly
+    Students.update($scope.student._id, $scope.student).then(function(reponse){
+      //Season is successfully changed
+    }, function(error) {
+              //otherwise display the error
+              $scope.error = 'Unable to save student!\n' + error;
+    });
+
+  };
+  
+   //button to go back by one season
+   $scope.goBackSeasons = function(){
+    var currentSeason = $scope.student.season;
+    var parseCurrentSeason = currentSeason.split(" ");
+    //console.log(parseCurrentSeason[1] - 1);
+    var newYear = parseCurrentSeason[1] - 1;
+
+    //if it was originally fall, then make it to spring but decrease the year by 1
+    if(parseCurrentSeason[0] === "Fall"){
+         $scope.student.season = "Spring " + parseCurrentSeason[1]; 
+    }
+    //if it is spring, just change it to fall but keep the current year
+    else{
+      $scope.student.season = "Fall " + newYear;
+    }
+
+    //updates the change properly
+    Students.update($scope.student._id, $scope.student).then(function(reponse){
+      //Season is successfully changed
+    }, function(error) {
+              //otherwise display the error
+              $scope.error = 'Unable to save student!\n' + error;
+    });
+
+  };
+
+
 
   $scope.bulkEmail = function(){
    var emails = "";
@@ -93,6 +146,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
 
 
+
   $scope.create = function(isValid) {
         $scope.error = null;
 
@@ -106,11 +160,13 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         //Season attachment to student when they are created
         var season;
         var date = new Date();
+        //for later testing
+        //var date = new Date("February, 20, 2017 01:15:00");
 
         if (date.getMonth() <= 5){
           season = 'Spring ' + date.getFullYear(); //spring
         }
-        else{
+        else if(date.getMonth() >=6){
           season = 'Fall ' + date.getFullYear(); //fall
         }
 
@@ -147,6 +203,41 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
       Students.read(id)
       .then(function(response) {
+        
+        if(response.data.fulltime == true)
+          response.data.fulltime = 'Fulltime';       
+        else if(response.data.fulltime == false)
+          response.data.fulltime = 'Internship';
+        $scope.student = response.data;
+        $scope.loading = false;
+      }, function(error) {  
+        $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
+        $scope.loading = false;
+      });
+    };
+    $scope.displayEditForm = function() {
+      //debugger;
+      $scope.loading = true;
+
+      var id = $stateParams.studentId;
+
+      Students.read(id)
+      .then(function(response) {
+        var fulltime = response.data.fulltime;
+        var leadership =response.data.recruiterComments.leadership;
+        var behavior =response.data.recruiterComments.behavior;
+        var communication =response.data.recruiterComments.communication;
+        var critThinking =response.data.recruiterComments.critThinking;
+        var techKnowledge =response.data.recruiterComments.techKnowledge;
+        var candidacy =response.data.recruiterComments.candidacy;
+        
+        $('input[name=fulltimeRadios][value='+fulltime+']').prop('checked',true);
+        $('input[name=leadershipRadios][value='+leadership+']').prop('checked',true);
+        $('input[name=behaviorRadios][value='+behavior+']').prop('checked',true);
+        $('input[name=communicationRadios][value='+communication+']').prop('checked',true);
+        $('input[name=critThinkingRadios][value='+critThinking+']').prop('checked',true);
+        $('input[name=techKnowledgeRadios][value='+techKnowledge+']').prop('checked',true);
+        $('input[name=candidacyRadios][value='+candidacy+']').prop('checked',true);
         $scope.student = response.data;
         $scope.loading = false;
       }, function(error) {
@@ -156,7 +247,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     };
 
     $scope.update = function(isValid) {
-      //debugger;
+      //debugger;candidacy
       $scope.loading = true;
       var id = $stateParams.studentId;
 
@@ -165,7 +256,14 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
-
+      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')==null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')==null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')==null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')==null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')==null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')==null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')==null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+    
     Students.update(id, $scope.student).then(function(reponse){
 
       $scope.loading=false;
@@ -176,7 +274,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
               $scope.error = 'Unable to save student!\n' + error;
       });
   };
-
 
     $scope.remove = function() {
       /*
@@ -207,5 +304,10 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   return function(data,start){
     start = 0 + start;
     return data.slice(start);
+  };
+})
+.filter('reverse', function(){
+  return function(items){
+    return items.slice().reverse();
   };
 });
