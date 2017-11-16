@@ -11,11 +11,32 @@
 		
 	</div>
 
-	<div class="list-group" ng-if="!selectingStudentInterview">
+	<div ng-if="!selectingStudentInterview">
+		<button ng-click="showSettings=!showSettings">Create Slots</button>
+		<div ng-if="showSettings">
+			Date: <!-- DATEPICKER HERE --> <br>
+			<form name="batchSlotForm">
+				Add Batch of Slots:<br>
+				Time Interval:<br>
+				<input type="time" id="exampleInput" name="input" ng-model="batch.startTime"
+       placeholder="HH:mm:ss" min="06:00:00" max="19:00:00" required />
+       			TO
+       			<input type="time" id="exampleInput" name="input" ng-model="batch.endTime"
+       placeholder="HH:mm:ss" min="06:00:00" max="19:00:00" required />
+				<br> Interview Duration:<br>
+				Interviews Per Slot: <br>
+				ADD
+			</form>
 
-		<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'date'">
-			{{interview.date | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
-		</a>
-		
+			Add Customized Slots:<br>
+			Slot:<br>
+			ADD
+
+		</div>
+		<div class="list-group">
+			<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'date'">
+				{{interview.date | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
+			</a>
+		</div>
 	</div>
 </div>
