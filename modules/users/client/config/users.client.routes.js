@@ -12,7 +12,7 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       abstract: true,
       templateUrl: '/modules/core/client/views/layouts/layout-full.client.view.html',
       data: {
-        roles: ['user', 'admin']
+        roles: ['user', 'recruiter', 'admin']
       }
     })
 
