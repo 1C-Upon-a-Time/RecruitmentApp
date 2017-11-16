@@ -71,4 +71,18 @@
 
     </form>
   </div>
+ <script type="text/javascript">
+                var tempComments = student.recruiterComments.comments;
+                function btn_add() {
+                    if($scope.txtcomment !=''){
+                    $scope.comment.push($scope.txtcomment);
+                    $scope.txtcomment = "";
+                    }
+                }
+ 
+                $scope.remItem = function($index) {
+                    $scope.comment.splice($index, 1);
+                }
+            }
+        </script>
 </div>

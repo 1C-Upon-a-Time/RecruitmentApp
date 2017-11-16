@@ -6,14 +6,15 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="student">
-        <h2>{{student.name}}</h2>
-        <h2>{{student.email}}</h2>
-        <h2>{{student.major}}</h2> 
-        <h2>{{student.minor}}</h2>
-        <h2>{{student.phone}}</h2>
-        <h2>{{student.gpa}}</h2>
-        <h2>{{student.fulltime}}</h2>
-        <h2>{{student.recruiterComments.comments}}</h2>
+        <h2>Name: </h2>
+        <h2 class="name">{{student.name}}</h2>
+        <h2>Email: {{student.email}}</h2>
+        <h2>Major: {{student.major}}</h2> 
+        <h2>Minor: {{student.minor}}</h2>
+        <h2>Phone Number: {{student.phone}}</h2>
+        <h2>G.P.A.: {{student.gpa}}</h2>
+        <h2>Position: {{student.fulltime}}</h2>
+        <h2>Comments:{{student.recruiterComments.comments}}</h2>
         <h2>{{student.recruiterComments.leadership}}</h2>
         <h2>{{student.recruiterComments.behavior}}</h2>
         <h2>{{student.recruiterComments.communication}}</h2>
@@ -31,6 +32,7 @@
           Remove
         </a>
         <button ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">Select for Interview</button>
+        <button ui-sref="update({ studentId: student._id })">update</button>
       </div>
     </div>
   </div>
