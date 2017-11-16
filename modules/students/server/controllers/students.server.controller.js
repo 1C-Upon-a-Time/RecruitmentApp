@@ -47,6 +47,7 @@ exports.update = function(req, res) {
   student.gpa = req.body.gpa;
   student.fulltime = req.body.fulltime;
   student.interview = req.body.interview;
+  student.season = req.body.season;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
