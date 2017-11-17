@@ -26,6 +26,10 @@ var studentSchema = new Schema({
   },
   fulltime : Boolean,
   season : String,
+  resumePic: {
+    type: Buffer,
+    required : true
+  },
   recruiterComments:{
     comments: String,
     leadership:{
