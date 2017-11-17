@@ -11,7 +11,7 @@ var interviewSlotSchema = new Schema({
     type: Number,
     required: true,
     default: 60
-  }
+  },
   slot:{
     type: Number,
     enum: [1,2,3,4,5,6],
@@ -33,7 +33,7 @@ var interviewSlotSchema = new Schema({
     default: null
   },
   created_at: Date,
-  updated_at: Date 
+  updated_at: Date
 });
 
 
