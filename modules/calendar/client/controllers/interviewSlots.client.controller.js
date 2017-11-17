@@ -1,6 +1,8 @@
 'use strict';
+
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots', 'Students',
 function($scope, $location, $stateParams, $state, $http, InterviewSlots, Students){
+
 
   // MOST OF THESE SHOULD BE ROOTSCOPE DEFINED FROM AN ADMIN LEVEL CONTROLLER
   $scope.hours = [8,9,10,11,13,14,15,16];
@@ -59,18 +61,22 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
 
   // Just calls the update method
   $scope.selectForInterview = function(interview) {
+
+
     var date = new Date(interview.date);
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText))
     {
-      var a = document.getElementById("autoEmail");
-      a.href="mailto:"+$scope.student.email+
-      "?Subject=Interview Request&Body=We are looking forward to your interview tomorrow at "+interview.date+" in LOCATION";
+
+      // var a = document.getElementById("autoEmail");
+      // a.href="mailto:"+$scope.student.email+
+      // "?Subject=Interview Request&Body=We are looking forward to your interview tomorrow at "+interview.date+" in LOCATION";
       $scope.update(interview);
+      InterviewSlots.autoEmail($scope.student.email);
       alert("Interview scheduled!");
 
-    }
-  };
+  }
+};
 
   $scope.createDayInterviewSlots = function() {
     // SET GLOBAL "DAY" VARIABLE
@@ -95,6 +101,8 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
       }
     }
   };
+
+
 
   // Updates objects with references to each other
   $scope.update = function(interview) {

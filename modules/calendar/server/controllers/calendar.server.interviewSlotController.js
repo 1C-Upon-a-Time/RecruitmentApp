@@ -1,8 +1,15 @@
 /* Dependencies */
 
 'use strict';
-var mongoose = require('mongoose'), 
+var mongoose = require('mongoose'),
   InterviewSlot = require('../models/calendar.server.interviewSlotModel.js');
+
+  var path = require('path');
+  var nodemailer = require('nodemailer');
+  var config = require(path.resolve('./config/config'));
+  var smtpTransport = nodemailer.createTransport(config.mailer.options);
+
+
 
 /* Create an interviewSlot */
 exports.create = function(req, res) {
@@ -28,7 +35,8 @@ exports.read = function(req, res) {
   res.json(req.interviewSlot);
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, done) {
+
   var interviewSlot = req.interviewSlot;
 
   interviewSlot.date = req.body.date;
@@ -47,7 +55,29 @@ exports.update = function(req, res) {
     }
   });
 };
-  
+
+exports.autoEmail = function (res, req, done) {
+      var mailOptions = {
+        to: req.body.studentEmail,
+        from: config.mailer.from,
+        subject: 'Interview Request',
+        html: 'TEXT'
+      };
+      smtpTransport.sendMail(mailOptions, function (err) {
+        if (!err) {
+          res.send({
+            message: 'An email has been sent'
+          });
+        } else {
+          return res.status(400).send({
+            message: 'Failure sending email'
+          });
+        }
+
+        done(err);
+      });
+    };
+
 /* Delete a interviewSlot */
 exports.delete = function(req, res) {
   var interviewSlot = req.interviewSlot;
@@ -77,8 +107,8 @@ exports.list = function(req, res) {
   });
 };
 
-/* 
-  Middleware: find a interviewSlot by its ID, then pass it to the next request handler. 
+/*
+  Middleware: find a interviewSlot by its ID, then pass it to the next request handler.
 
  */
 exports.interviewByID = function(req, res, next, id) {
