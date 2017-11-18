@@ -14,9 +14,9 @@ angular.module('students').factory('Students', ['$http',
       read: function(id) {
          return $http.get('/api/employee/student/' + id);
        }, 
-    delete: function(id) {
-       return $http.delete('/api/employee/student/' + id);
-     },
+      delete: function(id) {
+         return $http.delete('/api/employee/student/' + id);
+       },
 
       update: function(id, student) {
         return $http.put('/api/employee/student/' + id, student);

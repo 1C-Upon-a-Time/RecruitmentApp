@@ -20,13 +20,13 @@
           </div>
         </div>
         <div class="form-group" show-errors>
-          <label class="control-lable" for="roles">Roles</label>
-          <div class = "controls">
-            <input class="form-control" type="text" name="roles" ng-model="user.roles" id="roles" ng-list required/>
+          <label class="control-label" for="roles">Account Type</label>
+          <div class="controls">
+            <select ng-model="user.roles" id="roles" required><option ng-repeat="role in roles" value="{{role.value}}">{{role.text}}</option></select>
+            <div ng-messages="userForm.roles.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">At least one role is required.</p>
+            </div>
           </div>
-          <div class = "controls">
-          <input class="form-control" ng-model="user.roles" type="radio" name="admin" id="admin" value='user, admin'><label for="admin"> Admin</label>
-          <input class="form-control" ng-model="user.roles" type="radio" name="admin" id="user" value='user'><label for="user"> User</label>
         </div>
         <div class="form-group">
           <input type="submit" value="Update" class="btn btn-default">
@@ -36,6 +36,5 @@
         </div>
       </fieldset>
     </form>
-    <button ng-click="remove();" class="btn btn-danger text">Delete Employee</button>
   </div>
 </section>
