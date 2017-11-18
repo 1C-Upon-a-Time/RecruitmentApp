@@ -21,7 +21,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
             $scope.getStudent();
         }
     };
-    
+
     // Gets all the interview slots.
     $scope.getInterviews = function() {
       /* set loader*/
@@ -51,7 +51,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
       .then(function(response) {
         $scope.student = response.data;
         $scope.loading = false;
-      }, function(error) {  
+      }, function(error) {
         $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
         $scope.loading = false;
       });
@@ -65,6 +65,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         {
             $scope.update(interview);
             alert("Interview scheduled!");
+            $state.go('employeeDashboard.employeeCandidateList');
         }
     };
 
@@ -106,7 +107,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         interviewSlot.student = $scope.student._id;
 
         updatedStudent.interview = interviewSlot._id;
-        
+
         /* Save the article using the Listings factory */
         InterviewSlots.update(slot_id, interviewSlot)
         .then(function(response) {

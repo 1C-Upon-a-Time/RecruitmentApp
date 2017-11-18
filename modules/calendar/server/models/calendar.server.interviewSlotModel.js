@@ -33,7 +33,7 @@ var interviewSlotSchema = new Schema({
     default: null
   },
   created_at: Date,
-  updated_at: Date 
+  updated_at: Date
 });
 
 
