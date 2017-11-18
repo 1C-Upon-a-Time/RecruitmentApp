@@ -5,7 +5,7 @@
 	<!-- Interview Slots list -->
 	<div class="list-group" ng-if="selectingStudentInterview">
 
-		<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'date' | filter:{isAvailable : true}">
+		 <a href="" target="_top" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview,student.email)" ng-repeat="interview in interviews | orderBy:'date' | filter:{isAvailable : true}"> 
 			{{interview.date | date:'shortTime'}}
 		</a>
 
@@ -19,3 +19,4 @@
 
 	</div>
 </div>
+<!--id= "autoEmail"-->

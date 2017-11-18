@@ -60,9 +60,10 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
   };
 
   // Just calls the update method
-  $scope.selectForInterview = function(interview) {
+  $scope.selectForInterview = function(interview, varMail) {
+    console.log("varMail:"+varMail);
 
-
+    var data = ({varMail}); //make student email into a JSON object
     var date = new Date(interview.date);
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText))
@@ -72,7 +73,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
       // a.href="mailto:"+$scope.student.email+
       // "?Subject=Interview Request&Body=We are looking forward to your interview tomorrow at "+interview.date+" in LOCATION";
       $scope.update(interview);
-      InterviewSlots.autoEmail($scope.student.email);
+      InterviewSlots.autoEmail(data);
       alert("Interview scheduled!");
 
   }

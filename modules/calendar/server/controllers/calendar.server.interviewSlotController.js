@@ -8,6 +8,9 @@ var mongoose = require('mongoose'),
   var nodemailer = require('nodemailer');
   var config = require(path.resolve('./config/config'));
   var smtpTransport = nodemailer.createTransport(config.mailer.options);
+  var sgTransport = require('nodemailer-sendgrid-transport');
+
+
 
 
 
@@ -56,27 +59,25 @@ exports.update = function(req, res, done) {
   });
 };
 
-exports.autoEmail = function (res, req, done) {
+exports.sendEmail = function (res, req, done) {
+
       var mailOptions = {
-        to: req.body.studentEmail,
+        to: 'victoriajoyscott@gmail.com',
         from: config.mailer.from,
         subject: 'Interview Request',
         html: 'TEXT'
       };
+
       smtpTransport.sendMail(mailOptions, function (err) {
         if (!err) {
-          res.send({
-            message: 'An email has been sent'
-          });
-        } else {
-          return res.status(400).send({
-            message: 'Failure sending email'
-          });
-        }
-
-        done(err);
-      });
-    };
+          console.log('An email has been sent');
+          }
+         else {
+          console.log('Failure sending email');
+          }
+          done(err);
+        });
+      };
 
 /* Delete a interviewSlot */
 exports.delete = function(req, res) {

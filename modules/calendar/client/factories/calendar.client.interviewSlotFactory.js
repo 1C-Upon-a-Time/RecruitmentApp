@@ -14,8 +14,8 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
         return $http.put('/api/employee/slot/' + id, interviewSlot);
       },
 
-      autoEmail: function(studentEmail){
-        return $http.post('/api/employee/autoEmail', studentEmail);
+      autoEmail: function(varEmail){
+        return $http.get('/api/employee/autoEmail', varEmail);
       }
 
       // read: function(id) {
