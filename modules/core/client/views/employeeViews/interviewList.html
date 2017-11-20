@@ -14,26 +14,33 @@
 	<div ng-if="!selectingStudentInterview">
 		<button ng-click="showSettings=!showSettings">Create Slots</button>
 		<div ng-if="showSettings">
-			Date: <!-- DATEPICKER HERE --> <br>
 			<form name="batchSlotForm">
+				Date: <input type="date" name="input" ng-model="batch.inputDate"
+       			placeholder="yyyy-MM-dd" min="{{minDate | date:'yyyy-MM-dd'}}"  /> <br>
+			
 				Add Batch of Slots:<br>
 				Time Interval:<br>
-				<input type="time" id="exampleInput" name="input" ng-model="batch.startTime"
-       placeholder="HH:mm:ss" min="06:00:00" max="19:00:00" required />
+				<input type="time" ng-model="batch.startTime"
+       			placeholder="HH" step="3600"  />
        			TO
-       			<input type="time" id="exampleInput" name="input" ng-model="batch.endTime"
-       placeholder="HH:mm:ss" min="06:00:00" max="19:00:00" required />
+       			<input type="time" ng-model="batch.endTime"
+       			placeholder="HH"  step="3600"  />
 				<br> Interview Duration:<br>
-				Interviews Per Slot: <br>
-				ADD
-			</form>
+				<select ng-model="batch.duration" ng-options="x for x in durations"  />
+				</select> <br>
+
+				Interviews Per Slot: 
+				<select ng-model="batch.interviewsPerSlot" ng-options="x for x in slots"  /><br>
+				<button ng-click="addBatch(batch)">ADD</button>
+			
 
 			Add Customized Slots:<br>
 			Slot:<br>
 			ADD
 			<button ng-click="createDayInterviewSlots()">CREATE 24</button>
-
+			</form>
 		</div>
+		<!-- {{ batch.startTime }} -->
 		<div class="list-group">
 			<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'date'">
 				{{interview.date | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}

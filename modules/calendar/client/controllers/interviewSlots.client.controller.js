@@ -2,9 +2,10 @@
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots', 'Students',
 function($scope, $location, $stateParams, $state, $http, InterviewSlots, Students){
 
+  $scope.durations = [30,45,60];
   // MOST OF THESE SHOULD BE ROOTSCOPE DEFINED FROM AN ADMIN LEVEL CONTROLLER
   $scope.hours = [8,9,10,11,13,14,15,16];
-  $scope.slots = [1,2,3];
+  $scope.slots = [1,2,3,4,5,6];
   $scope.numRecruiters = 3;
   $scope.day = new Date(2017,11,4);
   $scope.interviewArrays = [];
@@ -20,6 +21,27 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     if ($scope.selectingStudentInterview) {
       $scope.getStudent();
     }
+
+    var startTime = new Date();
+    startTime.setHours(8);
+    startTime.setMinutes(0);
+    startTime.setSeconds(0);
+    startTime.setMilliseconds(0);
+    var endTime = new Date();
+    endTime.setHours(15);
+    endTime.setMinutes(0);
+    endTime.setSeconds(0);
+    endTime.setMilliseconds(0);
+
+    $scope.batch = 
+    {
+        duration : 60,
+        startTime : startTime,
+        endTime : endTime,
+        inputDate : startTime,
+        interviewsPerSlot : 3
+    };
+    $scope.minDate = new Date();
   };
 
   // Gets all the interview slots.
@@ -39,6 +61,42 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     });
 
   };
+
+  $scope.addBatch = function(batch){
+    console.log(batch);
+
+    // Diff between start and time (9 in ms)
+    var timeDiff = batch.endTime - batch.startTime;
+    // Minute difference
+    timeDiff = timeDiff / 60000;
+    console.log(timeDiff);
+
+    // Number of slots to be created at different times
+    var numTimes = Math.floor(timeDiff / batch.duration);
+    console.log("nTimes " + numTimes);
+
+    var startHour = batch.startTime.getHours();
+    console.log("startHour " + startHour);
+
+    var day = batch.inputDate;
+    var interviewSlot;
+    for (var i = 0; i < numTimes; i++)
+    {
+        var hoursToAdd = Math.floor((i*batch.duration)/60);
+        console.log(hoursToAdd);
+        var slotDate = day.setHours(startHour + hoursToAdd);
+
+        interviewSlot = 
+        {
+            date : slotDate
+        };
+
+        for (var j = 0; j < batch.interviewsPerSlot; j++)
+        {
+
+        }
+    }
+  }
 
   // Find student information
   $scope.getStudent = function() {
@@ -77,7 +135,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
         // SET GLOBAL "DAY" VARIABLE
         var day = new Date(2017,11,4);
         var numRecruiters = 3;
-        var hours = [8,9,10,11,13,14,15,16];
+        var hours = [8,9,10,11,13,14,15];
         console.log(day);
         console.log(numRecruiters);
         console.log(hours);
@@ -87,7 +145,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
             {
                 var interviewSlot = {
                     // Date setHours is 0-23
-                    date: day.setHours(hours[i]-1),
+                    date: day.setHours(hours[i]),
                     slot: j+1
                 };
 
