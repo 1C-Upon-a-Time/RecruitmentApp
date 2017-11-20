@@ -69,34 +69,43 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     var timeDiff = batch.endTime - batch.startTime;
     // Minute difference
     timeDiff = timeDiff / 60000;
-    console.log(timeDiff);
+    // console.log(timeDiff);
 
     // Number of slots to be created at different times
     var numTimes = Math.floor(timeDiff / batch.duration);
-    console.log("nTimes " + numTimes);
+    // console.log("nTimes " + numTimes);
 
     var startHour = batch.startTime.getHours();
-    console.log("startHour " + startHour);
+    // console.log("startHour " + startHour);
 
-    var day = batch.inputDate;
-    var interviewSlot;
+    var interviewSlots = [];
+    var test = [];
     for (var i = 0; i < numTimes; i++)
     {
-        var hoursToAdd = Math.floor((i*batch.duration)/60);
-        console.log(hoursToAdd);
-        var slotDate = day.setHours(startHour + hoursToAdd);
-
-        interviewSlot = 
-        {
-            date : slotDate
-        };
+        var hoursToAdd = Math.floor((i*batch.duration) / 60);
+        var minutesToAdd = (i*batch.duration) % 60;
+        var slotDate = new Date(batch.inputDate);
+        slotDate.setHours(startHour + hoursToAdd);
+        slotDate.setMinutes(minutesToAdd);
 
         for (var j = 0; j < batch.interviewsPerSlot; j++)
         {
+          var newSlot = 
+          {
+              date : slotDate,
+              duration : batch.duration,
+              slot : j+1
+          };
 
+          interviewSlots.push(newSlot);
         }
     }
-  }
+
+    InterviewSlots.bulkCreate(interviewSlots);    
+
+    $scope.getInterviews();
+  };
+
 
   // Find student information
   $scope.getStudent = function() {
@@ -131,29 +140,29 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
   };
 
 
-    $scope.createDayInterviewSlots = function() {
-        // SET GLOBAL "DAY" VARIABLE
-        var day = new Date(2017,11,4);
-        var numRecruiters = 3;
-        var hours = [8,9,10,11,13,14,15];
-        console.log(day);
-        console.log(numRecruiters);
-        console.log(hours);
-        for (var i = 0; i < hours.length; i++)
-        {
-            for (var j = 0; j < numRecruiters; j++)
-            {
-                var interviewSlot = {
-                    // Date setHours is 0-23
-                    date: day.setHours(hours[i]),
-                    slot: j+1
-                };
+    // $scope.createDayInterviewSlots = function() {
+    //     // SET GLOBAL "DAY" VARIABLE
+    //     var day = new Date(2017,11,4);
+    //     var numRecruiters = 3;
+    //     var hours = [8,9,10,11,13,14,15];
+    //     console.log(day);
+    //     console.log(numRecruiters);
+    //     console.log(hours);
+    //     for (var i = 0; i < hours.length; i++)
+    //     {
+    //         for (var j = 0; j < numRecruiters; j++)
+    //         {
+    //             var interviewSlot = {
+    //                 // Date setHours is 0-23
+    //                 date: day.setHours(hours[i]),
+    //                 slot: j+1
+    //             };
 
-                InterviewSlots.create(interviewSlot);
-                console.log("Slot created!");
-            }
-        }
-    };
+    //             InterviewSlots.create(interviewSlot);
+    //             console.log("Slot created!");
+    //         }
+    //     }
+    // };
 
     // Updates objects with references to each other
     $scope.update = function(interview) {

@@ -22,6 +22,15 @@ exports.create = function(req, res) {
   });
 };
 
+exports.bulkCreate = function(req, res) {
+  var slotsList = req.body;
+
+  InterviewSlot.collection.insert(slotsList, function(err, docs){
+    if (err)
+      return err;
+  });
+};
+
 /* Show the current interviewSlot */
 exports.read = function(req, res) {
   /* send back the interviewSlot as json from the request */
