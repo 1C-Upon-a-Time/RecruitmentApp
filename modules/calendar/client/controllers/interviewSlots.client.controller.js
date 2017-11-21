@@ -69,14 +69,11 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     var timeDiff = batch.endTime - batch.startTime;
     // Minute difference
     timeDiff = timeDiff / 60000;
-    // console.log(timeDiff);
 
     // Number of slots to be created at different times
     var numTimes = Math.floor(timeDiff / batch.duration);
-    // console.log("nTimes " + numTimes);
 
     var startHour = batch.startTime.getHours();
-    // console.log("startHour " + startHour);
 
     var interviewSlots = [];
     var test = [];
@@ -84,19 +81,26 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     {
         var hoursToAdd = Math.floor((i*batch.duration) / 60);
         var minutesToAdd = (i*batch.duration) % 60;
-        var slotDate = new Date(batch.inputDate);
-        slotDate.setHours(startHour + hoursToAdd);
-        slotDate.setMinutes(minutesToAdd);
+
+        var startDate = new Date(batch.inputDate);
+        startDate.setHours(startHour + hoursToAdd);
+        startDate.setMinutes(minutesToAdd);
+
+        hoursToAdd = Math.floor(batch.duration / 60);
+        minutesToAdd = batch.duration % 60;
+        var endDate = new Date(batch.inputDate);
+        endDate.setHours(startDate.getHours() + hoursToAdd);
+        endDate.setMinutes(startDate.getMinutes() + minutesToAdd);
 
         for (var j = 0; j < batch.interviewsPerSlot; j++)
         {
           var newSlot = 
           {
-              date : slotDate,
-              duration : batch.duration,
+              startDate : startDate,
+              endDate : endDate,
               slot : j+1
           };
-
+          console.log(newSlot);
           interviewSlots.push(newSlot);
         }
     }
@@ -104,6 +108,29 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     InterviewSlots.bulkCreate(interviewSlots);    
 
     $scope.getInterviews();
+  };
+
+  $scope.addCustom = function(custom)
+  {
+    var startDate = new Date($scope.batch.inputDate);
+    startDate.setHours(custom.startTime.getHours());
+    startDate.setMinutes(custom.startTime.getMinutes());
+
+    var endDate = new Date($scope.batch.inputDate);
+    endDate.setHours(custom.endTime.getHours());
+    endDate.setMinutes(custom.endTime.getMinutes());
+
+    var newSlot = 
+    {
+      endDate : endDate,
+      startDate : startDate,
+      slot: 1
+    };
+
+    InterviewSlots.create(newSlot);
+
+    $scope.getInterviews();
+
   };
 
 

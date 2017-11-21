@@ -3,14 +3,13 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var interviewSlotSchema = new Schema({
-  date:{
+  startDate:{
     type: Date,
     required: true
-  },
-  duration:{
-    type: Number,
-    required: true,
-    default: 60
+  },  
+  endDate:{
+    type: Date,
+    required: true
   },
   slot:{
     type: Number,
