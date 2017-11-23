@@ -26,9 +26,9 @@ var studentSchema = new Schema({
   },
   fulltime : Boolean,
   season : String,
-  studentResumeURL: {
+  resumeImageURL: {
     type: String,
-    default: 'modules/students/client/resumeimg/default.png'
+    default: 'modules/students/client/img/default.png'
   },
   recruiterComments:{
     comments: String,

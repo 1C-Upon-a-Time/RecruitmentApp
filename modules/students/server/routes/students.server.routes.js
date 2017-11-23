@@ -16,10 +16,7 @@ module.exports = function (app) {
     .get(students.read)
     .put(students.update)
     .delete(students.delete);
-  //route for resume picture upload
-
-  
-
+  app.route('/api/employee/student/resume').post(students.uploadResumePicture);
 
 
   // Finish by binding the user middleware

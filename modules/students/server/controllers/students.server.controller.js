@@ -1,14 +1,14 @@
 /* Dependencies */
 
 "use strict";
-var mongoose = require('mongoose'),
-  Student = require('../models/students.server.model.js'),
-  //more imports for pictures
-   _ = require('lodash'),
-  fs = require('fs'),
-  path = require('path'),
-  multer = require('multer'),
-  config = require(path.resolve('./config/config'));
+  var _ = require('lodash'),
+    fs = require('fs'),
+    path = require('path'),
+    errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+    mongoose = require('mongoose'),
+    multer = require('multer'),
+    config = require(path.resolve('./config/config')),
+    Student = mongoose.model('Student');
 
 
 /*
@@ -110,6 +110,28 @@ exports.list = function(req, res) {
       // $scope.demo += element + ",";
 
    //});
+};
+
+exports.uploadResumePicture = function (req, res) {
+  var student = req.student;
+  var message = null;
+  var upload = multer(config.uploads.resumeUpload).single('resumePicture');
+  var resumeUploadFileFilter = require(path.resolve('./config/lib/multer')).resumeUploadFileFilter;
+
+  // Filtering to upload only images
+  upload.fileFilter = resumeUploadFileFilter;
+
+//  if (student) {
+    upload(req, res, function (uploadError) {
+      if(uploadError) {
+        return res.status(400).send({
+          message: 'Error occurred while uploading resume picture'
+        });
+      } else {
+        student.resumeImageURL = config.uploads.resumeUpload.dest + req.file.filename;
+      }
+    })
+//  }
 };
 
 /*
