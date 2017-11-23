@@ -2,7 +2,14 @@
 
 "use strict";
 var mongoose = require('mongoose'),
-  Student = require('../models/students.server.model.js');
+  Student = require('../models/students.server.model.js'),
+  //more imports for pictures
+   _ = require('lodash'),
+  fs = require('fs'),
+  path = require('path'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config'));
+
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update students.
@@ -48,6 +55,8 @@ exports.update = function(req, res) {
   student.fulltime = req.body.fulltime;
   student.interview = req.body.interview;
   student.season = req.body.season;
+  //update student image from default
+  student.studentResumeURL = req.body.studentResumeURL;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
@@ -121,3 +130,7 @@ exports.studentByID = function(req, res, next, id) {
     }
   });
 };
+
+
+
+

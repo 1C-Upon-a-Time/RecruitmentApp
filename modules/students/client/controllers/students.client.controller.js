@@ -1,7 +1,9 @@
 'use strict';
-angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
-  function($scope, $location, $stateParams, $state, $http, Students){
+angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students','$window', 'Authentication', 'FileUploader',
+  function($scope, $location, $stateParams, $state, $http, Students, FileUploader, $window){
     $scope.listings = [];
+
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -143,7 +145,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   function isEmpty(str){
     return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
   }
-
 
 
 
