@@ -11,6 +11,7 @@ module.exports = function (app) {
     .get(students.read)
     .put(students.update)
     .delete(students.delete);
+  app.route('/api/employee/student/resume').post(students.uploadResumePicture);
 
   // Finish by binding the user middleware
   app.param('studentID', students.studentByID);
