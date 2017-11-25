@@ -195,6 +195,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
               });
       };
 
+
     $scope.findOne = function() {
       //debugger;
       $scope.loading = true;
@@ -246,6 +247,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
     };
 
+
+  
     $scope.update = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
