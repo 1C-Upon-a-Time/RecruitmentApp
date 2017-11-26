@@ -1,14 +1,17 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
 
-	<div ng-if="selectingStudentInterview">Selecting interview for {{student.name}}</div>
-	Interviews for {{day | date}}
-	<!-- Interview Slots list -->
-	<div class="list-group" ng-if="selectingStudentInterview">
+	<div name="studentSelect" ng-if="selectingStudentInterview">
+		Selecting interview for {{student.name}} <br>
 
-		<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' | filter:{isAvailable : true}">
-			{{interview.startDate | date:'shortTime'}}
-		</a>
+		Interviews for {{day | date}}
+		<!-- Interview Slots list -->
+		<div class="list-group">
 
+			<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' | filter:{isAvailable : true}">
+				{{interview.startDate | date:'shortTime'}}
+			</a>
+
+		</div>
 	</div>
 
 	<div ng-if="!selectingStudentInterview">
@@ -44,7 +47,8 @@
 			<button ng-click="addCustom(custom)">ADD</button>
 			</form>
 		</div>
-		<!-- {{ batch.startTime }} -->
+
+		<br>Interviews for {{day | date}}
 		<div class="list-group">
 			<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'startDate'">
 				{{interview.startDate | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
