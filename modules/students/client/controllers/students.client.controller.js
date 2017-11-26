@@ -302,12 +302,14 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }//end of function
 ]).filter('startFrom', function(){
   return function(data,start){
+    if (!data || !data.length) {return;}
     start = 0 + start;
     return data.slice(start);
   };
 })
 .filter('reverse', function(){
   return function(items){
+    if (!items || !items.length) {return;}
     return items.slice().reverse();
   };
 });
