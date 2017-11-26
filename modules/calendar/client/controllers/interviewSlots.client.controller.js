@@ -3,13 +3,12 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
 function($scope, $location, $stateParams, $state, $http, InterviewSlots, Students){
 
   $scope.durations = [30,45,60];
-  // MOST OF THESE SHOULD BE ROOTSCOPE DEFINED FROM AN ADMIN LEVEL CONTROLLER
-  $scope.hours = [8,9,10,11,13,14,15,16];
   $scope.slots = [1,2,3,4,5,6];
-  $scope.numRecruiters = 3;
-  $scope.day = new Date(2017,11,4);
-  $scope.interviewArrays = [];
   $scope.selectingStudentInterview = false;
+  $scope.tempDays = [];
+  $scope.days = [];
+
+  // Determine whether a student is being selected by checking stateParams
   if ($stateParams.studentId)
   {
     $scope.selectingStudentInterview = true;
@@ -22,6 +21,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
       $scope.getStudent();
     }
 
+    // Start times are today's date by default
     var startTime = new Date();
     startTime.setHours(8);
     startTime.setMinutes(0);
@@ -53,8 +53,26 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     InterviewSlots.getAll().then(function(response) {
       $scope.loading = false; //remove loader
       $scope.interviews = response.data;
-      // console.log("Successfully retrieved slots!");
-      // console.log($scope.interviews);
+
+      // Sort out the days properly
+      for (var i = 0; i < $scope.interviews.length; i++)
+      {
+        var interviewDate = new Date($scope.interviews[i].startDate);
+        var date = new Date(interviewDate.getFullYear(), interviewDate.getMonth(), interviewDate.getDate(),0,0,0,0);
+
+        if ($scope.tempDays.indexOf(date.getTime()) == -1)
+        {
+          $scope.tempDays.push(date.getTime());
+        }
+      }
+
+      for (var j = 0; j < $scope.tempDays.length; j++)
+      {
+        console.log($scope.tempDays[j]);
+        $scope.days.push(new Date($scope.tempDays[j]));
+      }
+
+
     }, function(error) {
       $scope.loading = false;
       $scope.error = 'Unable to retrieve Interview Slots!\n' + error;

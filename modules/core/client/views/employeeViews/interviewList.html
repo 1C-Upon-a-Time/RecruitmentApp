@@ -3,14 +3,15 @@
 	<div name="studentSelect" ng-if="selectingStudentInterview">
 		Selecting interview for {{student.name}} <br>
 
-		Interviews for {{day | date}}
-		<!-- Interview Slots list -->
-		<div class="list-group">
+		<div ng-repeat="day in days">Interviews for {{day | date}}
+			<!-- Interview Slots list -->
+			<div class="list-group">
 
-			<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' | filter:{isAvailable : true}">
-				{{interview.startDate | date:'shortTime'}}
-			</a>
+				<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
+					{{interview.startDate | date:'shortTime'}}
+				</a>
 
+			</div>
 		</div>
 	</div>
 
@@ -48,12 +49,13 @@
 			</form>
 		</div>
 
-		<br>Interviews for {{day | date}}
-		<div class="list-group">
-			<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'startDate'">
-				{{interview.startDate | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
-			</a>
-		</div>
+		<br><div ng-repeat="day in days">Interviews for {{day | date}}
 
+			<div class="list-group">
+				<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
+					{{interview.startDate | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
