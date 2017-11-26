@@ -15,6 +15,9 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
       },
       update: function(id, interviewSlot) {
         return $http.put('/api/employee/slot/' + id, interviewSlot);
+      },
+      getRecruiters: function(){
+        return $http.get("/api/users/recruiters");
       }
 
       // read: function(id) {

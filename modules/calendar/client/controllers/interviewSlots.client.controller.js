@@ -5,7 +5,6 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
   $scope.durations = [30,45,60];
   $scope.slots = [1,2,3,4,5,6];
   $scope.selectingStudentInterview = false;
-  $scope.tempDays = [];
   $scope.days = [];
 
   // Determine whether a student is being selected by checking stateParams
@@ -19,6 +18,8 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     $scope.getInterviews();
     if ($scope.selectingStudentInterview) {
       $scope.getStudent();
+    } else {
+      $scope.getRecruiters();
     }
 
     // Start times are today's date by default
@@ -60,16 +61,10 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
         var interviewDate = new Date($scope.interviews[i].startDate);
         var date = new Date(interviewDate.getFullYear(), interviewDate.getMonth(), interviewDate.getDate(),0,0,0,0);
 
-        if ($scope.tempDays.indexOf(date.getTime()) == -1)
+        if ($scope.days.indexOf(date.getTime()) === -1)
         {
-          $scope.tempDays.push(date.getTime());
+          $scope.days.push(date.getTime());
         }
-      }
-
-      for (var j = 0; j < $scope.tempDays.length; j++)
-      {
-        console.log($scope.tempDays[j]);
-        $scope.days.push(new Date($scope.tempDays[j]));
       }
 
 
@@ -184,62 +179,47 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     }
   };
 
+  $scope.getRecruiters = function(interview) {
+    InterviewSlots.getRecruiters()
+    .then(function(response) {
+      $scope.recruiters = response.data;
+      console.log($scope.recruiters);
+    }, function(error) {
+      $scope.error = "Unable to retrieve recruiters!";
+    });
+  };
 
-    // $scope.createDayInterviewSlots = function() {
-    //     // SET GLOBAL "DAY" VARIABLE
-    //     var day = new Date(2017,11,4);
-    //     var numRecruiters = 3;
-    //     var hours = [8,9,10,11,13,14,15];
-    //     console.log(day);
-    //     console.log(numRecruiters);
-    //     console.log(hours);
-    //     for (var i = 0; i < hours.length; i++)
-    //     {
-    //         for (var j = 0; j < numRecruiters; j++)
-    //         {
-    //             var interviewSlot = {
-    //                 // Date setHours is 0-23
-    //                 date: day.setHours(hours[i]),
-    //                 slot: j+1
-    //             };
+  // Updates objects with references to each other
+  $scope.update = function(interview) {
+      var interviewSlot = interview;
+      var updatedStudent = $scope.student;
 
-    //             InterviewSlots.create(interviewSlot);
-    //             console.log("Slot created!");
-    //         }
-    //     }
-    // };
+      var slot_id = interviewSlot._id;
+      var student_id = updatedStudent._id;
 
-    // Updates objects with references to each other
-    $scope.update = function(interview) {
-        var interviewSlot = interview;
-        var updatedStudent = $scope.student;
+      // Slot is no longer available
+      interviewSlot.isAvailable = !interviewSlot.isAvailable;
+      // Set slot's scheduled student
+      interviewSlot.student = $scope.student._id;
 
-        var slot_id = interviewSlot._id;
-        var student_id = updatedStudent._id;
+      updatedStudent.interview = interviewSlot._id;
 
-        // Slot is no longer available
-        interviewSlot.isAvailable = !interviewSlot.isAvailable;
-        // Set slot's scheduled student
-        interviewSlot.student = $scope.student._id;
-
-        updatedStudent.interview = interviewSlot._id;
-
-        /* Save the article using the Listings factory */
-        InterviewSlots.update(slot_id, interviewSlot)
-        .then(function(response) {
-            console.log("Slot updated!");
-        }, function(error) {
-        //otherwise display the error
-            $scope.error = 'Unable to update slot!\n' + error;
-        });
-
-        Students.update(student_id,updatedStudent)
-        .then(function(reponse){
-            console.log("Interview assigned to student!");
-        }, function(error) {
-          //otherwise display the error
-          $scope.error = 'Unable to update student!\n' + error;
+      /* Save the article using the Listings factory */
+      InterviewSlots.update(slot_id, interviewSlot)
+      .then(function(response) {
+          console.log("Slot updated!");
+      }, function(error) {
+      //otherwise display the error
+          $scope.error = 'Unable to update slot!\n' + error;
       });
-    };
-  }
+
+      Students.update(student_id,updatedStudent)
+      .then(function(reponse){
+          console.log("Interview assigned to student!");
+      }, function(error) {
+        //otherwise display the error
+        $scope.error = 'Unable to update student!\n' + error;
+    });
+  };
+}
 ]);
