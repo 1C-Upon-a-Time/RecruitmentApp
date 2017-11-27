@@ -56,7 +56,7 @@ exports.update = function(req, res) {
   student.interview = req.body.interview;
   student.season = req.body.season;
   //update student image from default
-  student.studentResumeURL = req.body.studentResumeURL;
+  student.resumeImageURL = req.body.resumeImageURL;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
@@ -129,6 +129,15 @@ exports.uploadResumePicture = function (req, res) {
         });
       } else {
         student.resumeImageURL = config.uploads.resumeUpload.dest + req.file.filename;
+
+        student.save(function (saveError) {
+          if (saveError) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(saveError)
+            });
+          } 
+        });
+
       }
     })
 //  }

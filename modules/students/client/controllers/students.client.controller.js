@@ -2,11 +2,12 @@
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', '$timeout', '$window', 'Students', 'FileUploader',
   function($scope, $location, $stateParams, $state, $http, $timeout, $window, Students, FileUploader){
     $scope.listings = [];
-    $scope.imageURL = $scope.student.resumeImageURL;
+   
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
       $scope.loading = true;
+
 
       /* Get all the Students, then bind it to the scope */
       Students.getAll().then(function(response) {
@@ -19,58 +20,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             alias: 'resumePicture'
           });
 
-          $scope.uploader.filters.push({
-            name: 'imageFilter',
-            fn: function (item, options) {
-              var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-              return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-            }
-          });
-
-          // Called after the user selected a new picture file
-          $scope.uploader.onAfterAddingFile = function (fileItem) {
-            if ($window.FileReader) {
-              var fileReader = new FileReader();
-              fileReader.readAsDataURL(fileItem._file);
-
-              fileReader.onload = function (fileReaderEvent) {
-                $timeout(function () {
-                  $scope.imageURL = fileReaderEvent.target.result;
-                }, 0);
-              };
-            }
-          };
-
-          $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
-            // Show success message
-            $scope.success = true;
-            // Clear upload buttons
-            $scope.cancelUpload();
-          };
-
-          // Called after the user has failed to uploaded a new picture
-          $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {
-            // Clear upload buttons
-            $scope.cancelUpload();
-
-            // Show error message
-            $scope.error = response.message;
-          };
-
-          // Change user profile picture
-          $scope.uploadResumePicture = function () {
-            // Clear messages
-            $scope.success = $scope.error = null;
-
-            // Start upload
-            $scope.uploader.uploadAll();
-          };
-
-          // Cancel the upload process
-          $scope.cancelUpload = function () {
-            $scope.uploader.clearQueue();
-            $scope.imageURL = $scope.student.resumeImageURL;
-          };
 //ME
         //Season's filter
         $scope.seasons = []; //array of seasons
@@ -87,6 +36,26 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
 
     };
+
+
+
+
+
+    // Change user profile picture
+    $scope.uploadResumePicture = function () {
+      // Clear messages
+      $scope.success = $scope.error = null;
+
+      // Start upload
+      $scope.uploader.uploadAll();
+    };
+
+     // Cancel the upload process
+    $scope.cancelUpload = function () {
+      $scope.uploader.clearQueue();
+      $scope.imageURL = $scope.student.resumeImageURL;
+    };
+
 
   //set the sort filter to it's default first
   $scope.sort = "-created_at";
@@ -205,6 +174,40 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }
 
 
+// var picString = $scope.imageURL;
+// console.log(picString);
+
+// Called after the user selected a new picture file
+          $scope.uploader.onAfterAddingFile = function (fileItem) {
+            if ($window.FileReader) {
+              var fileReader = new FileReader();
+              fileReader.readAsDataURL(fileItem._file);
+
+              fileReader.onload = function (fileReaderEvent) {
+                $timeout(function () {
+                  $scope.imageURL = fileReaderEvent.target.result;
+                }, 0);
+              };
+            }
+          };
+
+          $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            // Show success message
+            $scope.success = true;
+            // Clear upload buttons
+            $scope.cancelUpload();
+          };
+
+          // Called after the user has failed to uploaded a new picture
+          $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {
+            // Clear upload buttons
+            $scope.cancelUpload();
+
+            // Show error message
+            $scope.error = response.message;
+          };
+
+
 
   $scope.create = function(isValid) {
         $scope.error = null;
@@ -215,6 +218,21 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
           return false;
         }
+
+
+         $scope.imageURL = $scope.student.resumeImageURL;
+
+
+         $scope.uploader.filters.push({
+            name: 'imageFilter',
+            fn: function (item, options) {
+              var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+              return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+          });
+
+          
+
 
         //Season attachment to student when they are created
         var season;
