@@ -30,7 +30,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             $scope.seasons.push($scope.listings[i].season);
           }
         }
-        $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        //$scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        $scope.filterSeason = $scope.currentSeason;
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
