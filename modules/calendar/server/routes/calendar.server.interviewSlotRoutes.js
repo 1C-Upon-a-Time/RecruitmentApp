@@ -7,6 +7,7 @@ module.exports = function (app) {
 
   app.route('/api/employee/interviewInvite').post(interviewSlots.sendInvite);
   app.route('/api/employee/interviewSlot').post(interviewSlots.create);
+  app.route('/api/employee/bulkInterviewSlots').post(interviewSlots.bulkCreate);
   app.route('/api/employee/viewInterviewSlots').get(interviewSlots.list);
   app.route('/api/employee/slot/:interviewSlotId')
     .get(interviewSlots.read)

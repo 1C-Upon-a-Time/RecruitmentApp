@@ -205,9 +205,9 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       Students.read(id)
       .then(function(response) {
         
-        if(response.data.fulltime === true)
+        if(response.data.fulltime)
           response.data.fulltime = 'Fulltime';       
-        else if(response.data.fulltime === false)
+        else 
           response.data.fulltime = 'Internship';
         $scope.student = response.data;
         $scope.loading = false;
@@ -305,12 +305,14 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }//end of function
 ]).filter('startFrom', function(){
   return function(data,start){
+    if (!data || !data.length) {return;}
     start = 0 + start;
     return data.slice(start);
   };
 })
 .filter('reverse', function(){
   return function(items){
+    if (!items || !items.length) {return;}
     return items.slice().reverse();
   };
 });
