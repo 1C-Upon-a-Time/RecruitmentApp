@@ -5,6 +5,7 @@ module.exports = function (app) {
   var users = require('../controllers/users.server.controller');
 
   // Setting up the users profile api
+  app.route('/api/users/interviews').put(users.updateInterviews);
   app.route('/api/users/recruiters').get(users.getRecruiters);
   app.route('/api/users/me').get(users.me);
   app.route('/api/users').put(users.update);

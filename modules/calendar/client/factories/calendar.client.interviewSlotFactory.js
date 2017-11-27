@@ -17,7 +17,10 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
         return $http.put('/api/employee/slot/' + id, interviewSlot);
       },
       getRecruiters: function(){
-        return $http.get("/api/users/recruiters");
+        return $http.get('/api/users/recruiters');
+      },
+      updateInterviews: function(user) {
+        return $http.put('/api/users/interviews');
       }
 
       // read: function(id) {

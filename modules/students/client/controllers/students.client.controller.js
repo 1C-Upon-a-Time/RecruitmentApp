@@ -204,9 +204,9 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       Students.read(id)
       .then(function(response) {
         
-        if(response.data.fulltime == true)
+        if(response.data.fulltime)
           response.data.fulltime = 'Fulltime';       
-        else if(response.data.fulltime == false)
+        else 
           response.data.fulltime = 'Internship';
         $scope.student = response.data;
         $scope.loading = false;
@@ -256,13 +256,13 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
-      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')==null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
-      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')==null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
-      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')==null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
-      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')==null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
-      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')==null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
-      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')==null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
-      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')==null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')===null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
     
     Students.update(id, $scope.student).then(function(reponse){
 

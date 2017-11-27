@@ -3,12 +3,12 @@
 	<div name="studentSelect" ng-if="selectingStudentInterview">
 		Selecting interview for {{student.name}} <br>
 
-		<div ng-repeat="day in days">Interviews for {{day | date}}
+		<div ng-repeat="day in days | orderBy:'day'">Interviews for {{day | date}}
 			<!-- Interview Slots list -->
 			<div class="list-group">
 
 				<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
-					{{interview.startDate | date:'shortTime'}}
+					{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
 				</a>
 
 			</div>
@@ -49,12 +49,22 @@
 			</form>
 		</div>
 
-		<br><div ng-repeat="day in days">Interviews for {{day | date}}
+		<br>
+		<div ng-repeat="day in days | orderBy:'day'">Interviews for {{day | date}}
 
 			<div class="list-group">
-				<a class="list-group-item list-group-item-action" ng-click="" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
-					{{interview.startDate | date:'shortTime'}} {{interview.isAvailable}} {{interview.student.name}}
-				</a>
+				<div ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
+					<div class="list-group-item list-group-item-action" ng-click="showOptions=!showOptions">
+					{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}} Student: {{interview.student.name}} Recruiter: {{interview.recruiter.displayName}}
+					</div>
+					
+					<div class="list-group-item list-group-item-info" ng-if="showOptions">
+						<select ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
+						</select><br>
+						<button ng-click="updateInterviewRecruiter(interview, recruiter)">Update</button>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>

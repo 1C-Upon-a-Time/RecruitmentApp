@@ -21,6 +21,17 @@ exports.getRecruiters = function(req, res){
 };
 
 exports.updateInterviews = function(req, res){
+	var user = req.user;
 
+	user.interviews = req.body.interviews;
+
+	user.save(function(err) {
+	    if(err) {
+	      console.log(err);
+	      res.status(400).send(err);
+	    } else {
+	      res.json(user);
+	    }
+  	});
 };
 
