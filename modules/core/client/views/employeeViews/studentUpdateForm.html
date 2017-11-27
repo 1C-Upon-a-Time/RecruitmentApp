@@ -4,48 +4,41 @@
     <div class="page-header">
       <h3>Edit student</h3>
       <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
-        <fieldset>
-          <div class="form-group" show-errors>
-            <label for="name">Name</label>
-            <input name="name" type="text" ng-model="student.name" id="name" class="form-control" placeholder="Name" required>
-            <div ng-messages="studentUpdateForm.name.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Please provide the student's name.</p>
-            </div>
-          </div>
-          <div class="form-group" show-errors>
-            <label for="email">mail</label>
-            <input name="email" type="text" ng-model="student.email" id="email" class="form-control" placeholder="email" required>
-            <div ng-messages="studentUpdateForm.email.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Please provide the student's email.</p>
-            </div>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <a href="#" editable-text="student.name" e-single e-required>{{ student.name || 'empty' }}</a>
           </div>
           <div class="form-group">
-            <label for="major">Major</label>
-            <input name="major" type="text" ng-model="student.major" id="major" class="form-control" placeholder="major">
+            <label for="email">E-mail:</label>
+             <span href="#" editable-text="student.email" e-single e-required>{{ student.email || 'empty' }}</span>
+          </div>
+          <div class="form-group">
+            <label for="major">Major:</label>
+             <span href="#" editable-text="student.major" e-single e-required>{{ student.major || 'empty' }}</span>
           </div>
 
           <div class="form-group">
-            <label for="minor">Minor</label>
-            <input name="minor" type="text" ng-model="student.minor" id="minor" class="form-control" placeholder="minor">
+            <label for="minor">Minor:</label>
+             <span href="#" editable-text="student.minor" e-single e-required>{{ student.minor|| 'empty' }}</span>
           </div>
 
           <div class="form-group">
-            <label for="phone">Phone</label>
-            <input name="phone" type="text" ng-model="student.phone" id="phone" class="form-control" placeholder="phone">
+            <label for="phone">Phone:</label>
+             <span href="#" editable-text="student.phone" e-single e-required>{{ student.phone || 'empty' }}</span>
           </div>
           <div class="form-group">
-            <label for="gpa">gpa</label>
-            <input name="gpa" type="text" ng-model="student.gpa" id="gpa" class="form-control" placeholder="gpa">
+            <label for="gpa">G.P.A.:</label>
+             <span href="#" editable-text="student.gpa" e-single e-required>{{ student.gpa || 'empty' }}</span>
           </div>
           <div class="form-group">
-            <legend>Position Type</legend>
-            <div class="form-check">
+            <label>Position Type: </label>
+            <div class="form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="'false'" name="fulltimeRadios" id="fulltimeRadios1">
                 Internship/Co-op
               </label>
             </div>
-            <div class="form-check">
+            <div class="form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="'true'" name="fulltimeRadios" id="fulltimeRadios2">
                 Full Time
@@ -53,11 +46,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="comments">comments</label>
-            <input name="comments" type="text" ng-model="student.recruiterComments.comments" id="comments" class="form-control" placeholder="comments">
+            <label for="comments">Comments:</label>
+              <a href="#" editable-textarea="student.recruiterComments.comments" e-rows="7" e-cols="40" e-single>
+              <pre>{{ student.recruiterComments.comments || 'no description' }}</pre>
+              </a>
           </div>
           <div class="form-group">
-            <legend>Leadership</legend>
+            <label>Leadership:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="leadershipRadios" id="leadershipRadios1">
@@ -91,7 +86,7 @@
           </div>
 
           <div class="form-group">
-            <legend>Behavior</legend>
+            <label>Behavior:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="behaviorRadios" id="behaviorRadios1">
@@ -124,7 +119,7 @@
             </div>
           </div>
           <div class="form-group">
-            <legend>Communication</legend>
+            <label>Communication:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="communicationRadios" id="communicationRadios1" value="1">
@@ -157,7 +152,7 @@
             </div>
           </div>
           <div class="form-group">
-            <legend>Critical Thinking</legend>
+            <label>Critical Thinking:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="critThinkingRadios" id="critThinkingRadios1">
@@ -190,7 +185,7 @@
             </div>
           </div>
           <div class="form-group">
-            <legend>Technical Knowledge</legend>
+            <label>Technical Knowledge:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="techKnowledgeRadios" id="techKnowledgeRadios1">
@@ -223,7 +218,7 @@
             </div>
           </div>
           <div class="form-group">
-            <legend>Candidacy</legend>
+            <label>Candidacy:</label>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" ng-value="1" name="candidacyRadios" id="candidacyRadios1">
@@ -258,7 +253,7 @@
 
 
           <div class="form-group">
-            <input type="submit" class="btn btn-default">
+            <input type="submit" class="btn btn-primary">
           </div>
           <div ng-show="error" class="text-danger">
             <strong ng-bind="error"></strong>
@@ -268,20 +263,3 @@
     </div>
   </div>
 </div>
-<!--
-<script>
-        $scope.tempComment = student.recruiterComments.comments;
-        $scope.btn_add = function($scope) {
-          debugger;
-            if($scope.txtcomment !=''){
-            $scope.tempComment.push($scope.txtcomment);
-            $scope.txtcomment = "";
-            }
-        }
-
-        $scope.remItem = function($index) {
-            $scope.comment.splice($index, 1);
-        }
-    }
-</script>
--->

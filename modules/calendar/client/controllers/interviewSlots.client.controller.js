@@ -184,16 +184,13 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
   $scope.selectForInterview = function(interview) {
     var date = new Date(interview.date);
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
-    if (confirm(confirmText))
-    {
-      var a = document.getElementById("autoEmail");
-      a.href="mailto:"+$scope.student.email+
-      "?Subject=Interview Request&Body=We are looking forward to your interview tomorrow at "+interview.date+" in LOCATION";
+    if (confirm(confirmText)) {
       $scope.update(interview);
+      $scope.sendInvite(interview);
       alert("Interview scheduled!");
-
     }
   };
+
 
   $scope.getRecruiters = function(interview) {
     InterviewSlots.getRecruiters()
@@ -203,6 +200,11 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     }, function(error) {
       $scope.error = "Unable to retrieve recruiters!";
     });
+    
+  $scope.sendInvite = function (interview) {
+    $http.post('/api/employee/interviewInvite', interview);
+  };
+
   };
 
   // Updates objects with references to each other
