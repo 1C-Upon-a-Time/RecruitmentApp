@@ -2,18 +2,21 @@
 
   <form name="userForm" ng-submit="signin(userForm.$valid)" class="signin" novalidate autocomplete="off">
     <fieldset>
+      <alert type="danger" ng-show="error" class="text-center text-danger">
+        <span ng-bind="error"></span>
+      </alert>
       <div class="form-group" show-errors>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" class="form-control" ng-model="credentials.username" placeholder="Username" lowercase required>
-        <div ng-messages="userForm.username.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Username is required.</p>
+        <label for="email">Email Address</label>
+        <input type="text" id="email" name="email" class="form-control" ng-model="credentials.email" lowercase required>
+        <div ng-messages="userForm.email.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Email address is required.</p>
         </div>
       </div>
       <div class="form-group" show-errors>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password" required>
+        <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" required>
         <div ng-messages="userForm.password.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Password is required.</p>
+          <span class="help-block error-text" ng-message="required">Password is required.</span>
         </div>
       </div>
       <div class="text-center form-group">
@@ -24,9 +27,6 @@
       <div class="text-center forgot-password">
         <a ui-sref="password.forgot">Forgot your password?</a>
       </div>
-      <alert type="danger" ng-show="error" class="text-center text-danger">
-        <span ng-bind="error"></span>
-      </alert>
     </fieldset>
   </form>
 
