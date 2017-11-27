@@ -37,17 +37,11 @@ exports.signup = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      // Remove sensitive data before login
+      // Remove sensitive data
       user.password = undefined;
       user.salt = undefined;
-
-      req.login(user, function (err) {
-        if (err) {
-          res.status(400).send(err);
-        } else {
-          res.json(user);
-        }
-      });
+      // Empty JSON response to circumvent automatic login
+      res.json();
     }
   });
 };
