@@ -2,6 +2,16 @@
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     $scope.listings = [];
+
+    // Calculate current season
+    var date = new Date();
+    if (date.getMonth() <= 5){
+      $scope.currentSeason = 'Spring ' + date.getFullYear(); //spring
+    }
+    else if(date.getMonth() >=6){
+      $scope.currentSeason = 'Fall ' + date.getFullYear(); //fall
+    }
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -145,8 +155,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }
 
 
-
-
   $scope.create = function(isValid) {
         $scope.error = null;
 
@@ -158,17 +166,17 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
 
         //Season attachment to student when they are created
-        var season;
-        var date = new Date();
-        //for later testing
-        //var date = new Date("February, 20, 2017 01:15:00");
+        var season =  $scope.currentSeason;
+        // var date = new Date();
+        // //for later testing
+        // //var date = new Date("February, 20, 2017 01:15:00");
 
-        if (date.getMonth() <= 5){
-          season = 'Spring ' + date.getFullYear(); //spring
-        }
-        else if(date.getMonth() >=6){
-          season = 'Fall ' + date.getFullYear(); //fall
-        }
+        // if (date.getMonth() <= 5){
+        //   season = 'Spring ' + date.getFullYear(); //spring
+        // }
+        // else if(date.getMonth() >=6){
+        //   season = 'Fall ' + date.getFullYear(); //fall
+        // }
 
 
         //More important to save what is required
