@@ -6,29 +6,102 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="student">
-
-        <h2>Name: {{student.name}}</h2>
-        <h2>Email: {{student.email}}</h2>
-        <h2>Major: {{student.major}}</h2>
-        <h2>Minor: {{student.minor}}</h2>
-        <h2>Phone: {{student.phone}}</h2>
-        <h2>GPA: {{student.gpa}}</h2>
-        <h2>Position: {{student.fulltime}}</h2>
-        <h2>Comments: {{student.recruiterComments.comments}}</h2>
-        <h2>Leadership: {{student.recruiterComments.leadership}}</h2>
-        <h2>Behavior: {{student.recruiterComments.behavior}}</h2>
-        <h2>Communication: {{student.recruiterComments.communication}}</h2>
-        <h2>Critical Thinking: {{student.recruiterComments.critThinking}}</h2>
-        <h2>Technology Knowledge: {{student.recruiterComments.techKnowledge}}</h2>
-        <h2>Candidacy: {{student.recruiterComments.candidacy}}</h2>
-        <h2 ng-model = "cSeason">Recruiting Season : {{student.season}}</h2>
-        <div ng-if="student.interview">
-          <h2>
-            Interview: {{student.interview.startDate | date:'short'}}
-          </h2>
-          <h2>
-            Recruiter: {{student.interview.recruiter.displayName}}
-          </h2>
+        <h1>{{student.name}}</h1><br><br>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-4"><strong>Name:</strong></div> 
+            <div class="col-md-6">{{student.name}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Email:</strong></div> 
+            <div class="col-md-6">{{student.email}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Major:</strong></div> 
+            <div class="col-md-6">{{student.major}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Minor:</strong></div> 
+            <div class="col-md-6">{{student.minor}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Phone:</strong></div> 
+            <div class="col-md-6">{{student.phone}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>GPA:</strong></div> 
+            <div class="col-md-6">{{student.gpa}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Position:</strong></div> 
+            <div class="col-md-6">{{student.fulltime}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Comments:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.comments}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Leadership:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.leadership}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Behavior:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.behavior}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Communication:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.communication}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Critical Thinking:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.critThinking}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Technology Knowledge:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.techKnowledge}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4"><strong>Candidacy:</strong></div> 
+            <div class="col-md-6">{{student.recruiterComments.candidacy}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-4" ng-model = "cSeason"><strong>Recruiting Season :</strong></div> 
+            <div class="col-md-6">
+              <button ng-click = "goBackSeasons()"> << </button>
+              {{student.season}}
+              <button ng-click = "changeSeasons()"> >> </button>
+            </div>
+          </div>
+          <hr/>
+          <div ng-if="student.interview">
+            <div class="row">
+              <div class="col-md-4">
+               <strong>Interview: </strong>
+              </div> 
+               <div class="col-md-6">{{student.interview.startDate | date:'short'}}</div>
+            </div>
+            <hr/>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Recruiter: </strong>
+              </div> 
+               <div class="col-md-6">{{student.interview.recruiter.displayName}}</div>
+            </div>
+          </div>
         </div>
         <p></p>
         <p></p>
@@ -49,9 +122,6 @@
           <i class="glyphicon glyphicon-trash"></i>
           Remove
         </a>
-
-        <button ng-click = "changeSeasons()"> Change to Next Season </button>
-        <button ng-click = "goBackSeasons()"> Go Back One Season </button>
         <button ui-sref = "employeeDashboard.employeeCandidateList">Back</button>
 
       </div>
