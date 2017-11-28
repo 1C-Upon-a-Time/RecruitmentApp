@@ -182,12 +182,14 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
 
   // Just calls the update method
   $scope.selectForInterview = function(interview) {
-    var date = new Date(interview.date);
+    var date = new Date(interview.startDate);
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText)) {
       $scope.update(interview);
-      $scope.sendInvite(interview);
+      //$scope.sendInvite(interview);
+      $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
       alert("Interview scheduled!");
+
     }
   };
 
