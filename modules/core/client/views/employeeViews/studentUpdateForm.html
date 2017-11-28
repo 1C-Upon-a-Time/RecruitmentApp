@@ -1,5 +1,5 @@
 <!-- Fill in this file to create a UI view for editing student entries. -->
-<div class="row" ng-controller="StudentsController" ng-init="displayEditForm()">
+<div class="row" ng-controller="StudentsController" ng-init="findOne()">
   <div class="col-md-offset-1 col-md-10 formWrapper">
     <div class="page-header">
       <h3>Edit student</h3>
@@ -250,10 +250,34 @@
               </label>
             </div>
           </div>
+          <div class=form-group>
+            <label>Season</label>
+            <span>{{student.season}}</span>
+            <button type="button" ng-click = "goBackSeasons()"> << </button>
+            <button type="button" ng-click = "changeSeasons()"> >> </button>
+          </div>
+          <div class="form-group" ng-if="student.interview">
+            <label>Interview: </label>
+              <span>{{student.interview.startDate | date:'short'}}</span>
+          </div>
+          <div class="form-group" ng-if="student.interview">
+            <label>Recruiter: </label>
+              <span>{{student.interview.recruiter}}</span>
+          </div>
 
 
           <div class="form-group">
-            <input type="submit" class="btn btn-primary">
+            <input type="submit" class="btn btn-primary" ng-submit="update()">
+            <a class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
+            <i class="glyphicon glyphicon-envelope"></i>
+            Mail
+            </a>
+            <button class="btn btn-primary" type="button" ng-if="!student.interview" ng-click="submitForInterview();"> Interview </button>
+            <a class="btn btn-danger" ng-click="remove();" >
+              <i class="glyphicon glyphicon-trash"></i>
+              Remove
+            </a>
+            <button ui-sref = "employeeDashboard.employeeCandidateList">Back</button>
           </div>
           <div ng-show="error" class="text-danger">
             <strong ng-bind="error"></strong>
