@@ -2,7 +2,16 @@
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', '$timeout', '$window', 'Students', 'FileUploader',
   function($scope, $location, $stateParams, $state, $http, $timeout, $window, Students, FileUploader){
     $scope.listings = [];
-   
+
+    // Calculate current season
+    var date = new Date();
+    if (date.getMonth() <= 5){
+      $scope.currentSeason = 'Spring ' + date.getFullYear(); //spring
+    }
+    else if(date.getMonth() >=6){
+      $scope.currentSeason = 'Fall ' + date.getFullYear(); //fall
+    }
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -29,7 +38,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             $scope.seasons.push($scope.listings[i].season);
           }
         }
-        $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        //$scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        $scope.filterSeason = $scope.currentSeason;
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
@@ -174,6 +184,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }
 
 
+<<<<<<< HEAD
 // var picString = $scope.imageURL;
 // console.log(picString);
 
@@ -209,6 +220,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
 
 
+=======
+>>>>>>> development
   $scope.create = function(isValid) {
         $scope.error = null;
 
@@ -231,21 +244,21 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             }
           });
 
-          
+
 
 
         //Season attachment to student when they are created
-        var season;
-        var date = new Date();
-        //for later testing
-        //var date = new Date("February, 20, 2017 01:15:00");
+        var season =  $scope.currentSeason;
+        // var date = new Date();
+        // //for later testing
+        // //var date = new Date("February, 20, 2017 01:15:00");
 
-        if (date.getMonth() <= 5){
-          season = 'Spring ' + date.getFullYear(); //spring
-        }
-        else if(date.getMonth() >=6){
-          season = 'Fall ' + date.getFullYear(); //fall
-        }
+        // if (date.getMonth() <= 5){
+        //   season = 'Spring ' + date.getFullYear(); //spring
+        // }
+        // else if(date.getMonth() >=6){
+        //   season = 'Fall ' + date.getFullYear(); //fall
+        // }
 
 
         //More important to save what is required
@@ -272,6 +285,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
               });
       };
 
+
     $scope.findOne = function() {
       //debugger;
       $scope.loading = true;
@@ -280,10 +294,17 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
       Students.read(id)
       .then(function(response) {
+<<<<<<< HEAD
 
         if(response.data.fulltime == true)
           response.data.fulltime = 'Fulltime';
         else if(response.data.fulltime == false)
+=======
+
+        if(response.data.fulltime)
+          response.data.fulltime = 'Fulltime';
+        else
+>>>>>>> development
           response.data.fulltime = 'Internship';
         $scope.student = response.data;
         $scope.loading = false;
@@ -323,6 +344,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
     };
 
+
+
     $scope.update = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
@@ -333,6 +356,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
+<<<<<<< HEAD
       $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')==null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
       $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')==null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
       $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')==null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
@@ -341,6 +365,16 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')==null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')==null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
 
+=======
+      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')===null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+
+>>>>>>> development
     Students.update(id, $scope.student).then(function(reponse){
 
       $scope.loading=false;
@@ -379,12 +413,14 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }//end of function
 ]).filter('startFrom', function(){
   return function(data,start){
+    if (!data || !data.length) {return;}
     start = 0 + start;
     return data.slice(start);
   };
 })
 .filter('reverse', function(){
   return function(items){
+    if (!items || !items.length) {return;}
     return items.slice().reverse();
   };
 });

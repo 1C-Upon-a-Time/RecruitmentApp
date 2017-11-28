@@ -21,7 +21,7 @@ var validateLocalStrategyProperty = function (property) {
  * A Validation function for local strategy email
  */
 var validateLocalStrategyEmail = function (email) {
-  return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email));
+  return ((this.provider !== 'local' && !this.updated) || (validator.isEmail(email)) && /^.*@exxonmobil.com$/.test(email));
 };
 
 /**
@@ -50,14 +50,7 @@ var UserSchema = new Schema({
     lowercase: true,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
-  },
-  username: {
-    type: String,
-    unique: 'Username already exists',
-    required: 'Please fill in a username',
-    lowercase: true,
-    trim: true
+    validate: [validateLocalStrategyEmail, 'Please fill a valid email address ending with @exxonmobil.com']
   },
   password: {
     type: String,
@@ -83,10 +76,14 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin', 'recruiter', 'none']
+      enum: ['user', 'admin', 'none']
     }],
     default: ['none'],
     required: 'Please provide at least one role'
+  },
+  isRecruiter: {
+    type: Boolean,
+    default: false
   },
   updated: {
     type: Date
@@ -151,25 +148,27 @@ UserSchema.methods.authenticate = function (password) {
 
 /**
  * Find possible not used username
+ * Disabled: this function is not needed when using the local passport strategy
  */
-UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
-  var _this = this;
-  var possibleUsername = username.toLowerCase() + (suffix || '');
 
-  _this.findOne({
-    username: possibleUsername
-  }, function (err, user) {
-    if (!err) {
-      if (!user) {
-        callback(possibleUsername);
-      } else {
-        return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
-      }
-    } else {
-      callback(null);
-    }
-  });
-};
+// UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
+//   var _this = this;
+//   var possibleUsername = username.toLowerCase() + (suffix || '');
+//
+//   _this.findOne({
+//     username: possibleUsername
+//   }, function (err, user) {
+//     if (!err) {
+//       if (!user) {
+//         callback(possibleUsername);
+//       } else {
+//         return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
+//       }
+//     } else {
+//       callback(null);
+//     }
+//   });
+// };
 
 /**
 * Generates a random passphrase that passes the owasp test.

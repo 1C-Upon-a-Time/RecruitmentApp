@@ -8,7 +8,6 @@ angular.module('users.admin').controller('UserController', ['$scope', '$state', 
     $scope.roles = [
       {text : "None", value : "none"},
       {text : "Administrator", value : "admin"},
-      {text : "Recruiter", value : "recruiter"},
       {text : "User", value : "user"}
     ];
 

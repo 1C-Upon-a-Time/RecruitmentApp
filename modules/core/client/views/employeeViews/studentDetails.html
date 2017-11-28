@@ -24,10 +24,10 @@
         <h2 ng-model = "cSeason">Recruiting Season : {{student.season}}</h2>
         <div ng-if="student.interview">
           <h2>
-            Interview: {{student.interview.date | date:'short'}}
+            Interview: {{student.interview.startDate | date:'short'}}
           </h2>
           <h2>
-            Recruiter: {{student.interview.recruiter}}
+            Recruiter: {{student.interview.recruiter.displayName}}
           </h2>
         </div>
         <p></p>

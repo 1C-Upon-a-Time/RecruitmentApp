@@ -1,8 +1,17 @@
 /* Dependencies */
 
 'use strict';
-var mongoose = require('mongoose'), 
-  InterviewSlot = require('../models/calendar.server.interviewSlotModel.js');
+
+var path = require('path'),
+  InterviewSlot = require('../models/calendar.server.interviewSlotModel.js'),
+  config = require(path.resolve('./config/config')),
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  nodemailer = require('nodemailer'),
+  async = require('async');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 /* Create an interviewSlot */
 exports.create = function(req, res) {
@@ -19,6 +28,15 @@ exports.create = function(req, res) {
     } else {
       res.json(interviewSlot);
     }
+  });
+};
+
+exports.bulkCreate = function(req, res) {
+  var slotsList = req.body;
+
+  InterviewSlot.collection.insert(slotsList, function(err, docs){
+    if (err)
+      return err;
   });
 };
 
@@ -73,6 +91,53 @@ exports.list = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(interviewSlots);
+    }
+  });
+};
+
+exports.sendInvite = function (req, res, next) {
+  console.log('Here we are...');
+
+  async.waterfall([
+    function (req, res, done) {
+      var httpTransport = 'http://';
+      if (config.secure && config.secure.ssl === true) {
+        httpTransport = 'https://';
+      }
+      res.render(path.resolve('modules/calendar/server/templates/interview-invite-email'), {
+        name: req.body.student,
+        appName: config.app.title,
+        time: req.body.date,
+        interviewer: 'N/A'
+      }, function (err, emailHTML) {
+        done(err, emailHTML);
+      });
+    },
+    // If valid email, send reset email using service
+    function (emailHTML, done) {
+      var mailOptions = {
+        to: 'taylorjameswalker@gmail.com',
+        from: config.mailer.from,
+        subject: 'Interview!',
+        html: emailHTML
+      };
+      smtpTransport.sendMail(mailOptions, function (err) {
+        // if (!err) {
+        //   res.send({
+        //     message: 'An email has been sent to the provided email with further instructions.'
+        //   });
+        // } else {
+        //   return res.status(400).send({
+        //     message: 'Failure sending email'
+        //   });
+        // }
+
+        done(err);
+      });
+    }
+  ], function (err) {
+    if (err) {
+      return next(err);
     }
   });
 };

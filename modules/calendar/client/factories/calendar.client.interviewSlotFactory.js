@@ -10,16 +10,21 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
       create: function(interviewSlot) {
         return $http.post('/api/employee/interviewSlot', interviewSlot);
       },
+      bulkCreate: function(interviewSlots){
+        return $http.post('/api/employee/bulkInterviewSlots', interviewSlots);
+      },
       update: function(id, interviewSlot) {
         return $http.put('/api/employee/slot/' + id, interviewSlot);
+      },
+      getRecruiters: function(){
+        return $http.get('/api/users/recruiters');
+      },
+      updateInterviews: function(user) {
+        return $http.put('/api/users/interviews');
       }
 
       // read: function(id) {
       //   return $http.get('/api/listings/' + id);
-      // }, 
-
-      // update: function(id, listing) {
-      //   return $http.put('/api/listings/' + id, listing);
       // }, 
 
       // delete: function(id) {
