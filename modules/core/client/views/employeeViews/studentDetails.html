@@ -6,8 +6,9 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="student">
-        <h1>{{student.name}}</h1><br><br>
-        <div class="col-md-8">
+        <div class="col-md-10">
+        <h1>{{student.name}}</h1>
+        <hr/>
           <div class="row">
             <div class="col-md-4"><strong>Name:</strong></div> 
             <div class="col-md-6">{{student.name}}</div>
@@ -69,7 +70,7 @@
           </div>
           <hr/>
           <div class="row">
-            <div class="col-md-4"><strong>Technology Knowledge:</strong></div> 
+            <div class="col-md-4"><strong>Tech Knowledge:</strong></div> 
             <div class="col-md-6">{{student.recruiterComments.techKnowledge}}</div>
           </div>
           <hr/>
@@ -81,9 +82,9 @@
           <div class="row">
             <div class="col-md-4" ng-model = "cSeason"><strong>Recruiting Season :</strong></div> 
             <div class="col-md-6">
-              <button ng-click = "goBackSeasons()"> << </button>
+              <a class="btn btn-xs btn-default" ng-click = "goBackSeasons()"> << </a>
               {{student.season}}
-              <button ng-click = "changeSeasons()"> >> </button>
+              <a class="btn btn-xs btn-default" ng-click = "changeSeasons()"> >> </a>
             </div>
           </div>
           <hr/>
@@ -102,27 +103,28 @@
                <div class="col-md-6">{{student.interview.recruiter.displayName}}</div>
             </div>
           </div>
-        </div>
-        <p></p>
-        <p></p>
-        <a class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
+        <hr/>
+
+        <button class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
           <i class="glyphicon glyphicon-edit"></i>
           Edit
-        </a>
-        <a class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
+        </button>
+        <button class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
           <i class="glyphicon glyphicon-envelope"></i>
           Mail
-        </a>
+        </button>
 
-        <a class="btn btn-primary" ng-if="!student.interview" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
+        <button class="btn btn-primary" ng-if="!student.interview" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
           <i class="glyphicon glyphicon-user"></i>
           Interview
-        </a>
-        <a class="btn btn-danger" ng-click="remove();" >
+        </button>
+        <button class="btn btn-danger" ng-click="remove();" >
           <i class="glyphicon glyphicon-trash"></i>
           Remove
-        </a>
-        <button ui-sref = "employeeDashboard.employeeCandidateList">Back</button>
+        </button>
+        <button class="btn btn-default" ui-sref = "employeeDashboard.employeeCandidateList">
+          Back
+        </button>
 
       </div>
     </div>
