@@ -5,7 +5,7 @@ module.exports = function (app) {
   var interviewSlots = require('../controllers/calendar.server.interviewSlotController.js'),
     express = require('express');
 
-  app.route('/api/employee/interviewInvite').post(interviewSlots.sendInvite);
+  app.route('/api/employee/interviewEmail').post(interviewSlots.sendInvite);
   app.route('/api/employee/interviewSlot').post(interviewSlots.create);
   app.route('/api/employee/bulkInterviewSlots').post(interviewSlots.bulkCreate);
   app.route('/api/employee/viewInterviewSlots').get(interviewSlots.list);

@@ -14,6 +14,27 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     $scope.studentId = $stateParams.studentId;
   }
 
+  $scope.sendMail = function(interview, student)
+  {
+
+    // Define basic Email data
+    var data =
+    {
+      email : student.email,
+      subject: student.name + " Interview",
+      body: "Interview on " + interview.startDate
+    };
+
+    $http.post('/api/employee/interviewEmail', data).
+      success(function(data, status, headers, config) {    
+          console.log("Success!");
+          alert("Email sent!");
+      }).
+      error(function(data, status, headers, config) {
+          console.log("Failure!");
+      });
+  };
+
   $scope.init = function(){
     $scope.getInterviews();
     if ($scope.selectingStudentInterview) {
@@ -183,13 +204,17 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
   // Just calls the update method
   $scope.selectForInterview = function(interview) {
     var date = new Date(interview.startDate);
+
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText)) {
+      // Update the interview with the student 
       $scope.update(interview);
-      //$scope.sendInvite(interview);
+
+      // Send email to student
+      $scope.sendMail(interview, $scope.student);
+      
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
       alert("Interview scheduled!");
-
     }
   };
 
