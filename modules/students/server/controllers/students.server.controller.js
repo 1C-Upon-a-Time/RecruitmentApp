@@ -1,8 +1,15 @@
 /* Dependencies */
 
 "use strict";
-var mongoose = require('mongoose'),
-  Student = require('../models/students.server.model.js');
+  var _ = require('lodash'),
+    fs = require('fs'),
+    path = require('path'),
+    errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+    mongoose = require('mongoose'),
+    multer = require('multer'),
+    config = require(path.resolve('./config/config')),
+    Student = mongoose.model('Student');
+
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update students.
@@ -48,6 +55,8 @@ exports.update = function(req, res) {
   student.fulltime = req.body.fulltime;
   student.interview = req.body.interview;
   student.season = req.body.season;
+  //update student image from default
+  student.resumeImageURL = req.body.resumeImageURL;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {
@@ -103,6 +112,37 @@ exports.list = function(req, res) {
    //});
 };
 
+exports.uploadResumePicture = function (req, res) {
+  var student = req.student;
+  var message = null;
+  var upload = multer(config.uploads.resumeUpload).single('resumePicture');
+  var resumeUploadFileFilter = require(path.resolve('./config/lib/multer')).resumeUploadFileFilter;
+
+  // Filtering to upload only images
+  upload.fileFilter = resumeUploadFileFilter;
+
+//  if (student) {
+    upload(req, res, function (uploadError) {
+      if(uploadError) {
+        return res.status(400).send({
+          message: 'Error occurred while uploading resume picture'
+        });
+      } else {
+        student.resumeImageURL = config.uploads.resumeUpload.dest + req.file.filename;
+
+        student.save(function (saveError) {
+          if (saveError) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(saveError)
+            });
+          } 
+        });
+
+      }
+    })
+//  }
+};
+
 /*
   Middleware: find a student by its ID, then pass it to the next request handler.
 
@@ -127,3 +167,7 @@ exports.studentByID = function(req, res, next, id) {
     }
   });
 };
+
+
+
+

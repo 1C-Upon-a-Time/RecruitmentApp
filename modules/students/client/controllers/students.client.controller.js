@@ -1,6 +1,6 @@
 'use strict';
-angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
-  function($scope, $location, $stateParams, $state, $http, Students){
+angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', '$timeout', '$window', 'Students', 'FileUploader',
+  function($scope, $location, $stateParams, $state, $http, $timeout, $window, Students, FileUploader){
     $scope.listings = [];
 
     // Calculate current season
@@ -17,11 +17,19 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       /* set loader*/
       $scope.loading = true;
 
+
       /* Get all the Students, then bind it to the scope */
       Students.getAll().then(function(response) {
         $scope.loading = false; //remove loader
         $scope.listings = response.data;
 
+//ME
+          $scope.uploader = new FileUploader({
+            url: '/api/employee/student/resume',
+            alias: 'resumePicture'
+          });
+
+//ME
         //Season's filter
         $scope.seasons = []; //array of seasons
         for(var i = 0; i < $scope.listings.length;i++){
@@ -38,6 +46,26 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
 
     };
+
+
+
+
+
+    // Change user profile picture
+    $scope.uploadResumePicture = function () {
+      // Clear messages
+      $scope.success = $scope.error = null;
+
+      // Start upload
+      $scope.uploader.uploadAll();
+    };
+
+     // Cancel the upload process
+    $scope.cancelUpload = function () {
+      $scope.uploader.clearQueue();
+      $scope.imageURL = $scope.student.resumeImageURL;
+    };
+
 
   //set the sort filter to it's default first
   $scope.sort = "-created_at";
@@ -57,7 +85,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     //if it was originally fall, then make it to spring but increase the year by 1
     if(parseCurrentSeason[0] === "Fall"){
-         $scope.student.season = "Spring " + nYear; 
+         $scope.student.season = "Spring " + nYear;
     }
     //if it is spring, just change it to fall but keep the current year
     else{
@@ -73,7 +101,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     });
 
   };
-  
+
    //button to go back by one season
    $scope.goBackSeasons = function(){
     var currentSeason = $scope.student.season;
@@ -83,7 +111,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     //if it was originally fall, then make it to spring but decrease the year by 1
     if(parseCurrentSeason[0] === "Fall"){
-         $scope.student.season = "Spring " + parseCurrentSeason[1]; 
+         $scope.student.season = "Spring " + parseCurrentSeason[1];
     }
     //if it is spring, just change it to fall but keep the current year
     else{
@@ -139,7 +167,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           return true;
         }
         else if($scope.filter === "any"){
-          return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
+          return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
                  (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
         }
         else if($scope.filter === "name"){
@@ -156,6 +184,44 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }
 
 
+<<<<<<< HEAD
+// var picString = $scope.imageURL;
+// console.log(picString);
+
+// Called after the user selected a new picture file
+          $scope.uploader.onAfterAddingFile = function (fileItem) {
+            if ($window.FileReader) {
+              var fileReader = new FileReader();
+              fileReader.readAsDataURL(fileItem._file);
+
+              fileReader.onload = function (fileReaderEvent) {
+                $timeout(function () {
+                  $scope.imageURL = fileReaderEvent.target.result;
+                }, 0);
+              };
+            }
+          };
+
+          $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            // Show success message
+            $scope.success = true;
+            // Clear upload buttons
+            $scope.cancelUpload();
+          };
+
+          // Called after the user has failed to uploaded a new picture
+          $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {
+            // Clear upload buttons
+            $scope.cancelUpload();
+
+            // Show error message
+            $scope.error = response.message;
+          };
+
+
+
+=======
+>>>>>>> development
   $scope.create = function(isValid) {
         $scope.error = null;
 
@@ -165,6 +231,21 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
           return false;
         }
+
+
+         $scope.imageURL = $scope.student.resumeImageURL;
+
+
+         $scope.uploader.filters.push({
+            name: 'imageFilter',
+            fn: function (item, options) {
+              var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+              return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+          });
+
+
+
 
         //Season attachment to student when they are created
         var season =  $scope.currentSeason;
@@ -213,14 +294,21 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
       Students.read(id)
       .then(function(response) {
-        
+<<<<<<< HEAD
+
+        if(response.data.fulltime == true)
+          response.data.fulltime = 'Fulltime';
+        else if(response.data.fulltime == false)
+=======
+
         if(response.data.fulltime)
-          response.data.fulltime = 'Fulltime';       
-        else 
+          response.data.fulltime = 'Fulltime';
+        else
+>>>>>>> development
           response.data.fulltime = 'Internship';
         $scope.student = response.data;
         $scope.loading = false;
-      }, function(error) {  
+      }, function(error) {
         $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
         $scope.loading = false;
       });
@@ -240,7 +328,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         var critThinking =response.data.recruiterComments.critThinking;
         var techKnowledge =response.data.recruiterComments.techKnowledge;
         var candidacy =response.data.recruiterComments.candidacy;
-        
+
         $('input[name=fulltimeRadios][value='+fulltime+']').prop('checked',true);
         $('input[name=leadershipRadios][value='+leadership+']').prop('checked',true);
         $('input[name=behaviorRadios][value='+behavior+']').prop('checked',true);
@@ -257,7 +345,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     };
 
 
-  
+
     $scope.update = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
@@ -268,6 +356,16 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
+<<<<<<< HEAD
+      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')==null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')==null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')==null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')==null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')==null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')==null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')==null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+
+=======
       $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
       $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
       $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
@@ -275,7 +373,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
-    
+
+>>>>>>> development
     Students.update(id, $scope.student).then(function(reponse){
 
       $scope.loading=false;
