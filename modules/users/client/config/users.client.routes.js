@@ -12,7 +12,7 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       abstract: true,
       templateUrl: '/modules/core/client/views/layouts/layout-full.client.view.html',
       data: {
-        roles: ['user', 'admin']
+        roles: ['user', 'recruiter', 'admin']
       }
     })
 
@@ -81,6 +81,10 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
     .state('authentication.signup', {
       url: '/signup',
       templateUrl: 'modules/users/client/views/authentication/signup.client.view.html'
+    })
+    .state('authentication.confirmation', {
+      url: '/signup/confirmation',
+      templateUrl: 'modules/users/client/views/authentication/signup-confirmation.client.view.html'
     })
     .state('authentication.signin', {
       url: '/signin?err',

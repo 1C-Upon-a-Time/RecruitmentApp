@@ -5,6 +5,12 @@ angular.module('users.admin').controller('UserController', ['$scope', '$state', 
     $scope.authentication = Authentication;
     $scope.user = userResolve;
 
+    $scope.roles = [
+      {text : "None", value : "none"},
+      {text : "Administrator", value : "admin"},
+      {text : "User", value : "user"}
+    ];
+
     $scope.remove = function (user) {
       if (confirm('Are you sure you want to delete this user?')) {
         if (user) {
@@ -22,7 +28,6 @@ angular.module('users.admin').controller('UserController', ['$scope', '$state', 
     $scope.update = function (isValid) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
-
         return false;
       }
 

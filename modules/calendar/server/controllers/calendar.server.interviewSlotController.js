@@ -1,8 +1,17 @@
 /* Dependencies */
 
 'use strict';
-var mongoose = require('mongoose'), 
-  InterviewSlot = require('../models/calendar.server.interviewSlotModel.js');
+
+var path = require('path'),
+  InterviewSlot = require('../models/calendar.server.interviewSlotModel.js'),
+  config = require(path.resolve('./config/config')),
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  nodemailer = require('nodemailer'),
+  async = require('async');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 /* Create an interviewSlot */
 exports.create = function(req, res) {
@@ -19,6 +28,15 @@ exports.create = function(req, res) {
     } else {
       res.json(interviewSlot);
     }
+  });
+};
+
+exports.bulkCreate = function(req, res) {
+  var slotsList = req.body;
+
+  InterviewSlot.collection.insert(slotsList, function(err, docs){
+    if (err)
+      return err;
   });
 };
 
@@ -75,6 +93,19 @@ exports.list = function(req, res) {
       res.json(interviewSlots);
     }
   });
+};
+
+exports.sendInvite = function (req, res) {
+  var data = req.body;
+
+  smtpTransport.sendMail({
+        from: config.mailer.from,
+        to: data.email,
+        subject: data.subject,
+        text: data.body
+    });
+ 
+    res.json(data);
 };
 
 /* 

@@ -1,78 +1,259 @@
 <!-- Fill in this file to create a UI view for editing student entries. -->
-<div class="row" ng-controller="StudentsController" ng-init="findOne()">
+<div class="row" ng-controller="StudentsController" ng-init="displayEditForm()">
   <div class="col-md-offset-1 col-md-10 formWrapper">
     <div class="page-header">
       <h3>Edit student</h3>
       <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
-        <fieldset>
-          <div class="form-group" show-errors>
-            <label for="name">Name</label>
-            <input name="name" type="text" ng-model="student.name" id="name" class="form-control" placeholder="Name" required>
-            <div ng-messages="studentUpdateForm.name.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Please provide the student's name.</p>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <a href="#" editable-text="student.name" e-single e-required>{{ student.name || 'empty' }}</a>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail:</label>
+             <span href="#" editable-text="student.email" e-single e-required>{{ student.email || 'empty' }}</span>
+          </div>
+          <div class="form-group">
+            <label for="major">Major:</label>
+             <span href="#" editable-text="student.major" e-single e-required>{{ student.major || 'empty' }}</span>
+          </div>
+
+          <div class="form-group">
+            <label for="minor">Minor:</label>
+             <span href="#" editable-text="student.minor" e-single e-required>{{ student.minor|| 'empty' }}</span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone:</label>
+             <span href="#" editable-text="student.phone" e-single e-required>{{ student.phone || 'empty' }}</span>
+          </div>
+          <div class="form-group">
+            <label for="gpa">G.P.A.:</label>
+             <span href="#" editable-text="student.gpa" e-single e-required>{{ student.gpa || 'empty' }}</span>
+          </div>
+          <div class="form-group">
+            <label>Position Type: </label>
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="'false'" name="fulltimeRadios" id="fulltimeRadios1">
+                Internship/Co-op
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="'true'" name="fulltimeRadios" id="fulltimeRadios2">
+                Full Time
+              </label>
             </div>
           </div>
-          <div class="form-group" show-errors>
-            <label for="email">mail</label>
-            <input name="email" type="text" ng-model="student.email" id="email" class="form-control" placeholder="email" required>
-            <div ng-messages="studentUpdateForm.email.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Please provide the student's email.</p>
+          <div class="form-group">
+            <label for="comments">Comments:</label>
+              <a href="#" editable-textarea="student.recruiterComments.comments" e-rows="7" e-cols="40" e-single>
+              <pre>{{ student.recruiterComments.comments || 'no description' }}</pre>
+              </a>
+          </div>
+          <div class="form-group">
+            <label>Leadership:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="leadershipRadios" id="leadershipRadios1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="leadershipRadios" id="leadershipRadios2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="leadershipRadios" id="leadershipRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="leadershipRadios" id="leadershipRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="leadershipRadios" id="leadershipRadios5">
+                5
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Behavior:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="behaviorRadios" id="behaviorRadios1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="behaviorRadios" id="behaviorRadios2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="behaviorRadios" id="behaviorRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="behaviorRadios" id="behaviorRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="behaviorRadios" id="behaviorRadios5">
+                5
+              </label>
             </div>
           </div>
           <div class="form-group">
-            <label for="major">Major</label>
-            <input name="major" type="text" ng-model="student.major" id="major" class="form-control" placeholder="major">
+            <label>Communication:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="communicationRadios" id="communicationRadios1" value="1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="communicationRadios" id="communicationRadios2" value="2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="communicationRadios" id="communicationRadios3" value="3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="communicationRadios" id="communicationRadios4" value="4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="communicationRadios" id="communicationRadios5" value="5">
+                5
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Critical Thinking:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="critThinkingRadios" id="critThinkingRadios1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="critThinkingRadios" id="critThinkingRadios2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="critThinkingRadios" id="critThinkingRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="critThinkingRadios" id="critThinkingRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="critThinkingRadios" id="critThinkingRadios5">
+                5
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Technical Knowledge:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="techKnowledgeRadios" id="techKnowledgeRadios1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="techKnowledgeRadios" id="techKnowledgeRadios2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="techKnowledgeRadios" id="techKnowledgeRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="techKnowledgeRadios" id="techKnowledgeRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="techKnowledgeRadios" id="techKnowledgeRadios5">
+                5
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Candidacy:</label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="1" name="candidacyRadios" id="candidacyRadios1">
+                1
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="2" name="candidacyRadios" id="candidacyRadios2">
+                2
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="3" name="candidacyRadios" id="candidacyRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="4" name="candidacyRadios" id="candidacyRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" ng-value="5" name="candidacyRadios" id="candidacyRadios5">
+                5
+              </label>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="minor">Minor</label>
-            <input name="minor" type="text" ng-model="student.minor" id="minor" class="form-control" placeholder="minor">
-          </div>
 
           <div class="form-group">
-            <label for="phone">Phone</label>
-            <input name="phone" type="text" ng-model="student.phone" id="phone" class="form-control" placeholder="phone">
-          </div>
-          <div class="form-group">
-            <label for="gpa">gpa</label>
-            <input name="gpa" type="text" ng-model="student.gpa" id="gpa" class="form-control" placeholder="gpa">
-          </div>
-          <div class="form-group">
-            <label for="fulltime">fulltime</label>
-            <input name="fulltime" type="text" ng-model="student.fulltime" id="fulltime" class="form-control" placeholder="fulltime">
-          </div>
-          <div class="form-group">
-            <label for="comments">comments</label>
-            <input name="comments" type="text" ng-model="student.recruiterComments.comments" id="comments" class="form-control" placeholder="comments">
-          </div>
-          <div class="form-group">
-            <label for="leadership">leadership</label>
-            <input name="leadership" type="text" ng-model="student.recruiterComments.leadership" id="leadership" class="form-control" placeholder="leadership">
-          </div>
-          <div class="form-group">
-            <label for="behavior">behavior</label>
-            <input name="behavior" type="text" ng-model="student.recruiterComments.behavior" id="behavior" class="form-control" placeholder="behavior">
-          </div>
-          <div class="form-group">
-            <label for="communication">communication</label>
-            <input name="communication" type="text" ng-model="student.recruiterComments.communication" id="communication" class="form-control" placeholder="communication">
-          </div>
-          <div class="form-group">
-            <label for="critThinking">critThinking</label>
-            <input name="critThinking" type="text" ng-model="student.recruiterComments.critThinking" id="critThinking" class="form-control" placeholder="critThinking">
-          </div>
-          <div class="form-group">
-            <label for="techKnowledge">techKnowledge</label>
-            <input name="techKnowledge" type="text" ng-model="student.recruiterComments.techKnowledge" id="techKnowledge" class="form-control" placeholder="techKnowledge">
-          </div>
-          <div class="form-group">
-            <label for="candidacy">candidacy</label>
-            <input name="candidacy" type="text" ng-model="student.recruiterComments.candidacy" id="candidacy" class="form-control" placeholder="candidacy">
-          </div>
-
-
-          <div class="form-group">
-            <input type="submit" class="btn btn-default">
+            <input type="submit" class="btn btn-primary">
           </div>
           <div ng-show="error" class="text-danger">
             <strong ng-bind="error"></strong>
