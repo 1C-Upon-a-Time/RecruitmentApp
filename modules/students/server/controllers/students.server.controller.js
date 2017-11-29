@@ -151,7 +151,13 @@ exports.uploadResumePicture = function (req, res) {
         then finally call next
  */
 exports.studentByID = function(req, res, next, id) {
-  Student.findById(id).populate('interview')
+  Student.findById(id).populate({ 
+     path: 'interview',
+     populate: {
+       path: 'recruiter',
+       model: 'User'
+     } 
+  })
   .exec(function(err, student) {
     if(err) {
       res.status(400).send(err);

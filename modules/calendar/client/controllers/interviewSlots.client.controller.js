@@ -14,6 +14,40 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     $scope.studentId = $stateParams.studentId;
   }
 
+  $scope.sendMail = function(interview, student)
+  {
+    console.log(interview.startDate + " :: " + interview.endDate);
+    var startDate = new Date(interview.startDate);
+    var endDate = new Date(interview.endDate);
+    var startMonth = startDate.getMonth()+1;
+    var endMonth = endDate.getMonth()+1;
+    var Sday = startDate.getDate();
+    var Eday = endDate.getDate();
+    var Shours = ("0" + (startDate.getHours()+5)).slice(-2);
+    var Ehours = ("0" + (endDate.getHours()+5)).slice(-2);
+    var Sminutes = ("0"+ startDate.getMinutes()).slice(-2);
+    var Eminutes = ("0" + endDate.getMinutes()).slice(-2);
+
+    var gcal = "https://www.google.com/calendar/render?action=TEMPLATE&text=Interview+Request&dates="+startDate.getFullYear()+ startMonth + Sday +"T"+Shours+Sminutes+"00Z/"+endDate.getFullYear()+ endMonth + Eday +"T"+Ehours+Eminutes+"00Z&location=Reitz+Union";
+    console.log(gcal);
+    // Define basic Email data
+    var data =
+    {
+      email : student.email,
+      subject: student.name + " Interview",
+      body: "Interview on " + interview.startDate +"\n"+ gcal
+    };
+
+    $http.post('/api/employee/interviewEmail', data).
+      success(function(data, status, headers, config) {
+          console.log("Success!");
+          alert("Email sent!");
+      }).
+      error(function(data, status, headers, config) {
+          console.log("Failure!");
+      });
+  };
+
   $scope.init = function(){
     $scope.getInterviews();
     if ($scope.selectingStudentInterview) {
@@ -35,7 +69,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     endTime.setSeconds(0);
     endTime.setMilliseconds(0);
 
-    $scope.batch = 
+    $scope.batch =
     {
         duration : 60,
         startTime : startTime,
@@ -114,10 +148,10 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
           if ($scope.recruiters[j])
           {
             recruiter = $scope.recruiters[j]._id;
-          } 
+          }
 
           // Create new slot
-          var newSlot = 
+          var newSlot =
           {
               startDate : startDate,
               endDate : endDate,
@@ -148,9 +182,9 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     if ($scope.recruiters[0])
     {
       recruiter = $scope.recruiters[0]._id;
-    } 
+    }
 
-    var newSlot = 
+    var newSlot =
     {
       endDate : endDate,
       startDate : startDate,
@@ -182,11 +216,17 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
 
   // Just calls the update method
   $scope.selectForInterview = function(interview) {
-    var date = new Date(interview.date);
+    var date = new Date(interview.startDate);
+
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText)) {
+      // Update the interview with the student
       $scope.update(interview);
-      $scope.sendInvite(interview);
+
+      // Send email to student
+      $scope.sendMail(interview, $scope.student);
+
+      $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
       alert("Interview scheduled!");
     }
   };
@@ -200,7 +240,7 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     }, function(error) {
       $scope.error = "Unable to retrieve recruiters!";
     });
-    
+
   $scope.sendInvite = function (interview) {
     $http.post('/api/employee/interviewInvite', interview);
   };
