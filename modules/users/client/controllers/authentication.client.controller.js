@@ -23,8 +23,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
       }
 
       $http.post('/api/auth/signup', $scope.credentials).success(function (response) {
-        // Redirect to the home page
-        $state.go('home');
+        // Redirect to the confirmation page
+        $state.go('authentication.confirmation');
       }).error(function (response) {
         $scope.error = response.message;
       });
