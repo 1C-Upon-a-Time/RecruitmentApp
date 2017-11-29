@@ -20,6 +20,27 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/users/:userId',
       permissions: '*'
+    }, {
+      resources: '/api/users/:userId',
+      permissions: '*'
+    }, {
+      resources: '/api/users/:userId',
+      permissions: '*'
+    }]
+  }, {
+    roles: ['admin', 'user'],
+    allows: [{
+      resources: '/api/employee/interviewInvite',
+      permissions: '*'
+    }, {
+      resources: '/api/employee/interviewSlot',
+      permissions: '*'
+    }, {
+      resources: '/api/employee/viewInterviewSlots',
+      permissions: '*'
+    }, {
+      resources: '/api/employee/slot/:interviewSlotId',
+      permissions: '*'
     }]
   }]);
 };

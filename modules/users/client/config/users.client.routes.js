@@ -82,6 +82,10 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       url: '/signup',
       templateUrl: 'modules/users/client/views/authentication/signup.client.view.html'
     })
+    .state('authentication.confirmation', {
+      url: '/signup/confirmation',
+      templateUrl: 'modules/users/client/views/authentication/signup-confirmation.client.view.html'
+    })
     .state('authentication.signin', {
       url: '/signin?err',
       templateUrl: 'modules/users/client/views/authentication/signin.client.view.html'
