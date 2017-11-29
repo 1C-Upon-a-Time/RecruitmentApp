@@ -2,7 +2,7 @@
 	<div name="studentSelect" ng-if="selectingStudentInterview">
 		<h2>Selecting interview for {{student.name}}:</h2> <br>
 
-		<div class="card bg-secondary"ng-repeat="day in days | orderBy:'day'">
+		<div class="card bg-default"ng-repeat="day in days | orderBy:'day'">
 			<div class="card-header"> {{day | date}} </div><br>
 			<div class="row">
 
@@ -50,7 +50,7 @@
 		</div>
 
 		<br>
-		<div class="card bg-secondary" ng-repeat="day in days | orderBy:'day'">
+		<div class="card bg-default" ng-repeat="day in days | orderBy:'day'">
 			<div class="card-header"> {{day | date}} </div><br>
 			<div class="row">
 				<div class="col-md-4" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">

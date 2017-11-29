@@ -4,15 +4,15 @@
   </div>
   <div class="row">
     <nav class="col-sm-3 col-md-3">
-      <ul class="nav nav-pills nav-stacked">
-        <li ui-sref-active="active">
-          <a ui-sref="settings.profile">Edit Profile</a>
+      <ul class="nav flex-column">
+        <li ui-sref-active="active" class="nav-item">
+          <a ui-sref="settings.profile" class="nav-link">Edit Profile</a>
         </li>
-        <li ui-sref-active="active">
-          <a ui-sref="settings.picture">Change Profile Picture</a>
+        <li ui-sref-active="active" class="nav-item">
+          <a ui-sref="settings.picture" class="nav-link">Change Profile Picture</a>
         </li>
-        <li ui-sref-active="active" ng-show="user.provider === 'local'">
-          <a ui-sref="settings.password">Change Password</a>
+        <li ui-sref-active="active" class="nav-item" ng-show="user.provider === 'local'">
+          <a ui-sref="settings.password" class="nav-link">Change Password</a>
         </li>
       </ul>
     </nav>
