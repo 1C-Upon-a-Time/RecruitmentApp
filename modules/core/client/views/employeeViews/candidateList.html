@@ -2,107 +2,92 @@
 <!--added StudentController, don't delete the ng-init find since it is needed to get all of the students-->
 <div class="animated fadeIn" ng-controller = "StudentsController" ng-init ="find()">
 
-  <p>Here are the candidates:</p>
   <!--Search bar -->
-  <input type="search" class="light-table-filter" id = "myInput"  placeholder="search" ng-model = "query">
-   <!-- Sorting options -->
-   <tr class = "sortingTypes">
-    <th><b>Sort By:</b>
-          <select ng-model="sort">
-            <!-- sorts from most recently added student -->
-            <option value = "-created_at">Default</option>
-            <!-- sort name from A - Z -->
-            <option value = "name">Name</option>
-            <!-- sort by highest GPA to lowest GPA, it no GPA they will appear first -->
-            <option value = "-gpa">GPA</option>
-             <!-- sort major from A - Z -->
-            <option value = "major">Major</option>
-          </select>
-    </th>
-   </tr>
+  <label for="myInput">Search:</label>
+  <input type="text" class="form-control" id = "myInput"  placeholder="search" ng-model = "query">
+  <hr/>
+  
+  <div class="row">
+    <label for="recruiting-season-filter" class="col-md-2 mx-auto">Recruiting Season</label>
+    <label for="sort-filter" class="col-md-2 mx-auto">Sort By:</label>
+    <label for="search-filter" class="col-md-2 mx-auto">Search By:</label>
+    <label for="show-number-option" class="col-md-2 mx-auto">Entries per page: </label>
+  </div>
 
-   <!-- Show a certain amount of entries of candiates at a time -->
-   <tr class = "paginationFormat">
-    <th><b>Show </b>
-          <select ng-model = "pageSize">
-            <option value = "10">10</option>
-            <option value = "25">25</option>
-            <option value = "50">50</option>
-            <option value = "100">100</option>
-          </select>
-    </th>
-    <th><b> entries</b></th>
-   </tr>
+  <div class="row">
+    <select id="recruiting-season-filter" class="form-control col-md-2 mx-auto" ng-model="filterSeason">
+      <option ng-repeat = "season in seasons | reverse">{{season}}</option>
+    </select>
 
+    <!-- Sorting options -->
+    <select id="sort-filter" ng-model="sort" class="form-control col-md-2 mx-auto">
+      <!-- sorts from most recently added student -->
+      <option value = "-created_at">Default</option>
+      <!-- sort name from A - Z -->
+      <option value = "name">Name</option>
+      <!-- sort by highest GPA to lowest GPA, it no GPA they will appear first -->
+      <option value = "-gpa">GPA</option>
+      <!-- sort major from A - Z -->
+      <option value = "major">Major</option>
+    </select>
 
+    <select id="search-filter" class="form-control col-md-2 mx-auto" ng-model="filter">
+      <option value = "any">Any</option>
+      <option value = "name">Name</option>
+      <option value = "major">Major</option>
+    </select>
 
+    <!-- Show a certain amount of entries of candiates at a time -->
+    <select id="show-number-option" ng-model = "pageSize" class="form-control col-md-2 mx-auto">
+      <option value = "10">10</option>
+      <option value = "25">25</option>
+      <option value = "50">50</option>
+      <option value = "100">100</option>
+    </select>
 
-
-  <!-- filter options -->
-   <table class="table">
-        <thead>
-          <tr class="filters">
-            <!-- Can't really work on this now since we don't have any seasons -->
-            <th>Recruiting Season
-              <select id="recruiting-season-filter" class="form-control" ng-model="filterSeason">
-                <option ng-repeat = "season in seasons | reverse">{{season}}</option>
-              </select>
-            </th>
-            <!-- Called it filter instead of customFilter so that we can get a separate access to each of the variables inside of it. Helps with if,else statements -->
-            <th>Filters
-              <select id="major-filter" class="form-control" ng-model="filter">
-                <option value = "any">Any</option>
-                <option value = "name">Name</option>
-                <option value = "major">Major</option>
-              </select>
-            </th>
-          </tr>
-        </thead>
-      </table>
+  </div>
+  <hr/>
 
 
 
+  <!-- Candidates table -->
+  <div class="tableWrapper">
+    <table class="table table-striped table-hover" table id = "table" id = "myTable" >
+      <thead class = "thead-inverse">
+       <tr>
+        <th style = "width:10%;">Name</th>
+        <th style = "width:10%;">GPA</th>
+        <th style = "width:10%;">Major</th>
+        <th style = "width:10%;">Minor</th>
+        <th style = "width:10%;">
 
-        <!-- Candidates table -->
-         <div class="tableWrapper">
-            <table class="table table-striped table-hover" table id = "table" id = "myTable" >
-              <thead class = "thead-inverse">
-                 <tr>
-                    <th style = "width:10%;">Name</th>
-                    <th style = "width:10%;">GPA</th>
-                    <th style = "width:10%;">Major</th>
-                    <th style = "width:10%;">Minor</th>
-                    <th style = "width:10%;">
+          <input type="checkbox" ng-model="all" >
+          Email
+          <a href="" target="_top" id="xyz">
+            <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope">Send</i>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
+    <!-- added the filter:query to be able to have a general search bar -->
+    <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
 
-                      <input type="checkbox" ng-model="all" >
-                      Email
-                      <a href="" target="_top" id="xyz">
-                      <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope">Send</i>
-                    </a>
-                  </th>
-                </tr>
-             </thead>
-             <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
-             <!-- added the filter:query to be able to have a general search bar -->
-               <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
-
-                    <tr>
-                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
-                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
-                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
-                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
-                        <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
-                     </tr>
-              </tbody>
-            </table>
-          </div>
-            <!-- startFrom:(currentPage -1) *pageSize -->
-
+      <tr>
+        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
+        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
+        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
+        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>
+        <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- startFrom:(currentPage -1) *pageSize -->
 
 
-          <!-- A part of the pagination process -->
-          <pagination total-items = "listings.length" ng-model ="currentPage" items-per-page = "pageSize"></pagination>
+
+<!-- A part of the pagination process -->
+<pagination total-items = "listings.length" ng-model ="currentPage" items-per-page = "pageSize"></pagination>
 
 </div>
-
-</script>
