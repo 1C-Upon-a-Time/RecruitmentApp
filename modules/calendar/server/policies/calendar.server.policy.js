@@ -13,12 +13,18 @@ acl = new acl(new acl.memoryBackend());
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
-    roles: ['admin'],
+    roles: ['admin', 'user'],
     allows: [{
-      resources: '/api/users',
+      resources: '/api/employee/interviewInvite',
       permissions: '*'
     }, {
-      resources: '/api/users/:userId',
+      resources: '/api/employee/interviewSlot',
+      permissions: '*'
+    }, {
+      resources: '/api/employee/viewInterviewSlots',
+      permissions: '*'
+    }, {
+      resources: '/api/employee/slot/:interviewSlotId',
       permissions: '*'
     }]
   }]);
