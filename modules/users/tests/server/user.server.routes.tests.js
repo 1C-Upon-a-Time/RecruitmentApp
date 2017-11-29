@@ -4,8 +4,12 @@ var should = require('should'),
   request = require('supertest'),
   path = require('path'),
   mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  express = require(path.resolve('./config/lib/express'));
+  express = require(path.resolve('../../../../config/lib/express'));
+  config = require('../../../../config/env/development');
+
+  mongoose.connect('mongodb://trump:covfefe@ds229465.mlab.com:29465/easyrecruit-dev');
+  var model = require('../../server/models/user.server.model.js');
+  var User = mongoose.model('User');
 
 /**
  * Globals
@@ -896,7 +900,7 @@ describe('User CRUD tests', function () {
       });
   });
 
-  afterEach(function (done) {
-    User.remove().exec(done);
-  });
+  // afterEach(function (done) {
+  //   User.remove().exec(done);
+  // });
 });
