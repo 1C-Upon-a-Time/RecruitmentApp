@@ -64,7 +64,7 @@
 						<select class="form-control" ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
 						</select>
 						<button class="btn btn-primary" ng-click="updateInterviewRecruiter(interview, recruiter)">Update</button>
-						<button class="btn btn-primary" ng-click="sendMail(interview, interview.student)">Re-send Email</button>
+						<button class="btn btn-primary" ng-if="interview.student" ng-click="sendMail(interview, interview.student)">Re-send Email</button>
 						<button class="btn btn-danger" ng-click="deleteSlot(interview._id)">Delete</button>
 					</div>
 				</div>
