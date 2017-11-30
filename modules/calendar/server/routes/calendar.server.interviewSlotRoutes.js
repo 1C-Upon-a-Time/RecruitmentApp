@@ -8,7 +8,7 @@ module.exports = function (app) {
 
   app.route('/api/employee/interviewEmail').post(adminPolicy.isAllowed, interviewSlots.sendInvite);
   app.route('/api/employee/interviewSlot').post(adminPolicy.isAllowed, interviewSlots.create);
-  app.route('/api/employee/bulkInterviewSlots').post(adminPolicy.isAllowed, interviewSlots.bulkCreate);
+  app.route('/api/employee/bulkInterviewSlots').post(interviewSlots.bulkCreate);
   app.route('/api/employee/viewInterviewSlots').get(adminPolicy.isAllowed, interviewSlots.list);
   app.route('/api/employee/slot/:interviewSlotId')
     .get(adminPolicy.isAllowed, interviewSlots.read)
