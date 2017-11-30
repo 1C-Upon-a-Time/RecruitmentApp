@@ -16,13 +16,26 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
 
   $scope.sendMail = function(interview, student)
   {
+    console.log(interview.startDate + " :: " + interview.endDate);
+    var startDate = new Date(interview.startDate);
+    var endDate = new Date(interview.endDate);
+    var startMonth = startDate.getMonth()+1;
+    var endMonth = endDate.getMonth()+1;
+    var Sday = startDate.getDate();
+    var Eday = endDate.getDate();
+    var Shours = ("0" + (startDate.getHours()+5)).slice(-2);
+    var Ehours = ("0" + (endDate.getHours()+5)).slice(-2);
+    var Sminutes = ("0"+ startDate.getMinutes()).slice(-2);
+    var Eminutes = ("0" + endDate.getMinutes()).slice(-2);
 
+    var gcal = "https://www.google.com/calendar/render?action=TEMPLATE&text=Interview+Request&dates="+startDate.getFullYear()+ startMonth + Sday +"T"+Shours+Sminutes+"00Z/"+endDate.getFullYear()+ endMonth + Eday +"T"+Ehours+Eminutes+"00Z&location=Reitz+Union";
+    console.log(gcal);
     // Define basic Email data
     var data =
     {
       email : student.email,
       subject: student.name + " Interview",
-      body: "Interview on " + interview.startDate
+      body: "Interview on " + interview.startDate +"\n"+ gcal
     };
 
     $http.post('/api/employee/interviewEmail', data).
@@ -33,6 +46,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     error(function(data, status, headers, config) {
       console.log("Failure!");
     });
+
   };
 
   $scope.init = function(){
@@ -56,7 +70,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     endTime.setSeconds(0);
     endTime.setMilliseconds(0);
 
-    $scope.batch = 
+    $scope.batch =
     {
       duration : 60,
       startTime : startTime,
@@ -135,10 +149,10 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
           if ($scope.recruiters[j])
           {
             recruiter = $scope.recruiters[j]._id;
-          } 
+          }
 
           // Create new slot
-          var newSlot = 
+          var newSlot =
           {
             startDate : startDate,
             endDate : endDate,
@@ -179,6 +193,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         recruiter: recruiter
       };
 
+
       InterviewSlots.create(newSlot);
       $scope.getInterviews();
     };
@@ -207,12 +222,12 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
 
     var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText)) {
-      // Update the interview with the student 
+      // Update the interview with the student
       $scope.update(interview);
 
       // Send email to student
       $scope.sendMail(interview, $scope.student);
-      
+
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
       alert("Interview scheduled!");
     }
@@ -227,10 +242,11 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     }, function(error) {
       $scope.error = "Unable to retrieve recruiters!";
     });
-    
+
     $scope.sendInvite = function (interview) {
       $http.post('/api/employee/interviewInvite', interview);
     };
+
 
   };
 
