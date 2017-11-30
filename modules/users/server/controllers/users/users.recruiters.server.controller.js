@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 // URLs for which user can't be redirected on signin
 exports.getRecruiters = function(req, res){
 	// Make sure to only get specific fields so as not to get salt and password hash
-	User.find({roles : "recruiter"}, "displayName email profileImageURL interviews")
+	User.find({isRecruiter : "true"}, "displayName email profileImageURL interviews")
 	.populate('interviews')
 	.exec(function(err, recruiters) {
 		if(err) {

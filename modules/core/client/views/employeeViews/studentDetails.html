@@ -1,0 +1,133 @@
+<div class="row" ng-controller="StudentsController" ng-init="findOne()">
+  <div class="col-sm-offset-1 col-sm-10">
+    <div ng-show="error" class="text-danger">
+      <strong ng-bind="error"></strong>
+    </div>
+    <div class="jumbotron">
+      <img id="loader" ng-show="loading" src="/../../img/484.gif">
+      <div ng-show="student">
+        <div class="col-sm-10">
+        <h1>{{student.name}}</h1>
+        <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Name:</strong></div> 
+            <div class="col-sm-6">{{student.name}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Email:</strong></div> 
+            <div class="col-sm-6">{{student.email}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Major:</strong></div> 
+            <div class="col-sm-6">{{student.major}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Minor:</strong></div> 
+            <div class="col-sm-6">{{student.minor}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Phone:</strong></div> 
+            <div class="col-sm-6">{{student.phone}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>GPA:</strong></div> 
+            <div class="col-sm-6">{{student.gpa}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Position:</strong></div> 
+            <div class="col-sm-6">{{student.fulltime}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Comments:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.comments}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Leadership:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.leadership}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Behavior:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.behavior}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Communication:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.communication}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Critical Thinking:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.critThinking}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Tech Knowledge:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.techKnowledge}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4"><strong>Candidacy:</strong></div> 
+            <div class="col-sm-6">{{student.recruiterComments.candidacy}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-4" ng-model = "cSeason"><strong>Recruiting Season :</strong></div> 
+            <div class="col-sm-6">
+              <a class="btn btn-sm btn-default" ng-click = "goBackSeasons()"> << </a>
+              {{student.season}}
+              <a class="btn btn-sm btn-default" ng-click = "changeSeasons()"> >> </a>
+            </div>
+          </div>
+          <hr/>
+          <div ng-if="student.interview">
+            <div class="row">
+              <div class="col-sm-4">
+               <strong>Interview: </strong>
+              </div> 
+               <div class="col-sm-6">{{student.interview.startDate | date:'short'}}</div>
+            </div>
+            <hr/>
+            <div class="row">
+              <div class="col-sm-4">
+                <strong>Recruiter: </strong>
+              </div> 
+               <div class="col-sm-6">{{student.interview.recruiter.displayName}}</div>
+            </div>
+            <hr/>
+          </div>
+        
+
+        <button class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
+          <i class="glyphicon glyphicon-edit"></i>
+          Edit
+        </button>
+        <button class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
+          <i class="glyphicon glyphicon-envelope"></i>
+          Mail
+        </button>
+
+        <button class="btn btn-primary" ng-if="!student.interview" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
+          <i class="glyphicon glyphicon-user"></i>
+          Interview
+        </button>
+        <button class="btn btn-danger" ng-click="remove();" >
+          <i class="glyphicon glyphicon-trash"></i>
+          Remove
+        </button>
+        <button class="btn btn-default" ui-sref = "employeeDashboard.employeeCandidateList">
+          Back
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

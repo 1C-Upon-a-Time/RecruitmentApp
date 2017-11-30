@@ -1,16 +1,16 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
-
 	<div name="studentSelect" ng-if="selectingStudentInterview">
-		Selecting interview for {{student.name}} <br>
+		<h2>Selecting interview for {{student.name}}:</h2> <br>
 
-		<div ng-repeat="day in days | orderBy:'day'">Interviews for {{day | date}}
-			<!-- Interview Slots list -->
-			<div class="list-group">
+		<div class="card bg-default"ng-repeat="day in days | orderBy:'day'">
+			<div class="card-header"> {{day | date}} </div><br>
+			<div class="row">
 
-				<a href="" target="_top" id= "autoEmail" class="list-group-item list-group-item-action" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
+				<div class="col-md-4" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
+					<div class =" list-group-item list-group-item-action">
 					{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
-				</a>
-
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
        			TO
        			<input type="time" ng-model="batch.endTime"
        			placeholder="HH"  step="1800"  />
-				<br> Interview Duration:<br>
+				<br> Interview Duration:
 				<select ng-model="batch.duration" ng-options="x for x in durations"  />
 				</select> <br>
 
@@ -50,21 +50,24 @@
 		</div>
 
 		<br>
-		<div ng-repeat="day in days | orderBy:'day'">Interviews for {{day | date}}
-
-			<div class="list-group">
-				<div ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
-					<div class="list-group-item list-group-item-action" ng-click="showOptions=!showOptions">
-					{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}} Student: {{interview.student.name}} Recruiter: {{interview.recruiter.displayName}}
+		<div class="card bg-default" ng-repeat="day in days | orderBy:'day'">
+			<div class="card-header"> {{day | date}} </div><br>
+			<div class="row">
+				<div class="col-md-4" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
+					<div class="list-group-item list-group-item-action"  ng-click="showOptions=!showOptions">
+						{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
+						<br> Student: {{interview.student.name}}
+						<br> Recruiter: {{interview.recruiter.displayName}}
 					</div>
-					
-					<div class="list-group-item list-group-item-info" ng-if="showOptions">
-						<select ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
-						</select><br>
-						<button ng-click="updateInterviewRecruiter(interview, recruiter)">Update</button>
+			
+					<div class="list-group-item " ng-if="showOptions">
+						<select class="form-control" ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
+						</select>
+						<button class="btn btn-primary" ng-click="updateInterviewRecruiter(interview, recruiter)">Update</button>
+						<button class="btn btn-primary" ng-if="interview.student" ng-click="sendMail(interview, interview.student)">Re-send Email</button>
+						<button class="btn btn-danger" ng-click="deleteSlot(interview._id)">Delete</button>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
