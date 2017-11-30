@@ -1,11 +1,11 @@
 'use strict';
 angular.module('calendar').controller('SlotsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'InterviewSlots', 'Students',
-function($scope, $location, $stateParams, $state, $http, InterviewSlots, Students){
+  function($scope, $location, $stateParams, $state, $http, InterviewSlots, Students){
 
-  $scope.durations = [30,45,60];
-  $scope.slots = [1,2,3,4,5,6];
-  $scope.selectingStudentInterview = false;
-  $scope.days = [];
+    $scope.durations = [30,45,60];
+    $scope.slots = [1,2,3,4,5,6];
+    $scope.selectingStudentInterview = false;
+    $scope.days = [];
 
   // Determine whether a student is being selected by checking stateParams
   if ($stateParams.studentId)
@@ -26,13 +26,13 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
     };
 
     $http.post('/api/employee/interviewEmail', data).
-      success(function(data, status, headers, config) {    
-          console.log("Success!");
-          alert("Email sent!");
-      }).
-      error(function(data, status, headers, config) {
-          console.log("Failure!");
-      });
+    success(function(data, status, headers, config) {    
+      console.log("Success!");
+      alert("Email sent!");
+    }).
+    error(function(data, status, headers, config) {
+      console.log("Failure!");
+    });
   };
 
   $scope.init = function(){
@@ -58,11 +58,11 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
 
     $scope.batch = 
     {
-        duration : 60,
-        startTime : startTime,
-        endTime : endTime,
-        inputDate : startTime,
-        interviewsPerSlot : 3
+      duration : 60,
+      startTime : startTime,
+      endTime : endTime,
+      inputDate : startTime,
+      interviewsPerSlot : 3
     };
     $scope.minDate = new Date();
   };
@@ -140,48 +140,48 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
           // Create new slot
           var newSlot = 
           {
-              startDate : startDate,
-              endDate : endDate,
-              slot : j+1,
-              recruiter : recruiter
+            startDate : startDate,
+            endDate : endDate,
+            slot : j+1,
+            recruiter : recruiter
           };
           interviewSlots.push(newSlot);
         }
-    }
+      }
 
-    InterviewSlots.bulkCreate(interviewSlots);
-    alert(interviewSlots.length + " slots created!");
-    $scope.getInterviews();
+      InterviewSlots.bulkCreate(interviewSlots);
+      alert(interviewSlots.length + " slots created!");
+      $scope.getInterviews();
 
-  };
-
-  $scope.addCustom = function(custom)
-  {
-    var startDate = new Date($scope.batch.inputDate);
-    startDate.setHours(custom.startTime.getHours());
-    startDate.setMinutes(custom.startTime.getMinutes());
-
-    var endDate = new Date($scope.batch.inputDate);
-    endDate.setHours(custom.endTime.getHours());
-    endDate.setMinutes(custom.endTime.getMinutes());
-
-    var recruiter = null;
-    if ($scope.recruiters[0])
-    {
-      recruiter = $scope.recruiters[0]._id;
-    } 
-
-    var newSlot = 
-    {
-      endDate : endDate,
-      startDate : startDate,
-      slot: 1,
-      recruiter: recruiter
     };
 
-    InterviewSlots.create(newSlot);
-    $scope.getInterviews();
-  };
+    $scope.addCustom = function(custom)
+    {
+      var startDate = new Date($scope.batch.inputDate);
+      startDate.setHours(custom.startTime.getHours());
+      startDate.setMinutes(custom.startTime.getMinutes());
+
+      var endDate = new Date($scope.batch.inputDate);
+      endDate.setHours(custom.endTime.getHours());
+      endDate.setMinutes(custom.endTime.getMinutes());
+
+      var recruiter = null;
+      if ($scope.recruiters[0])
+      {
+        recruiter = $scope.recruiters[0]._id;
+      } 
+
+      var newSlot = 
+      {
+        endDate : endDate,
+        startDate : startDate,
+        slot: 1,
+        recruiter: recruiter
+      };
+
+      InterviewSlots.create(newSlot);
+      $scope.getInterviews();
+    };
 
 
   // Find student information
@@ -228,19 +228,19 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
       $scope.error = "Unable to retrieve recruiters!";
     });
     
-  $scope.sendInvite = function (interview) {
-    $http.post('/api/employee/interviewInvite', interview);
-  };
+    $scope.sendInvite = function (interview) {
+      $http.post('/api/employee/interviewInvite', interview);
+    };
 
   };
 
   // Updates objects with references to each other
   $scope.update = function(interview) {
-      var interviewSlot = interview;
-      var updatedStudent = $scope.student;
+    var interviewSlot = interview;
+    var updatedStudent = $scope.student;
 
-      var slot_id = interviewSlot._id;
-      var student_id = updatedStudent._id;
+    var slot_id = interviewSlot._id;
+    var student_id = updatedStudent._id;
 
       // Slot is no longer available
       interviewSlot.isAvailable = !interviewSlot.isAvailable;
@@ -252,37 +252,50 @@ function($scope, $location, $stateParams, $state, $http, InterviewSlots, Student
       /* Save the article using the Listings factory */
       InterviewSlots.update(slot_id, interviewSlot)
       .then(function(response) {
-          console.log("Slot updated!");
+        console.log("Slot updated!");
       }, function(error) {
       //otherwise display the error
-          $scope.error = 'Unable to update slot!\n' + error;
-      });
+      $scope.error = 'Unable to update slot!\n' + error;
+    });
 
       Students.update(student_id,updatedStudent)
       .then(function(reponse){
-          console.log("Interview assigned to student!");
+        console.log("Interview assigned to student!");
       }, function(error) {
         //otherwise display the error
         $scope.error = 'Unable to update student!\n' + error;
-    });
-  };
+      });
+    };
 
-  $scope.updateInterviewRecruiter = function(interview, recruiter){
-    console.log(interview);
-    console.log(recruiter);
+    $scope.updateInterviewRecruiter = function(interview, recruiter){
+      console.log(interview);
+      console.log(recruiter);
 
-    var interviewSlot = interview;
-    interviewSlot.recruiter = recruiter._id;
+      var interviewSlot = interview;
+      interviewSlot.recruiter = recruiter._id;
 
-    InterviewSlots.update(interviewSlot._id, interviewSlot)
-    .then(function(response) {
-      console.log("Slot updated!");
-      alert("Recruiter " + recruiter.displayName + " assigned to interview!");
-      $scope.getInterviews();
-    }, function(error) {
+      InterviewSlots.update(interviewSlot._id, interviewSlot)
+      .then(function(response) {
+        console.log("Slot updated!");
+        alert("Recruiter " + recruiter.displayName + " assigned to interview!");
+        $scope.getInterviews();
+      }, function(error) {
     //otherwise display the error
-      $scope.error = 'Unable to update slot!\n' + error;
-    });
-  };
-}
+    $scope.error = 'Unable to update slot!\n' + error;
+  });
+    };
+
+    $scope.deleteSlot = function(id){
+      if (confirm("Delete this slot?"))
+      {
+        InterviewSlots.delete(id)
+        .then(function(response){
+          console.log("Slot deleted!");
+          $scope.getInterviews();
+        }, function(error){
+
+        });
+      }
+    };
+  }
 ]);

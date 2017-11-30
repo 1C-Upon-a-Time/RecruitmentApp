@@ -288,11 +288,11 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   };
 
     $scope.remove = function() {
-      /*
-        Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise,
-        display the error.
-        */
-        //debugger;
+        if (!confirm("Delete this student?"))
+        {
+          return;
+        }
+
         $scope.loading = true;
 
         var id = $stateParams.studentId;
