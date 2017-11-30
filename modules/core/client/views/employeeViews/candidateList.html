@@ -82,7 +82,7 @@
                <tbody ng-repeat = "student in listings | orderBy:sort | filter: customFilter |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
 
                     <tr>
-                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.name}}</td>
+                        <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.firstName}} {{student.lastName}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.gpa}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.major}}</td>
                         <td ui-sref="employeeDashboard.studentProfile({ studentId: student._id})">{{student.minor}}</td>

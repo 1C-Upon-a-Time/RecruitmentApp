@@ -5,8 +5,12 @@
       <h3>Edit student</h3>
       <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
           <div class="form-group">
-            <label for="name">Name:</label>
-            <a href="#" editable-text="student.name" e-single e-required>{{ student.name || 'empty' }}</a>
+            <label for="firstname">First Name:</label>
+            <a href="#" editable-text="student.firstname" e-single e-required>{{ student.firstName || 'empty' }}</a>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <a href="#" editable-text="student.lastname" e-single e-required>{{ student.lastName || 'empty' }}</a>
           </div>
           <div class="form-group">
             <label for="email">E-mail:</label>
