@@ -40,10 +40,6 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
     })
     .state('employeeDashboard.studentProfile', {
       url: '/:studentId', 
-      templateUrl: 'modules/core/client/views/employeeViews/studentDetails.html'
-    })
-    .state('employeeDashboard.studentUpdateForm',{
-      url:'/update/:studentId',
       templateUrl: 'modules/core/client/views/employeeViews/studentUpdateForm.html'
     })
 
