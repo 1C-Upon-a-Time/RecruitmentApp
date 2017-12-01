@@ -181,8 +181,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         //   season = 'Fall ' + date.getFullYear(); //fall
         // }
 
+        //change whatever format the phone number is to just 10 digits
         var phone = $scope.phonenumber.replace(/[- )(]/g,'');
-
 
         //More important to save what is required
         var student = {
