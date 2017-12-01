@@ -34,7 +34,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     var data =
     {
       email : student.email,
-      subject: student.name + " Interview",
+      subject: student.firstName + " " + student.lastName + " Interview",
       body: "Interview on " + interview.startDate +"\n"+ gcal
     };
 
@@ -220,7 +220,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
   $scope.selectForInterview = function(interview) {
     var date = new Date(interview.startDate);
 
-    var confirmText = "Confirm " + $scope.student.name + " for " + date + " and send email to " + $scope.student.email + "?";
+    var confirmText = "Confirm " + $scope.student.firstName + " " + $scope.student.lastName + " for " + date + " and send email to " + $scope.student.email + "?";
     if (confirm(confirmText)) {
       // Update the interview with the student
       $scope.update(interview);

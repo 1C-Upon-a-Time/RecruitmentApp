@@ -1,6 +1,6 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
 	<div name="studentSelect" ng-if="selectingStudentInterview">
-		<h2>Selecting interview for {{student.name}}:</h2> <br>
+		<h2>Selecting interview for {{student.firstName}} {{student.lastName}}:</h2> <br>
 
 		<div class="card bg-default"ng-repeat="day in days | orderBy:'day'">
 			<div class="card-header"> {{day | date}} </div><br>
@@ -56,7 +56,7 @@
 				<div class="col-md-4" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
 					<div class="list-group-item list-group-item-action"  ng-click="showOptions=!showOptions">
 						{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
-						<br> Student: {{interview.student.name}}
+						<br> Student: {{interview.student.firstName}} {{interview.student.lastName}}
 						<br> Recruiter: {{interview.recruiter.displayName}}
 					</div>
 			

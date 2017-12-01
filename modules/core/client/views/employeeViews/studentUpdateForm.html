@@ -3,9 +3,9 @@
 <div class="row" ng-controller="StudentsController" ng-init="findOne()">
   <div class="col-sm-offset-1 col-sm-12 formWrapper">
     <div class="page-header card">
-      <h3 class="card-header">{{student.name}}</h3>
+      <h3 class="card-header">{{student.firstName}} {{student.lastName}}</h3>
       <form name="studentUpdateForm" class="form-horizontal card-body row" ng-submit="update(studentUpdateForm.$valid)">
-        <div class="card card-outline-primary col-sm-12 col-md-6 " name="detailsContainer">
+        <div class="card card-outline-primary card-inverse col-sm-12 col-md-6 " name="detailsContainer">
           <div class="card-body">
 
             <div class="row">
@@ -330,7 +330,7 @@
             Save
           </button>
 
-          <button class="btn btn-primary border col-4 col-sm-3 col-xl-2" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
+          <button class="btn btn-primary border col-4 col-sm-3 col-xl-2" href="mailto:{{student.email}}?Subject=Hello%20{{student.firstName}}" target="_top">
             <i class="fa fa-envelope"></i>
             Mail
           </button>
