@@ -5,12 +5,13 @@
       <h3 class="card-header">{{student.name}}</h3>
       <form name="studentUpdateForm" class="form-horizontal card-body row" ng-submit="update(studentUpdateForm.$valid)">
 
-        <div class="card col-sm-12 col-md-6 " name="detailsContainer">
+        <div class="card card-outline-primary col-sm-12 col-md-6 " name="detailsContainer">
           <div class="card-body">
 
             <div class="row">
               <label class="col-sm-3 col-md-5 col-xl-3" for="name">Name:</label>
-              <span class="col-sm-9 col-md-7" href="#" editable-text="student.name" submit="update()" e-single e-required>{{ student.name || 'empty' }}</span>
+              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.firstName" submit="update()" e-single e-required>{{ student.firstName || 'empty' }}</span>
+              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.lastName" submit="update()" e-single e-required>{{ student.lastName || 'empty' }}</span>
             </div>
             <hr/>
             <div class="row">
@@ -88,7 +89,7 @@
 
 
 
-        <div class="card col-sm-12 col-md-6 ">
+        <div class="card card-outline-primary col-sm-12 col-md-6 ">
           <div class="card-body">
             <div class="row">
               <label class="col-sm-4 col-md-12">Leadership:</label>
@@ -314,7 +315,7 @@
         </div>
 
 
-        <div class="card card-body col-sm-12 col-md-6 ">
+        <div class="card card-outline-primary card-body col-sm-12 col-md-6 ">
           <label for="comments">Comments:</label>
           <textarea style="height: 250px" class="form-control" ng-model="student.recruiterComments.comments">
             {{ student.recruiterComments.comments || 'N/A' }}
@@ -325,7 +326,7 @@
         <hr/>
         <div class="row col-sm-12">
             <button type="submit" class="btn btn-primary border col-4 col-sm-3 col-xl-2" ng-submit="update()">
-              Submit
+              Save
             </button>
 
             <button class="btn btn-primary border col-4 col-sm-3 col-xl-2" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
