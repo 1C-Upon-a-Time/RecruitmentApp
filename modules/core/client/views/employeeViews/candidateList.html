@@ -1,4 +1,7 @@
 
+<!--Link required to get glyphicons to work -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 <!--added StudentController, don't delete the ng-init find since it is needed to get all of the students-->
 <div class="animated fadeIn" ng-controller = "StudentsController" ng-init ="find()">
 
@@ -53,8 +56,6 @@
   </div>
   <hr/>
 
-
-
   <!-- Candidates table -->
   <div class="table-responsive">
     <table class="table table-striped table-hover" table id = "table" id = "myTable" >
@@ -69,7 +70,7 @@
           <input type="checkbox" ng-model="all" >
           Email
           <a href="" target="_top" id="xyz">
-            <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope">Send</i>
+            <i ng-click="bulkEmail()" class="fa fa-envelope">Send</i>
           </a>
         </th>
       </tr>

@@ -140,10 +140,12 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
         else if($scope.filter === "any"){
           return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
-                 (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
+                 (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1)  ;
         }
         else if($scope.filter === "name"){
-          return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+          return (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1);
         }
         else if($scope.filter === "major"){
           return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
@@ -179,15 +181,18 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         //   season = 'Fall ' + date.getFullYear(); //fall
         // }
 
+        //change whatever format the phone number is to just 10 digits
+        var phone = $scope.phonenumber.replace(/[- )(]/g,'');
 
         //More important to save what is required
         var student = {
-          name: $scope.name,
+          firstName: $scope.firstname,
+          lastName: $scope.lastname,
           email: $scope.email,
           major: $scope.major,
           minor: $scope.minor,
           gpa: $scope.gpa,
-          phone: $scope.phonenumber,
+          phone: phone,
           fulltime: $scope.fulltime,
           season : season
         };
