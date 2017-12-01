@@ -15,7 +15,7 @@ exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin', 'user'],
     allows: [{
-      resources: '/api/employee/interviewInvite',
+      resources: '/api/employee/interviewEmail',
       permissions: '*'
     }, {
       resources: '/api/employee/interviewSlot',
