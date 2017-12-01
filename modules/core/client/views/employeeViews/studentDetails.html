@@ -1,3 +1,6 @@
+<!--Link required to get glyphicons to work -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 <div class="row" ng-controller="StudentsController" ng-init="findOne()">
   <div class="col-sm-offset-1 col-sm-10">
     <div ng-show="error" class="text-danger">
@@ -105,22 +108,22 @@
             <hr/>
           </div>
         
-
         <button class="btn btn-primary" ui-sref="employeeDashboard.studentUpdateForm({ studentId: student._id })">
-          <i class="glyphicon glyphicon-edit"></i>
+          <i class="fa fa-edit"></i>
           Edit
         </button>
         <button class="btn btn-primary" href="mailto:{{student.email}}?Subject=Hello%20{{student.name}}" target="_top">
-          <i class="glyphicon glyphicon-envelope"></i>
+          <i class="fa fa-envelope"></i>
+
           Mail
         </button>
 
         <button class="btn btn-primary" ng-if="!student.interview" ui-sref="employeeDashboard.selectForInterview({ studentId: student._id })">
-          <i class="glyphicon glyphicon-user"></i>
+          <i class="fa fa-user"></i>
           Interview
         </button>
         <button class="btn btn-danger" ng-click="remove();" >
-          <i class="glyphicon glyphicon-trash"></i>
+          <i class="fa fa-trash"></i>
           Remove
         </button>
         <button class="btn btn-default" ui-sref = "employeeDashboard.employeeCandidateList">

@@ -140,10 +140,12 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
         else if($scope.filter === "any"){
           return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
-                 (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
+                 (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1)  ;
         }
         else if($scope.filter === "name"){
-          return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+          return (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1);
         }
         else if($scope.filter === "major"){
           return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
@@ -179,15 +181,18 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         //   season = 'Fall ' + date.getFullYear(); //fall
         // }
 
+        //change whatever format the phone number is to just 10 digits
+        var phone = $scope.phonenumber.replace(/[- )(]/g,'');
 
         //More important to save what is required
         var student = {
-          name: $scope.name,
+          firstName: $scope.firstname,
+          lastName: $scope.lastname,
           email: $scope.email,
           major: $scope.major,
           minor: $scope.minor,
           gpa: $scope.gpa,
-          phone: $scope.phonenumber,
+          phone: phone,
           fulltime: $scope.fulltime,
           season : season
         };
@@ -206,26 +211,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
 
     $scope.findOne = function() {
-      //debugger;
-      $scope.loading = true;
-
-      var id = $stateParams.studentId;
-
-      Students.read(id)
-      .then(function(response) {
-        
-        if(response.data.fulltime)
-          response.data.fulltime = 'Fulltime';       
-        else 
-          response.data.fulltime = 'Internship';
-        $scope.student = response.data;
-        $scope.loading = false;
-      }, function(error) {  
-        $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
-        $scope.loading = false;
-      });
-    };
-    $scope.displayEditForm = function() {
       //debugger;
       $scope.loading = true;
 
@@ -268,7 +253,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         return false;
       }
 
-      $scope.student.fullTime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.fulltime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
       $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
       $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
       $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')===null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
@@ -286,14 +271,38 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
               $scope.error = 'Unable to save student!\n' + error;
       });
   };
+    $scope.submitForInterview = function() {
+      $scope.loading = true;
+      var id = $stateParams.studentId;
+
+
+      $scope.student.fulltime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')===null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+    
+    Students.update(id, $scope.student).then(function(reponse){
+
+      $scope.loading=false;
+      $state.go('employeeDashboard.selectForInterview',{studentId: id });
+    }, function(error) {
+              //otherwise display the error
+              $scope.loading=false;
+              $scope.error = 'Unable to save student!\n' + error;
+      });
+  };
 
     $scope.remove = function() {
-      /*
-        Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise,
-        display the error.
-        */
-        //debugger;
+        if (!confirm("Delete this student?"))
+        {
+          return;
+        }
+
         $scope.loading = true;
+        confirm("Are you sure you want to delete this student?");
 
         var id = $stateParams.studentId;
         Students.delete(id)

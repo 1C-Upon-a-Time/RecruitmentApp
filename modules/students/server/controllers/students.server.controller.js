@@ -39,7 +39,8 @@ exports.update = function(req, res) {
   var student = req.student;
 
   /* Replace the article's properties with the new properties found in req.body */
-  student.name = req.body.name;
+  student.firstName = req.body.firstName;
+  student.lastName = req.body.lastName;
   student.email = req.body.email;
   student.major = req.body.major;
   student.minor = req.body.minor;

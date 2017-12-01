@@ -10,6 +10,9 @@ angular.module('calendar').factory('InterviewSlots', ['$http',
       create: function(interviewSlot) {
         return $http.post('/api/employee/interviewSlot', interviewSlot);
       },
+      delete: function(id){
+        return $http.delete('/api/employee/slot/' + id);
+      },
       bulkCreate: function(interviewSlots){
         return $http.post('/api/employee/bulkInterviewSlots', interviewSlots);
       },

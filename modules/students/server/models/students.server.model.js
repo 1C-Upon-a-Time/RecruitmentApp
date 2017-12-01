@@ -4,7 +4,11 @@ var mongoose = require('mongoose'),
 
 
 var studentSchema = new Schema({
-  name:{
+  firstName:{
+    type:String,
+    required: true
+  },
+  lastName:{
     type:String,
     required: true
   },
@@ -17,7 +21,10 @@ var studentSchema = new Schema({
     required: true
   },
   minor: String,
-  phone: String,
+  phone: { 
+    type: String,
+    required: true
+  },
   gpa: Number,
   interview: {
     type: Schema.Types.ObjectId,
