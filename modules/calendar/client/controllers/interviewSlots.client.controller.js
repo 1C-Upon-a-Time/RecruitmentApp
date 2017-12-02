@@ -198,120 +198,144 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
       $scope.getInterviews();
     };
 
+    $scope.interviewFilter = function(interview)
+    {
+      if ($scope.query)
+      {
+        var q = $scope.query.toUpperCase();
 
-  // Find student information
-  $scope.getStudent = function() {
-    //debugger;
-    $scope.loading = true;
+        var rec, stud;
+        if (interview.recruiter)
+        {
+          rec = interview.recruiter.displayName.toUpperCase().includes(q);
+        }
 
-    var id = $stateParams.studentId;
-
-    Students.read(id)
-    .then(function(response) {
-      $scope.student = response.data;
-      $scope.loading = false;
-    }, function(error) {
-      $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
-      $scope.loading = false;
-    });
-  };
-
-  // Just calls the update method
-  $scope.selectForInterview = function(interview) {
-    var date = new Date(interview.startDate);
-
-    var confirmText = "Confirm " + $scope.student.firstName + " " + $scope.student.lastName + " for " + date + " and send email to " + $scope.student.email + "?";
-    if (confirm(confirmText)) {
-      // Update the interview with the student
-      $scope.update(interview);
-
-      // Send email to student
-      $scope.sendMail(interview, $scope.student);
-
-      $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
-      alert("Interview scheduled!");
-    }
-  };
-
-
-  $scope.getRecruiters = function(interview) {
-    InterviewSlots.getRecruiters()
-    .then(function(response) {
-      $scope.recruiters = response.data;
-      $scope.recruiter = $scope.recruiters[0];
-    }, function(error) {
-      $scope.error = "Unable to retrieve recruiters!";
-    });
-
-    $scope.sendInvite = function (interview) {
-      $http.post('/api/employee/interviewInvite', interview);
+        if (interview.student)
+        {
+          stud = (interview.student.firstName.toUpperCase().includes(q) ||
+                  interview.student.lastName.toUpperCase().includes(q));
+        }
+        return rec || stud || interview.startDate.toUpperCase().includes(q);
+      }
+      else
+      {
+        return true;
+      }
     };
 
+    // Find student information
+    $scope.getStudent = function() {
+      //debugger;
+      $scope.loading = true;
 
-  };
+      var id = $stateParams.studentId;
 
-  // Updates objects with references to each other
-  $scope.update = function(interview) {
-    var interviewSlot = interview;
-    var updatedStudent = $scope.student;
-
-    var slot_id = interviewSlot._id;
-    var student_id = updatedStudent._id;
-
-      // Slot is no longer available
-      interviewSlot.isAvailable = !interviewSlot.isAvailable;
-      // Set slot's scheduled student
-      interviewSlot.student = $scope.student._id;
-
-      updatedStudent.interview = interviewSlot._id;
-
-      /* Save the article using the Listings factory */
-      InterviewSlots.update(slot_id, interviewSlot)
+      Students.read(id)
       .then(function(response) {
-        console.log("Slot updated!");
+        $scope.student = response.data;
+        $scope.loading = false;
       }, function(error) {
-      //otherwise display the error
-      $scope.error = 'Unable to update slot!\n' + error;
-    });
-
-      Students.update(student_id,updatedStudent)
-      .then(function(reponse){
-        console.log("Interview assigned to student!");
-      }, function(error) {
-        //otherwise display the error
-        $scope.error = 'Unable to update student!\n' + error;
+        $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
+        $scope.loading = false;
       });
     };
 
-    $scope.updateInterviewRecruiter = function(interview, recruiter){
-      console.log(interview);
-      console.log(recruiter);
+    // Just calls the update method
+    $scope.selectForInterview = function(interview) {
+      var date = new Date(interview.startDate);
 
-      var interviewSlot = interview;
-      interviewSlot.recruiter = recruiter._id;
+      var confirmText = "Confirm " + $scope.student.firstName + " " + $scope.student.lastName + " for " + date + " and send email to " + $scope.student.email + "?";
+      if (confirm(confirmText)) {
+        // Update the interview with the student
+        $scope.update(interview);
 
-      InterviewSlots.update(interviewSlot._id, interviewSlot)
-      .then(function(response) {
-        console.log("Slot updated!");
-        alert("Recruiter " + recruiter.displayName + " assigned to interview!");
-        $scope.getInterviews();
-      }, function(error) {
-    //otherwise display the error
-    $scope.error = 'Unable to update slot!\n' + error;
-  });
-    };
+        // Send email to student
+        $scope.sendMail(interview, $scope.student);
 
-    $scope.deleteSlot = function(id){
-      if (confirm("Delete this slot?"))
-      {
-        InterviewSlots.delete(id)
-        .then(function(response){
-          console.log("Slot deleted!");
-          $scope.getInterviews();
-        }, function(error){
-
-        });
+        $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
+        alert("Interview scheduled!");
       }
     };
-  }
+
+
+    $scope.getRecruiters = function(interview) {
+      InterviewSlots.getRecruiters()
+      .then(function(response) {
+        $scope.recruiters = response.data;
+        $scope.recruiter = $scope.recruiters[0];
+      }, function(error) {
+        $scope.error = "Unable to retrieve recruiters!";
+      });
+
+      $scope.sendInvite = function (interview) {
+        $http.post('/api/employee/interviewInvite', interview);
+      };
+
+
+    };
+
+    // Updates objects with references to each other
+    $scope.update = function(interview) {
+      var interviewSlot = interview;
+      var updatedStudent = $scope.student;
+
+      var slot_id = interviewSlot._id;
+      var student_id = updatedStudent._id;
+
+        // Slot is no longer available
+        interviewSlot.isAvailable = !interviewSlot.isAvailable;
+        // Set slot's scheduled student
+        interviewSlot.student = $scope.student._id;
+
+        updatedStudent.interview = interviewSlot._id;
+
+        /* Save the article using the Listings factory */
+        InterviewSlots.update(slot_id, interviewSlot)
+        .then(function(response) {
+          console.log("Slot updated!");
+        }, function(error) {
+        //otherwise display the error
+        $scope.error = 'Unable to update slot!\n' + error;
+      });
+
+        Students.update(student_id,updatedStudent)
+        .then(function(reponse){
+          console.log("Interview assigned to student!");
+        }, function(error) {
+          //otherwise display the error
+          $scope.error = 'Unable to update student!\n' + error;
+        });
+      };
+
+      $scope.updateInterviewRecruiter = function(interview, recruiter){
+        console.log(interview);
+        console.log(recruiter);
+
+        var interviewSlot = interview;
+        interviewSlot.recruiter = recruiter._id;
+
+        InterviewSlots.update(interviewSlot._id, interviewSlot)
+        .then(function(response) {
+          console.log("Slot updated!");
+          alert("Recruiter " + recruiter.displayName + " assigned to interview!");
+          $scope.getInterviews();
+        }, function(error) {
+      //otherwise display the error
+      $scope.error = 'Unable to update slot!\n' + error;
+    });
+      };
+
+      $scope.deleteSlot = function(id){
+        if (confirm("Delete this slot?"))
+        {
+          InterviewSlots.delete(id)
+          .then(function(response){
+            console.log("Slot deleted!");
+            $scope.getInterviews();
+          }, function(error){
+
+          });
+        }
+      };
+    }
 ]);

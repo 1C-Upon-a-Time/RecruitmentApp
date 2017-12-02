@@ -1,23 +1,17 @@
 <section>
-  <div class="page-header">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>Users</h1>
-      </div>
-    </div>
+    <label for="userSearch">Search:</label>
+    <input name="userSearch" class="form-control" type="text" ng-model="search" placeholder="search" ng-change="figureOutItemsToDisplay()" />
     <hr>
-  </div>
-    <input class="form-control" type="text" ng-model="search" placeholder="Search" ng-change="figureOutItemsToDisplay()" />
-    <br>
     <a ng-repeat="user in pagedItems" ui-sref="admin.user({userId: user._id})" class="card">
       <div class="row card-body">
         <h4 class="col-12 col-sm-5 col-md-6 col-lg-3" ng-bind="user.displayName"></h4>
         <p class="col-10 col-sm-5 col-md-4" ng-bind="user.email"></p>
         <div class="col text-right">
           <i style="font-size: 26px"  ng-if="user.roles.includes('admin')" class="fa fa-shield"></i>
-          <i style="font-size: 26px; color: red" ng-if="user.roles.includes('none')" class="fa fa-exclamation-circle"></i>
-          <i style="font-size: 26px"  ng-if="user.isRecruiter" class="fa fa-user-circle"></i>
-        </div>
+<!--           <i style="font-size: 26px"  ng-if="user.roles.includes('user')" class="fa fa-user"></i>
+ -->          <i style="font-size: 26px; color: red" ng-if="user.roles.includes('none')" class="fa fa-exclamation-circle"></i>
+<!--           <i style="font-size: 26px"  ng-if="user.isRecruiter" class="fa fa-user-circle"></i>
+ -->        </div>
       </div>
     </a>
 

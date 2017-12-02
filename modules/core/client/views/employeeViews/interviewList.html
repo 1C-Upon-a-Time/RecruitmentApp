@@ -1,14 +1,19 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
+
+  	<label for="slotSearch">Search:</label>
+	<input type="text" name="slotSearch" class="form-control" ng-model="query" placeholder="search" />
+	<hr>
+
 	<div name="studentSelect" ng-if="selectingStudentInterview">
-		<h2>Selecting interview for {{student.firstName}} {{student.lastName}}:</h2> <br>
+		<h2>Selecting interview for {{student.firstName}} {{student.lastName}}:</h2>  
 
 		<div class="card bg-default"ng-repeat="day in days | orderBy:'day'">
-			<div class="card-header"> {{day | date}} </div><br>
+			<div class="card-header"> {{day | date}} </div> 
 			<div class="row">
 
-				<div class="col-md-4" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
+				<div class="col-md-4" ng-click="selectForInterview(interview)" ng-repeat="interview in interviews | orderBy:'startDate | filter:query' " data-ng-if="(day | date) == (interview.startDate | date) && interview.isAvailable">
 					<div class =" list-group-item list-group-item-action">
-					{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
+						{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
 					</div>
 				</div>
 			</div>
@@ -16,57 +21,114 @@
 	</div>
 
 	<div ng-if="!selectingStudentInterview">
-		<button ng-click="showSettings=!showSettings">Create Slots</button>
-		<div ng-if="showSettings">
-			<form name="batchSlotForm">
-				Date: <input type="date" name="input" ng-model="batch.inputDate"
-       			placeholder="yyyy-MM-dd" min="{{minDate | date:'yyyy-MM-dd'}}"  /> <br>
-			
-				Add Batch of Slots:<br>
-				Time Interval:<br>
-				<input type="time" ng-model="batch.startTime"
-       			placeholder="HH" step="1800"  />
-       			TO
-       			<input type="time" ng-model="batch.endTime"
-       			placeholder="HH"  step="1800"  />
-				<br> Interview Duration:
-				<select ng-model="batch.duration" ng-options="x for x in durations"  />
-				</select> <br>
 
-				Interviews Per Slot: 
-				<select ng-model="batch.interviewsPerSlot" ng-options="x for x in slots"  /><br>
-				<button ng-click="addBatch(batch)">ADD</button>
-			
+		<div class="card">
+			<div class="card-header" data-toggle="collapse" href="#slotCreation">
+				Create Slots
+			</div>
 
-			Add Customized Slots:<br>
-			Slot:<br>
-			<input type="time" ng-model="custom.startTime"
-       		placeholder="HH" step="300"  />
-       		TO
-       		<input type="time" ng-model="custom.endTime"
-       		placeholder="HH"  step="300"  /><br>
-			<button ng-click="addCustom(custom)">ADD</button>
-			</form>
+			<div class="card-body collapse" id="slotCreation">
+
+				Date: 
+				<input class="form-control" type="date" name="input" ng-model="batch.inputDate"
+				placeholder="yyyy-MM-dd" min="{{minDate | date:'yyyy-MM-dd'}}"  /> 
+
+				<br>
+
+				<div class="row">
+					<h5 class="col-12">Time Interval:</h5>
+				</div>
+
+				<div class="row">
+					<div class="col-12 col-sm-5 col-md-6 col-lg-4">
+						<input class="form-control " type="time" ng-model="batch.startTime"
+						placeholder="HH" step="1800"  />
+					</div>
+
+					<p class="text-center col-12 col-sm-2 col-lg-2">TO</p>
+
+					<div class="col-12 col-sm-5 col-md-6 col-lg-4">
+						<input class="form-control " type="time" ng-model="batch.endTime"
+						placeholder="HH"  step="1800"  />
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12 col-sm-5 col-lg-6">
+						Interview Duration:
+						<select class="form-control" ng-model="batch.duration" ng-options="x for x in durations"  /> 
+					</div>
+
+					<div class="col-12 col-sm-5 col-lg-6">
+						Interviews Per Slot: 
+						<select class="form-control" ng-model="batch.interviewsPerSlot" ng-options="x for x in slots"  />
+					</div>
+				</div>
+
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<button class="btn btn-default" ng-click="addBatch(batch)">ADD</button>
+					</div>
+				</div> 
+				<hr>
+
+				<div class="row">
+					<h5 class="col-12">Custom Slot:</h5>
+				</div>
+
+				<div class="row">
+					<div class="col-12 col-sm-5 col-md-6 col-lg-4">
+						<input class="form-control" type="time" ng-model="custom.startTime"
+						placeholder="HH" step="300"  />
+					</div>
+
+					<p class="text-center col-12 col-sm-2 col-lg-2">TO</p>
+
+					<div class="col-12 col-sm-5 col-md-6 col-lg-4">
+						<input class="form-control" type="time" ng-model="custom.endTime"
+						placeholder="HH"  step="300"  />	
+					</div>
+				</div>
+
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<button class="btn btn-default" ng-click="addCustom(custom)">ADD</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<br>
+
 		<div class="card bg-default" ng-repeat="day in days | orderBy:'day'">
-			<div class="card-header"> {{day | date}} </div><br>
+			<div class="card-header"> {{day | date}} </div> 
 			<div class="row">
-				<div class="col-md-4" ng-repeat="interview in interviews | orderBy:'startDate'" data-ng-if="(day | date) == (interview.startDate | date)">
-					<div class="list-group-item list-group-item-action"  ng-click="showOptions=!showOptions">
+				<div class="col-md-4" ng-repeat="interview in interviews | orderBy:'startDate' | filter:interviewFilter" data-ng-if="(day | date) == (interview.startDate | date)">
+
+					<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#slotSettings{{$index}}">
 						{{interview.startDate | date:'shortTime'}} - {{interview.endDate | date:'shortTime'}}
-						<br> Student: {{interview.student.firstName}} {{interview.student.lastName}}
-						<br> Recruiter: {{interview.recruiter.displayName}}
+						<br>
+						Student: {{interview.student.firstName}} {{interview.student.lastName}}
+						<br>
+						Recruiter: {{interview.recruiter.displayName}}
+					</a>
+
+					<div class="collapse" id="slotSettings{{$index}}">
+						<div class="list-group-item">
+							<select class="form-control" ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
+							<button class="btn btn-primary" ng-click="updateInterviewRecruiter(interview, recruiter)">
+								Update
+							</button>
+							<button class="btn btn-danger" ng-click="deleteSlot(interview._id)">
+								Delete
+							</button>
+							<button class="btn btn-primary" ng-if="interview.student" ng-click="sendMail(interview, interview.student)">
+								Re-send Email
+							</button>
+						</div>
 					</div>
-			
-					<div class="list-group-item " ng-if="showOptions">
-						<select class="form-control" ng-model="recruiter" ng-options="recruiter.displayName for recruiter in recruiters" />
-						</select>
-						<button class="btn btn-primary" ng-click="updateInterviewRecruiter(interview, recruiter)">Update</button>
-						<button class="btn btn-primary" ng-if="interview.student" ng-click="sendMail(interview, interview.student)">Re-send Email</button>
-						<button class="btn btn-danger" ng-click="deleteSlot(interview._id)">Delete</button>
-					</div>
+
 				</div>
 			</div>
 		</div>
