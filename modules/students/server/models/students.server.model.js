@@ -4,7 +4,11 @@ var mongoose = require('mongoose'),
 
 
 var studentSchema = new Schema({
-  name:{
+  firstName:{
+    type:String,
+    required: true
+  },
+  lastName:{
     type:String,
     required: true
   },
@@ -59,6 +63,10 @@ var studentSchema = new Schema({
       default: 0
     },
     updated_at: Date
+  },
+  inline:{
+    type: Boolean,
+    default: true
   },
   created_at: Date,
   updated_at: Date

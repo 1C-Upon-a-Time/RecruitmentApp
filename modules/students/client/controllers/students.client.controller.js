@@ -2,6 +2,18 @@
 angular.module('students').controller('StudentsController', ['$scope', '$location', '$stateParams', '$state', '$http', 'Students',
   function($scope, $location, $stateParams, $state, $http, Students){
     $scope.listings = [];
+
+    // Calculate current season
+    var date = new Date();
+    if (date.getMonth() <= 5){
+      $scope.currentSeason = 'Spring ' + date.getFullYear(); //spring
+    }
+    else if(date.getMonth() >=6){
+      $scope.currentSeason = 'Fall ' + date.getFullYear(); //fall
+    }
+
+
+
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -122,8 +134,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     //Case insensitive
     //checks if the search bar is currently null. If so, just load everything in the
     //student database anyways
-
-    if($scope.filterSeason && $scope.filterSeason.toUpperCase() === student.season.toUpperCase()){
+    
+    if(($scope.filterSeason && $scope.filterSeason.toUpperCase() === student.season.toUpperCase())&& (student.inline===false)){
         if(!$scope.query){
           return true;
         }
@@ -139,6 +151,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
      }
   };
+
+
 
   function isEmpty(str){
     return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
@@ -173,7 +187,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
         //More important to save what is required
         var student = {
-          name: $scope.name,
+          firstName: $scope.firstName,
+          lastName: $scope.lastName,
           email: $scope.email,
           major: $scope.major,
           minor: $scope.minor,
@@ -229,7 +244,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
 
   
-    $scope.update = function(isValid) {
+    $scope.updateRecruiterComments = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
       var id = $stateParams.studentId;
@@ -246,9 +261,39 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+      $scope.student.inline = false;
     
     Students.update(id, $scope.student).then(function(reponse){
 
+      $scope.loading=false;
+      $state.go('employeeDashboard.employeeCandidatesInLine', { successMessage: 'Student succesfully updated!' });
+    }, function(error) {
+              //otherwise display the error
+              $scope.loading=false;
+              $scope.error = 'Unable to save student!\n' + error;
+      });
+  };
+
+      $scope.update = function(isValid) {
+      //debugger;candidacy
+      $scope.loading = true;
+      var id = $stateParams.studentId;
+
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'articleForm');
+        return false;
+      }
+
+      $scope.student.fulltime =  ((document.querySelector('input[name=fulltimeRadios]:checked')===null)?0:document.querySelector('input[name=fulltimeRadios]:checked').value);
+      $scope.student.recruiterComments.leadership =  ((document.querySelector('input[name=leadershipRadios]:checked')===null)?0:document.querySelector('input[name=leadershipRadios]:checked').value);
+      $scope.student.recruiterComments.behavior = ((document.querySelector('input[name=behaviorRadios]:checked')===null)?0:document.querySelector('input[name=behaviorRadios]:checked').value);
+      $scope.student.recruiterComments.communication = ((document.querySelector('input[name=communicationRadios]:checked')===null)?0:document.querySelector('input[name=communicationRadios]:checked').value);
+      $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
+      $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
+      $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+
+    
+    Students.update(id, $scope.student).then(function(reponse){
       $scope.loading=false;
       $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
     }, function(error) {
@@ -270,6 +315,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+      $scope.student.inline = false;
     
     Students.update(id, $scope.student).then(function(reponse){
 
@@ -301,6 +347,18 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
           $scope.loading = false;
         });
       };
+      
+$scope.deleteFromList = function (student) {
+  var student_to_delete = student;
+  var id=student_to_delete._id;
+  var index= $scope.listings.indexOf(student);
+
+
+  Students.delete(id).then (function (success) {
+    $scope.listings.splice(index, 1);
+  });
+};
+   
 
       /* Bind the success message to the scope if it exists as part of the current state */
       if($stateParams.successMessage) {

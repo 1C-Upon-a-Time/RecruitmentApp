@@ -48,6 +48,7 @@ exports.update = function(req, res) {
   student.fulltime = req.body.fulltime;
   student.interview = req.body.interview;
   student.season = req.body.season;
+  student.inline = req.body.inline;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.body.recruiterComments) {

@@ -3,7 +3,7 @@
   <div class="col-md-offset-1 col-md-10 formWrapper">
     <div class="page-header">
       <h3>Edit student</h3>
-      <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
+      <form name="studentUpdateForm" class="form-horizontal" ng-submit="updateRecruiterComments(studentUpdateForm.$valid)">
           <div class="form-group">
             <label for="firstName">First Name:</label>
             <a href="#" editable-text="student.firstName" e-single e-required>{{ student.firstName || 'empty' }}</a>
@@ -260,14 +260,6 @@
             <button type="button" ng-click = "goBackSeasons()"> << </button>
             <button type="button" ng-click = "changeSeasons()"> >> </button>
           </div>
-          <div class="form-group" ng-if="student.interview">
-            <label>Interview: </label>
-              <span>{{student.interview.startDate | date:'short'}}</span>
-          </div>
-          <div class="form-group" ng-if="student.interview">
-            <label>Recruiter: </label>
-              <span>{{student.interview.recruiter}}</span>
-          </div>
 
 
           <div class="form-group">
@@ -277,10 +269,6 @@
             Mail
             </a>
             <button class="btn btn-primary" type="button" ng-if="!student.interview" ng-click="submitForInterview();"> Interview </button>
-            <a class="btn btn-danger" ng-click="remove();" >
-              <i class="glyphicon glyphicon-trash"></i>
-              Remove
-            </a>
             <button ui-sref = "employeeDashboard.employeeCandidatesInLine">Back</button>
           </div>
           <div ng-show="error" class="text-danger">

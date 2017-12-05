@@ -3,7 +3,7 @@
   <div class="col-md-offset-1 col-md-10 formWrapper">
     <div class="page-header">
       <h3>Edit student</h3>
-      <form name="studentUpdateForm" class="form-horizontal" ng-submit="update(studentUpdateForm.$valid)">
+      <form name="studentProfile" class="form-horizontal" ng-submit="update(studentProfile.$valid)">
           <div class="form-group">
             <label for="firstName">First Name:</label>
             <a href="#" editable-text="student.firstName" e-single e-required>{{ student.firstName || 'empty' }}</a>
@@ -281,7 +281,7 @@
               <i class="glyphicon glyphicon-trash"></i>
               Remove
             </a>
-            <button ui-sref = "employeeDashboard.employeeCandidatesInLine">Back</button>
+            <button ui-sref="employeeDashboard.employeeCandidateList">Back</button>
           </div>
           <div ng-show="error" class="text-danger">
             <strong ng-bind="error"></strong>

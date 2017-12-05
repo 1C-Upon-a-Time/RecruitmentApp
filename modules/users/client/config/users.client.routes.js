@@ -26,6 +26,10 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       url: '/candidates',
       templateUrl: 'modules/core/client/views/employeeViews/candidateList.html'
     })
+    .state('employeeDashboard.employeeCandidatesInLine', {
+      url: '/candidatesInLine',
+      templateUrl: 'modules/core/client/views/employeeViews/candidatesInLine.html'
+    })
     .state('employeeDashboard.employeeInterviewList', {
       url: '/interviews',
       templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
@@ -39,9 +43,14 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       templateUrl: 'modules/core/client/views/employeeViews/interviewList.html'
     })
     .state('employeeDashboard.studentProfile', {
-      url: '/:studentId', 
-      templateUrl: 'modules/core/client/views/employeeViews/studentUpdateForm.html'
+      url: '/profile/:studentId', 
+      templateUrl: 'modules/core/client/views/employeeViews/studentProfile.html'
     })
+    .state('employeeDashboard.recruiterComments', {
+      url: '/:studentId', 
+      templateUrl: 'modules/core/client/views/employeeViews/recruiterComments.html'
+    })
+
 
     // Settings Views
     .state('settings', {

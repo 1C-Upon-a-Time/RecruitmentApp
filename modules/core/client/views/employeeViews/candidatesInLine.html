@@ -1,0 +1,66 @@
+
+<!--added StudentController, don't delete the ng-init find since it is needed to get all of the students-->
+<div class="animated fadeIn" ng-controller = "StudentsController" ng-init ="find()">
+
+  
+   <!-- Show a certain amount of entries of candiates at a time -->
+   <tr class = "paginationFormat">
+    <th><b>Show </b>
+          <select ng-model = "pageSize">
+            <option value = "10">10</option>
+            <option value = "25">25</option>
+            <option value = "50">50</option>
+            <option value = "100">100</option>
+          </select>
+    </th>
+    <th><b> entries</b></th>
+   </tr>
+
+
+
+
+        <!-- Candidates table -->
+         <div class="tableWrapper">
+            <table class="table table-striped table-hover" table id = "table" id = "myTable" >
+              <thead class = "thead-inverse">
+                 <tr>
+                    <th style = "width:10%;">Name</th>
+                    <th style = "width:10%;">GPA</th>
+                    <th style = "width:10%;">Major</th>
+                    <th style = "width:10%;">Minor</th>
+                    <th style = "width:10%;">
+
+                      <input type="checkbox" ng-model="all" >
+                      Email
+                      <a href="" target="_top" id="xyz">
+                      <i ng-click="bulkEmail()" class="glyphicon glyphicon-envelope">Send</i>
+                    </a>
+                  </th>
+                  <th style = "width:10%;">
+                      Delete
+                  </th>
+
+                </tr>
+             </thead>
+             <!-- If you do filter by query, shows everything. If you did a filter by your own function, you have to specifiy how it should be like -->
+             <!-- added the filter:query to be able to have a general search bar -->
+               <tbody  ng-repeat = "student in listings | orderBy:created_at | filter:{inline:'true', season:currentSeason} |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
+
+                    <tr>
+                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.firstName}} {{student.lastName}}</td>
+                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.gpa}}</td>
+                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.major}}</td>
+                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.minor}}</td>
+                        <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
+                        <td class="btn btn-danger" ng-click="deleteFromList(student._id);" >
+                          <i class="glyphicon glyphicon-trash"></i>
+                        </td>
+                     </tr>
+              </tbody>
+            </table>
+          </div>
+            <!-- startFrom:(currentPage -1) *pageSize -->
+          <!-- A part of the pagination process -->
+          <pagination total-items = "listings.length" ng-model ="currentPage" items-per-page = "pageSize"></pagination>
+
+</div>
