@@ -249,7 +249,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 };
 
 
-
+// Unused currently
 $scope.updateRecruiterComments = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
@@ -298,10 +298,11 @@ $scope.updateRecruiterComments = function(isValid) {
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
       $scope.student.inline = false;
-
+      console.log("Test?");
+      
       Students.update(id, $scope.student).then(function(reponse){
         $scope.loading=false;
-        $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
+        alert($scope.student.firstName + " saved!");
       }, function(error) {
               //otherwise display the error
               $scope.loading=false;

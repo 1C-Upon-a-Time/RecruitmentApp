@@ -1,9 +1,5 @@
 <div class="animated fadeIn" ng-controller="SlotsController" ng-init="init()">
 
-  	<label for="slotSearch">Search:</label>
-	<input type="text" name="slotSearch" class="form-control" ng-model="query" placeholder="search" />
-	<hr>
-
 	<div name="studentSelect" ng-if="selectingStudentInterview">
 		<h2>Selecting interview for {{student.firstName}} {{student.lastName}}:</h2>  
 
@@ -21,7 +17,9 @@
 	</div>
 
 	<div ng-if="!selectingStudentInterview">
-
+	  	<label for="slotSearch">Search:</label>
+		<input type="text" name="slotSearch" class="form-control" ng-model="$parent.query" placeholder="search" />
+		<hr>
 		<div class="card">
 			<div class="card-header" data-toggle="collapse" href="#slotCreation">
 				Create Slots

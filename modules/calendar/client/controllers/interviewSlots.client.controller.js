@@ -6,6 +6,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     $scope.slots = [1,2,3,4,5,6];
     $scope.selectingStudentInterview = false;
     $scope.days = [];
+    $scope.query = "";
 
   // Determine whether a student is being selected by checking stateParams
   if ($stateParams.studentId)

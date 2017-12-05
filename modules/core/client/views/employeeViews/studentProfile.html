@@ -5,14 +5,14 @@
   <div class="col-sm-offset-1 col-sm-12 formWrapper">
     <div class="page-header card">
       <h3 class="card-header">{{student.firstName}} {{student.lastName}}</h3>
-      <form name="studentUpdateForm" class="form-horizontal card-body row" ng-submit="update(studentUpdateForm.$valid)">
+      <form name="studentUpdateForm" class="form-horizontal card-body row">
         <div class="card card-outline-primary card-inverse col-sm-12 col-md-6 " name="detailsContainer">
           <div class="card-body">
 
             <div class="row">
               <label class="col-sm-3 col-md-5 col-xl-3" for="name">Name:</label>
-              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.firstName" submit="update()" e-single e-required>{{ student.firstName || 'empty' }}</span>
-              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.lastName" submit="update()" e-single e-required>{{ student.lastName || 'empty' }}</span>
+              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.firstName" e-single e-required>{{ student.firstName || 'empty' }}</span>
+              <span class="col-3 col-sm-4 col-md-3" href="#" editable-text="student.lastName"  e-single e-required>{{ student.lastName || 'empty' }}</span>
             </div>
             <hr/>
             <div class="row">
@@ -326,23 +326,24 @@
 
         <hr/>
         <div class="row col-sm-12">
-          <button type="submit" class="btn btn-primary border col-4 col-sm-3 col-xl-2" ng-submit="update()">
+         <!--  Doesn't validate properly -->
+          <button type="submit" class="btn btn-primary border col-4 col-sm-3 col-xl-2" ng-click="update(true)">
             <i class="fa fa-floppy-o"></i>
             Save
           </button>
 
-          <button class="btn btn-primary border col-4 col-sm-3 col-xl-2" href="mailto:{{student.email}}?Subject=Hello%20{{student.firstName}}" target="_top">
+          <a class="btn btn-primary border col-4 col-sm-3 col-xl-2" href="mailto:{{student.email}}?Subject=Hello%20{{student.firstName}}" target="_top">
             <i class="fa fa-envelope"></i>
             Mail
 
-          </button>
+          </a>
 
           <button class="btn btn-primary border col-4 col-sm-3 col-xl-2" ng-if="!student.interview" ng-click="submitForInterview()">
             <i class="fa fa-user"></i>
             Interview
           </button>
 
-          <button class="btn btn-danger border col-4 col-sm-3 col-xl-2" ng-click="remove();" >
+          <button class="btn btn-danger border col-4 col-sm-3 col-xl-2" ng-click="remove()" >
             <i class="fa fa-trash"></i>
             Remove
           </button>
