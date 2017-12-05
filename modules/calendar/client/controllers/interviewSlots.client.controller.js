@@ -253,7 +253,7 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
         // Send email to student
         $scope.sendMail(interview, $scope.student);
 
-        $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Interview successfully assigned!' });
+        $state.go($state.previous.state.name, $state.previous.params);
         alert("Interview scheduled!");
       }
     };
