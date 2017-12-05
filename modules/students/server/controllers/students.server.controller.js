@@ -39,7 +39,8 @@ exports.update = function(req, res) {
   var student = req.student;
 
   /* Replace the article's properties with the new properties found in req.body */
-  student.name = req.body.name;
+  student.firstName = req.body.firstName;
+  student.lastName = req.body.lastName;
   student.email = req.body.email;
   student.major = req.body.major;
   student.minor = req.body.minor;
@@ -112,7 +113,13 @@ exports.list = function(req, res) {
         then finally call next
  */
 exports.studentByID = function(req, res, next, id) {
-  Student.findById(id).populate('interview')
+  Student.findById(id).populate({ 
+     path: 'interview',
+     populate: {
+       path: 'recruiter',
+       model: 'User'
+     } 
+  })
   .exec(function(err, student) {
     if(err) {
       res.status(400).send(err);

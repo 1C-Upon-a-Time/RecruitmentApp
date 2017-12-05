@@ -21,7 +21,10 @@ var studentSchema = new Schema({
     required: true
   },
   minor: String,
-  phone: String,
+  phone: { 
+    type: String,
+    required: true
+  },
   gpa: Number,
   interview: {
     type: Schema.Types.ObjectId,

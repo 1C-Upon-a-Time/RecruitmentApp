@@ -1,3 +1,6 @@
+<!--Link required to get glyphicons to work -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 <section>
   <div class="page-header">
     <div class="row">
@@ -6,10 +9,10 @@
       </div>
       <div class="col-md-4">
         <a class="btn btn-primary" ui-sref="admin.user-edit({userId: user._id})">
-          <i class="glyphicon glyphicon-edit"></i>
+          <i class="fa fa-edit"></i>
         </a>
         <a class="btn btn-danger" ng-click="remove();" ng-if="user._id !== authentication.user._id">
-          <i class="glyphicon glyphicon-trash"></i>
+          <i class="fa fa-trash"></i>
         </a>
       </div>
     </div>
@@ -45,6 +48,11 @@
       <div class="row">
         <div class="col-md-3"><strong>Roles</strong></div>
         <div class="col-md-6" ng-bind="user.roles"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Interviewer:</strong></div>
+        <div class="col-md-6" ng-bind="user.isRecruiter"></div>
       </div>
     </div>
   </div>

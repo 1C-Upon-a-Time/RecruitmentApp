@@ -12,8 +12,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.currentSeason = 'Fall ' + date.getFullYear(); //fall
     }
 
-
-
     //gets all of the students
     $scope.find = function() {
       /* set loader*/
@@ -32,7 +30,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
             $scope.seasons.push($scope.listings[i].season);
           }
         }
-        $scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        //$scope.filterSeason = $scope.seasons[$scope.seasons.length - 1];
+        $scope.filterSeason = $scope.currentSeason;
       }, function(error) {
         $scope.loading = false;
         $scope.error = 'Unable to retrieve Students!\n' + error;
@@ -141,10 +140,12 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
         else if($scope.filter === "any"){
           return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
-                 (student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ;
+                 (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1)  ;
         }
         else if($scope.filter === "name"){
-          return student.name.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+          return (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1);
         }
         else if($scope.filter === "major"){
           return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
@@ -159,8 +160,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   }
 
 
-
-
   $scope.create = function(isValid) {
         $scope.error = null;
 
@@ -172,28 +171,31 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         }
 
         //Season attachment to student when they are created
-        var season;
-        var date = new Date();
-        //for later testing
-        //var date = new Date("February, 20, 2017 01:15:00");
+        var season =  $scope.currentSeason;
+        // var date = new Date();
+        // //for later testing
+        // //var date = new Date("February, 20, 2017 01:15:00");
 
-        if (date.getMonth() <= 5){
-          season = 'Spring ' + date.getFullYear(); //spring
-        }
-        else if(date.getMonth() >=6){
-          season = 'Fall ' + date.getFullYear(); //fall
-        }
+        // if (date.getMonth() <= 5){
+        //   season = 'Spring ' + date.getFullYear(); //spring
+        // }
+        // else if(date.getMonth() >=6){
+        //   season = 'Fall ' + date.getFullYear(); //fall
+        // }
 
+        //change whatever format the phone number is to just 10 digits
+        var phone = $scope.phonenumber.replace(/[- )(]/g,'');
 
         //More important to save what is required
         var student = {
           firstName: $scope.firstName,
           lastName: $scope.lastName,
+
           email: $scope.email,
           major: $scope.major,
           minor: $scope.minor,
           gpa: $scope.gpa,
-          phone: $scope.phonenumber,
+          phone: phone,
           fulltime: $scope.fulltime,
           season : season
         };
@@ -303,7 +305,6 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       });
   };
     $scope.submitForInterview = function() {
-      debugger;
       $scope.loading = true;
       var id = $stateParams.studentId;
 
@@ -329,11 +330,11 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
   };
 
     $scope.remove = function() {
-      /*
-        Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise,
-        display the error.
-        */
-        //debugger;
+        if (!confirm("Delete this student?"))
+        {
+          return;
+        }
+
         $scope.loading = true;
         confirm("Are you sure you want to delete this student?");
 
