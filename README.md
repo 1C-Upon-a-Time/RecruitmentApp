@@ -1,7 +1,7 @@
 ## 																										Easy Recruit - Team 1C
 Our deployed web application: http://exxon-easy-recruit.herokuapp.com/
 
-##Resources used:
+## Resources used:
 * Stack overflow
 * w3schools.com
 * youtube.com
