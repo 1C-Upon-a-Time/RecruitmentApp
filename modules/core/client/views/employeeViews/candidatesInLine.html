@@ -47,10 +47,10 @@
                <tbody  ng-repeat = "student in listings | orderBy:created_at | filter:{inline:'true', season:currentSeason} |startFrom:(currentPage -1) *pageSize| limitTo: pageSize">
 
                     <tr>
-                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.firstName}} {{student.lastName}}</td>
-                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.gpa}}</td>
-                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.major}}</td>
-                        <td ui-sref="employeeDashboard.recruiterComments({ studentId: student._id})">{{student.minor}}</td>
+                        <td ui-sref="employeeDashboard.recruiterCommentsForm({ studentId: student._id})">{{student.firstName}} {{student.lastName}}</td>
+                        <td ui-sref="employeeDashboard.recruiterCommentsForm({ studentId: student._id})">{{student.gpa}}</td>
+                        <td ui-sref="employeeDashboard.recruiterCommentsForm({ studentId: student._id})">{{student.major}}</td>
+                        <td ui-sref="employeeDashboard.recruiterCommentsForm({ studentId: student._id})">{{student.minor}}</td>
                         <td> <input type="checkbox" ng-checked="all" ng-model="student.selected">{{student.email}}</td>
                         <td class="btn btn-danger" ng-click="deleteFromList(student._id);" >
                           <i class="glyphicon glyphicon-trash"></i>

@@ -46,9 +46,9 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       url: '/profile/:studentId', 
       templateUrl: 'modules/core/client/views/employeeViews/studentProfile.html'
     })
-    .state('employeeDashboard.recruiterComments', {
+    .state('employeeDashboard.recruiterCommentsForm', {
       url: '/:studentId', 
-      templateUrl: 'modules/core/client/views/employeeViews/recruiterComments.html'
+      templateUrl: 'modules/core/client/views/employeeViews/recruiterCommentsForm.html'
     })
 
 
