@@ -8,335 +8,335 @@ angular.module('calendar').controller('SlotsController', ['$scope', '$location',
     $scope.days = [];
     $scope.query = "";
 
-  // Determine whether a student is being selected by checking stateParams
-  if ($stateParams.studentId)
-  {
-    $scope.selectingStudentInterview = true;
-    $scope.studentId = $stateParams.studentId;
-  }
-
-  $scope.sendMail = function(interview, student)
-  {
-    console.log(interview.startDate + " :: " + interview.endDate);
-    var startDate = new Date(interview.startDate);
-    var endDate = new Date(interview.endDate);
-    var startMonth = startDate.getMonth()+1;
-    var endMonth = endDate.getMonth()+1;
-    var Sday = startDate.getDate();
-    var Eday = endDate.getDate();
-    var Shours = ("0" + (startDate.getHours()+5)).slice(-2);
-    var Ehours = ("0" + (endDate.getHours()+5)).slice(-2);
-    var Sminutes = ("0"+ startDate.getMinutes()).slice(-2);
-    var Eminutes = ("0" + endDate.getMinutes()).slice(-2);
-
-    var gcal = "https://www.google.com/calendar/render?action=TEMPLATE&text=Interview+Request&dates="+startDate.getFullYear()+ startMonth + Sday +"T"+Shours+Sminutes+"00Z/"+endDate.getFullYear()+ endMonth + Eday +"T"+Ehours+Eminutes+"00Z&location=Reitz+Union";
-    console.log(gcal);
-    // Define basic Email data
-    var data =
+    // Determine whether a student is being selected by checking stateParams
+    if ($stateParams.studentId)
     {
-      email : student.email,
-      subject: student.firstName + " " + student.lastName + " Interview",
-      body: "Interview on " + interview.startDate +"\n"+ gcal
-    };
-
-    $http.post('/api/employee/interviewEmail', data).
-    success(function(data, status, headers, config) {    
-      console.log("Success!");
-      alert("Email sent!");
-    }).
-    error(function(data, status, headers, config) {
-      console.log("Failure!");
-    });
-
-  };
-
-  $scope.init = function(){
-    $scope.getInterviews();
-    if ($scope.selectingStudentInterview) {
-      $scope.getStudent();
-    } else {
-      $scope.getRecruiters();
-
+      $scope.selectingStudentInterview = true;
+      $scope.studentId = $stateParams.studentId;
     }
 
-    // Start times are today's date by default
-    var startTime = new Date();
-    startTime.setHours(8);
-    startTime.setMinutes(0);
-    startTime.setSeconds(0);
-    startTime.setMilliseconds(0);
-    var endTime = new Date();
-    endTime.setHours(15);
-    endTime.setMinutes(0);
-    endTime.setSeconds(0);
-    endTime.setMilliseconds(0);
 
-    $scope.batch =
+    // Creates a gCal link using the time, and sends an automatic email to the student including basic information and the link.
+    $scope.sendMail = function(interview, student)
     {
-      duration : 60,
-      startTime : startTime,
-      endTime : endTime,
-      inputDate : startTime,
-      interviewsPerSlot : 3
-    };
-    $scope.minDate = new Date();
-  };
+      console.log(interview.startDate + " :: " + interview.endDate);
+      var startDate = new Date(interview.startDate);
+      var endDate = new Date(interview.endDate);
+      var startMonth = startDate.getMonth()+1;
+      var endMonth = endDate.getMonth()+1;
+      var Sday = startDate.getDate();
+      var Eday = endDate.getDate();
+      var Shours = ("0" + (startDate.getHours()+5)).slice(-2);
+      var Ehours = ("0" + (endDate.getHours()+5)).slice(-2);
+      var Sminutes = ("0"+ startDate.getMinutes()).slice(-2);
+      var Eminutes = ("0" + endDate.getMinutes()).slice(-2);
 
-  // Gets all the interview slots.
-  $scope.getInterviews = function() {
-    /* set loader*/
-    $scope.loading = true;
-
-    /* Get all the Slots, then bind it to the scope */
-    InterviewSlots.getAll()
-    .then(function(response) {
-      $scope.loading = false; //remove loader
-      $scope.interviews = response.data;
-
-      // Sort out the days properly for display
-      for (var i = 0; i < $scope.interviews.length; i++)
+      var gcal = "https://www.google.com/calendar/render?action=TEMPLATE&text=Interview+Request&dates="+startDate.getFullYear()+ startMonth + Sday +"T"+Shours+Sminutes+"00Z/"+endDate.getFullYear()+ endMonth + Eday +"T"+Ehours+Eminutes+"00Z&location=Reitz+Union";
+      console.log(gcal);
+      // Define basic Email data
+      var data =
       {
-        var interviewDate = new Date($scope.interviews[i].startDate);
-        var date = new Date(interviewDate.getFullYear(), interviewDate.getMonth(), interviewDate.getDate(),0,0,0,0);
-
-        if ($scope.days.indexOf(date.getTime()) === -1)
-        {
-          $scope.days.push(date.getTime());
-        }
-      }
-
-
-    }, function(error) {
-      $scope.loading = false;
-      $scope.error = 'Unable to retrieve Interview Slots!\n' + error;
-    });
-
-  };
-
-  $scope.addBatch = function(batch){
-
-    // Diff between start and time (in ms)
-    var timeDiff = batch.endTime - batch.startTime;
-    // Minute difference
-    timeDiff = timeDiff / 60000;
-
-    // Number of slots to be created at different times
-    var numTimes = Math.floor(timeDiff / batch.duration);
-
-    var startHour = batch.startTime.getHours();
-
-    var interviewSlots = [];
-    var test = [];
-    for (var i = 0; i < numTimes; i++)
-    {
-        // Calculate extra hours and minutes for times in between
-        var hoursToAdd = Math.floor((i*batch.duration) / 60);
-        var minutesToAdd = (i*batch.duration) % 60;
-
-        var startDate = new Date(batch.inputDate);
-        startDate.setHours(startHour + hoursToAdd);
-        startDate.setMinutes(minutesToAdd);
-
-        hoursToAdd = Math.floor(batch.duration / 60);
-        minutesToAdd = batch.duration % 60;
-        var endDate = new Date(batch.inputDate);
-        endDate.setHours(startDate.getHours() + hoursToAdd);
-        endDate.setMinutes(startDate.getMinutes() + minutesToAdd);
-
-        for (var j = 0; j < batch.interviewsPerSlot; j++)
-        {
-          // Handle recruiter assignment
-          var recruiter = null;
-          if ($scope.recruiters[j])
-          {
-            recruiter = $scope.recruiters[j]._id;
-          }
-
-          // Create new slot
-          var newSlot =
-          {
-            startDate : startDate,
-            endDate : endDate,
-            slot : j+1,
-            recruiter : recruiter
-          };
-          interviewSlots.push(newSlot);
-        }
-      }
-
-      InterviewSlots.bulkCreate(interviewSlots);
-      alert(interviewSlots.length + " slots created!");
-      $scope.getInterviews();
-
-    };
-
-    $scope.addCustom = function(custom)
-    {
-      var startDate = new Date($scope.batch.inputDate);
-      startDate.setHours(custom.startTime.getHours());
-      startDate.setMinutes(custom.startTime.getMinutes());
-
-      var endDate = new Date($scope.batch.inputDate);
-      endDate.setHours(custom.endTime.getHours());
-      endDate.setMinutes(custom.endTime.getMinutes());
-
-      var recruiter = null;
-      if ($scope.recruiters[0])
-      {
-        recruiter = $scope.recruiters[0]._id;
-      } 
-
-      var newSlot = 
-      {
-        endDate : endDate,
-        startDate : startDate,
-        slot: 1,
-        recruiter: recruiter
+        email : student.email,
+        subject: student.firstName + " " + student.lastName + " Interview",
+        body: "Interview on " + interview.startDate +"\n"+ gcal
       };
 
+      $http.post('/api/employee/interviewEmail', data).
+      success(function(data, status, headers, config) {    
+        console.log("Success!");
+        alert("Email sent!");
+      }).
+      error(function(data, status, headers, config) {
+        console.log("Failure!");
+      });
 
-      InterviewSlots.create(newSlot);
+    };
+
+    // Used in controller to call basic method and set default scope values
+    $scope.init = function(){
       $scope.getInterviews();
+      if ($scope.selectingStudentInterview) {
+        $scope.getStudent();
+      } else {
+        $scope.getRecruiters();
+
+      }
+
+      // Set default times for the slot creation values
+      var startTime = new Date();
+      startTime.setHours(8);
+      startTime.setMinutes(0);
+      startTime.setSeconds(0);
+      startTime.setMilliseconds(0);
+      var endTime = new Date();
+      endTime.setHours(15);
+      endTime.setMinutes(0);
+      endTime.setSeconds(0);
+      endTime.setMilliseconds(0);
+
+      $scope.batch =
+      {
+        duration : 60,
+        startTime : startTime,
+        endTime : endTime,
+        inputDate : startTime,
+        interviewsPerSlot : 3
+      };
+      $scope.minDate = new Date(); // minimum date is today; slots can't be created in the past
     };
 
-    $scope.interviewFilter = function(interview)
-    {
-      if ($scope.query)
-      {
-        var q = $scope.query.toUpperCase();
-
-        var rec, stud;
-        if (interview.recruiter)
-        {
-          rec = interview.recruiter.displayName.toUpperCase().includes(q);
-        }
-
-        if (interview.student)
-        {
-          stud = (interview.student.firstName.toUpperCase().includes(q) ||
-                  interview.student.lastName.toUpperCase().includes(q));
-        }
-        return rec || stud || interview.startDate.toUpperCase().includes(q);
-      }
-      else
-      {
-        return true;
-      }
-    };
-
-    // Find student information
-    $scope.getStudent = function() {
-      //debugger;
+    // Fetches slots asynchonously, and processes the dates to organize them in the page properly
+    $scope.getInterviews = function() {
+      /* set loader*/
       $scope.loading = true;
 
-      var id = $stateParams.studentId;
-
-      Students.read(id)
+      /* Get all the Slots, then bind it to the scope */
+      InterviewSlots.getAll()
       .then(function(response) {
-        $scope.student = response.data;
-        $scope.loading = false;
+        $scope.loading = false; //remove loader
+        $scope.interviews = response.data;
+
+        // Get a list of all unique DAYS in all of the interviews
+        for (var i = 0; i < $scope.interviews.length; i++)
+        {
+          var interviewDate = new Date($scope.interviews[i].startDate);
+          var date = new Date(interviewDate.getFullYear(), interviewDate.getMonth(), interviewDate.getDate(),0,0,0,0);
+
+          if ($scope.days.indexOf(date.getTime()) === -1)
+          {
+            $scope.days.push(date.getTime());
+          }
+        }
+
+
       }, function(error) {
-        $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
         $scope.loading = false;
-      });
-    };
-
-    // Just calls the update method
-    $scope.selectForInterview = function(interview) {
-      var date = new Date(interview.startDate);
-
-      var confirmText = "Confirm " + $scope.student.firstName + " " + $scope.student.lastName + " for " + date + " and send email to " + $scope.student.email + "?";
-      if (confirm(confirmText)) {
-        // Update the interview with the student
-        $scope.update(interview);
-
-        // Send email to student
-        $scope.sendMail(interview, $scope.student);
-
-        $state.go($state.previous.state.name, $state.previous.params);
-        alert("Interview scheduled!");
-      }
-    };
-
-
-    $scope.getRecruiters = function(interview) {
-      InterviewSlots.getRecruiters()
-      .then(function(response) {
-        $scope.recruiters = response.data;
-        $scope.recruiter = $scope.recruiters[0];
-      }, function(error) {
-        $scope.error = "Unable to retrieve recruiters!";
+        $scope.error = 'Unable to retrieve Interview Slots!\n' + error;
       });
 
-      $scope.sendInvite = function (interview) {
-        $http.post('/api/employee/interviewInvite', interview);
+    };
+
+    // Algorithm to create a certain number of slots based on the start and end times and duration
+    $scope.addBatch = function(batch){
+
+      // Diff between start and time (in ms)
+      var timeDiff = batch.endTime - batch.startTime;
+      // Minute difference
+      timeDiff = timeDiff / 60000;
+
+      // Number of slots to be created at different times
+      var numTimes = Math.floor(timeDiff / batch.duration);
+
+      var startHour = batch.startTime.getHours();
+
+      var interviewSlots = [];
+      var test = [];
+      for (var i = 0; i < numTimes; i++)
+      {
+          // Calculate extra hours and minutes for times in between
+          var hoursToAdd = Math.floor((i*batch.duration) / 60);
+          var minutesToAdd = (i*batch.duration) % 60;
+
+          var startDate = new Date(batch.inputDate);
+          startDate.setHours(startHour + hoursToAdd);
+          startDate.setMinutes(minutesToAdd);
+
+          hoursToAdd = Math.floor(batch.duration / 60);
+          minutesToAdd = batch.duration % 60;
+          var endDate = new Date(batch.inputDate);
+          endDate.setHours(startDate.getHours() + hoursToAdd);
+          endDate.setMinutes(startDate.getMinutes() + minutesToAdd);
+
+          for (var j = 0; j < batch.interviewsPerSlot; j++)
+          {
+            // Handle recruiter assignment
+            var recruiter = null;
+            if ($scope.recruiters[j])
+            {
+              recruiter = $scope.recruiters[j]._id;
+            }
+
+            // Create new slot
+            var newSlot =
+            {
+              startDate : startDate,
+              endDate : endDate,
+              slot : j+1,
+              recruiter : recruiter
+            };
+            interviewSlots.push(newSlot);
+          }
+        }
+
+        InterviewSlots.bulkCreate(interviewSlots);
+        alert(interviewSlots.length + " slots created!");
+        $scope.getInterviews(); //pull the slots again to update the scope
+
       };
 
+      // Adds a slot simply between the teo designated times
+      $scope.addCustom = function(custom)
+      {
+        var startDate = new Date($scope.batch.inputDate);
+        startDate.setHours(custom.startTime.getHours());
+        startDate.setMinutes(custom.startTime.getMinutes());
 
-    };
+        var endDate = new Date($scope.batch.inputDate);
+        endDate.setHours(custom.endTime.getHours());
+        endDate.setMinutes(custom.endTime.getMinutes());
 
-    // Updates objects with references to each other
-    $scope.update = function(interview) {
-      var interviewSlot = interview;
-      var updatedStudent = $scope.student;
+        var recruiter = null;
+        if ($scope.recruiters[0])
+        {
+          recruiter = $scope.recruiters[0]._id;
+        } 
 
-      var slot_id = interviewSlot._id;
-      var student_id = updatedStudent._id;
+        var newSlot = 
+        {
+          endDate : endDate,
+          startDate : startDate,
+          slot: 1,
+          recruiter: recruiter
+        };
 
-        // Slot is no longer available
-        interviewSlot.isAvailable = !interviewSlot.isAvailable;
-        // Set slot's scheduled student
-        interviewSlot.student = $scope.student._id;
 
-        updatedStudent.interview = interviewSlot._id;
+        InterviewSlots.create(newSlot);
+        $scope.getInterviews();
+      };
 
-        /* Save the article using the Listings factory */
-        InterviewSlots.update(slot_id, interviewSlot)
+      // Filters based on recruiter name and by student name -- does not particularly filter based on time
+      $scope.interviewFilter = function(interview)
+      {
+        if ($scope.query)
+        {
+          var q = $scope.query.toUpperCase();
+
+          var rec, stud;
+          if (interview.recruiter)
+          {
+            rec = interview.recruiter.displayName.toUpperCase().includes(q);
+          }
+
+          if (interview.student)
+          {
+            stud = (interview.student.firstName.toUpperCase().includes(q) ||
+              interview.student.lastName.toUpperCase().includes(q));
+          }
+          return rec || stud || interview.startDate.toUpperCase().includes(q);
+        }
+        else
+        {
+          return true;
+        }
+      };
+
+      // Fetch a specific student
+      $scope.getStudent = function() {
+        
+        $scope.loading = true;
+
+        var id = $stateParams.studentId;
+
+        Students.read(id)
         .then(function(response) {
-          console.log("Slot updated!");
+          $scope.student = response.data;
+          $scope.loading = false;
         }, function(error) {
-        //otherwise display the error
-        $scope.error = 'Unable to update slot!\n' + error;
-      });
-
-        Students.update(student_id,updatedStudent)
-        .then(function(reponse){
-          console.log("Interview assigned to student!");
-        }, function(error) {
-          //otherwise display the error
-          $scope.error = 'Unable to update student!\n' + error;
+          $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
+          $scope.loading = false;
         });
       };
 
-      $scope.updateInterviewRecruiter = function(interview, recruiter){
-        console.log(interview);
-        console.log(recruiter);
+      // Confirms student information, updates student and slot, sends email to student
+      $scope.selectForInterview = function(interview) {
+        var date = new Date(interview.startDate);
 
-        var interviewSlot = interview;
-        interviewSlot.recruiter = recruiter._id;
+        var confirmText = "Confirm " + $scope.student.firstName + " " + $scope.student.lastName + " for " + date + " and send email to " + $scope.student.email + "?";
+        if (confirm(confirmText)) {
+          // Update the interview with the student
+          $scope.update(interview);
 
-        InterviewSlots.update(interviewSlot._id, interviewSlot)
-        .then(function(response) {
-          console.log("Slot updated!");
-          alert("Recruiter " + recruiter.displayName + " assigned to interview!");
-          $scope.getInterviews();
-        }, function(error) {
-      //otherwise display the error
-      $scope.error = 'Unable to update slot!\n' + error;
-    });
-      };
+          // Send email to student
+          $scope.sendMail(interview, $scope.student);
 
-      $scope.deleteSlot = function(id){
-        if (confirm("Delete this slot?"))
-        {
-          InterviewSlots.delete(id)
-          .then(function(response){
-            console.log("Slot deleted!");
-            $scope.getInterviews();
-          }, function(error){
-
-          });
+          $state.go($state.previous.state.name, $state.previous.params);
+          alert("Interview scheduled!");
         }
       };
-    }
-]);
+
+      // Gets all recruiters users
+      $scope.getRecruiters = function(interview) {
+        InterviewSlots.getRecruiters()
+        .then(function(response) {
+          $scope.recruiters = response.data;
+          $scope.recruiter = $scope.recruiters[0];
+        }, function(error) {
+          $scope.error = "Unable to retrieve recruiters!";
+        });
+
+      };
+
+      // Updates student, interview with references to each other
+      $scope.update = function(interview) {
+        var interviewSlot = interview;
+        var updatedStudent = $scope.student;
+
+        var slot_id = interviewSlot._id;
+        var student_id = updatedStudent._id;
+
+          // Slot is no longer available
+          interviewSlot.isAvailable = !interviewSlot.isAvailable;
+          // Set slot's scheduled student
+          interviewSlot.student = $scope.student._id;
+
+          updatedStudent.interview = interviewSlot._id;
+
+          /* Save the article using the Listings factory */
+          InterviewSlots.update(slot_id, interviewSlot)
+          .then(function(response) {
+            console.log("Slot updated!");
+          }, function(error) {
+          //otherwise display the error
+          $scope.error = 'Unable to update slot!\n' + error;
+        });
+
+          Students.update(student_id,updatedStudent)
+          .then(function(reponse){
+            console.log("Interview assigned to student!");
+          }, function(error) {
+            //otherwise display the error
+            $scope.error = 'Unable to update student!\n' + error;
+          });
+        };
+
+        // Update the recruiter field of the interview slot
+        $scope.updateInterviewRecruiter = function(interview, recruiter){
+
+          var interviewSlot = interview;
+          interviewSlot.recruiter = recruiter._id;
+
+          InterviewSlots.update(interviewSlot._id, interviewSlot)
+          .then(function(response) {
+            console.log("Slot updated!");
+            alert("Recruiter " + recruiter.displayName + " assigned to interview!");
+            $scope.getInterviews();
+          }, function(error) {
+            $scope.error = 'Unable to update slot!\n' + error;
+          });
+        };
+
+        // Deletes a singular slot
+        $scope.deleteSlot = function(id){
+          if (confirm("Delete this slot?"))
+          {
+            InterviewSlots.delete(id)
+            .then(function(response){
+              console.log("Slot deleted!");
+              $scope.getInterviews();
+            }, function(error){
+
+            });
+          }
+        };
+      }
+  ]);
