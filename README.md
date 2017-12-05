@@ -1,5 +1,5 @@
 ## 																										Easy Recruit - Team 1C
-http://exxon-easy-recruit.herokuapp.com/
+Our deployed web application: http://exxon-easy-recruit.herokuapp.com/
 
 ## Set up
 
