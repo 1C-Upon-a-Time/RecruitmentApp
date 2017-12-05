@@ -39,13 +39,17 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     };
 
+    $scope.back = function(){
+      $state.go($state.previous.state.name, $state.previous.params);
+   };
+
   //set the sort filter to it's default first
   $scope.sort = "-created_at";
 
   //pagination of candidates
     //sets default value of current entries to 10
-  $scope.currentPage = 1;
-  $scope.pageSize = "10";
+    $scope.currentPage = 1;
+    $scope.pageSize = "10";
 
   //button function to change the season to the next one
   $scope.changeSeasons = function(){
@@ -57,8 +61,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     //if it was originally fall, then make it to spring but increase the year by 1
     if(parseCurrentSeason[0] === "Fall"){
-         $scope.student.season = "Spring " + nYear; 
-    }
+     $scope.student.season = "Spring " + nYear; 
+   }
     //if it is spring, just change it to fall but keep the current year
     else{
       $scope.student.season = "Fall " + parseCurrentSeason[1];
@@ -70,7 +74,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     }, function(error) {
               //otherwise display the error
               $scope.error = 'Unable to save student!\n' + error;
-    });
+            });
 
   };
   
@@ -83,8 +87,8 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
     //if it was originally fall, then make it to spring but decrease the year by 1
     if(parseCurrentSeason[0] === "Fall"){
-         $scope.student.season = "Spring " + parseCurrentSeason[1]; 
-    }
+     $scope.student.season = "Spring " + parseCurrentSeason[1]; 
+   }
     //if it is spring, just change it to fall but keep the current year
     else{
       $scope.student.season = "Fall " + newYear;
@@ -96,7 +100,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
     }, function(error) {
               //otherwise display the error
               $scope.error = 'Unable to save student!\n' + error;
-    });
+            });
 
   };
 
@@ -120,37 +124,37 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         emails += $scope.listings[q].email + ",";
     }
   }
-    console.log(emails);
-    var a = document.getElementById("xyz");
-    a.href="mailto:?bcc=" + emails;
-  };
+  console.log(emails);
+  var a = document.getElementById("xyz");
+  a.href="mailto:?bcc=" + emails;
+};
 
   //filtering function
     //sets it to any by default for the any option
-  $scope.filter = "any";
-  $scope.customFilter = function(student){
+    $scope.filter = "any";
+    $scope.customFilter = function(student){
     //I need a default any for filters and then I need a season filter, but we don't have that variable in the model yet
     //Case insensitive
     //checks if the search bar is currently null. If so, just load everything in the
     //student database anyways
     
     if(($scope.filterSeason && $scope.filterSeason.toUpperCase() === student.season.toUpperCase())&& (student.inline===false)){
-        if(!$scope.query){
-          return true;
-        }
-        else if($scope.filter === "any"){
-          return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
-                 (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
-                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1)  ;
-        }
-        else if($scope.filter === "name"){
-          return (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
-                 (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1);
-        }
-        else if($scope.filter === "major"){
-          return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
-        }
-     }
+      if(!$scope.query){
+        return true;
+      }
+      else if($scope.filter === "any"){
+        return (student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) || 
+        (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+        (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1)  ;
+      }
+      else if($scope.filter === "name"){
+        return (student.firstName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1) ||
+        (student.lastName.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1);
+      }
+      else if($scope.filter === "major"){
+        return student.major.toUpperCase().indexOf($scope.query.toUpperCase() || '') !== -1;
+      }
+    }
   };
 
 
@@ -161,14 +165,14 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
 
 
   $scope.create = function(isValid) {
-        $scope.error = null;
+    $scope.error = null;
 
 
-        if (!isValid) {
-          $scope.$broadcast('show-errors-check-validity', 'registerForm');
+    if (!isValid) {
+      $scope.$broadcast('show-errors-check-validity', 'registerForm');
 
-          return false;
-        }
+      return false;
+    }
 
         //Season attachment to student when they are created
         var season =  $scope.currentSeason;
@@ -213,7 +217,7 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       };
 
 
-    $scope.findOne = function() {
+      $scope.findOne = function() {
       //debugger;
       $scope.loading = true;
 
@@ -242,11 +246,11 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
         $scope.error = 'Unable to retrieve student with id "' + id + '"\n' + error;
         $scope.loading = false;
       });
-    };
+};
 
 
-  
-    $scope.updateRecruiterComments = function(isValid) {
+
+$scope.updateRecruiterComments = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
       var id = $stateParams.studentId;
@@ -264,19 +268,19 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
       $scope.student.inline = false;
-    
-    Students.update(id, $scope.student).then(function(reponse){
 
-      $scope.loading=false;
-      $state.go('employeeDashboard.employeeCandidatesInLine', { successMessage: 'Student succesfully updated!' });
-    }, function(error) {
+      Students.update(id, $scope.student).then(function(reponse){
+
+        $scope.loading=false;
+        $state.go('employeeDashboard.employeeCandidatesInLine', { successMessage: 'Student succesfully updated!' });
+      }, function(error) {
               //otherwise display the error
               $scope.loading=false;
               $scope.error = 'Unable to save student!\n' + error;
-      });
-  };
+            });
+    };
 
-      $scope.update = function(isValid) {
+    $scope.update = function(isValid) {
       //debugger;candidacy
       $scope.loading = true;
       var id = $stateParams.studentId;
@@ -293,17 +297,18 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.critThinking =  ((document.querySelector('input[name=critThinkingRadios]:checked')===null)?0:document.querySelector('input[name=critThinkingRadios]:checked').value);
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
+      $scope.student.inline = false;
 
-    
-    Students.update(id, $scope.student).then(function(reponse){
-      $scope.loading=false;
-      $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
-    }, function(error) {
+      Students.update(id, $scope.student).then(function(reponse){
+        $scope.loading=false;
+        $state.go('employeeDashboard.employeeCandidateList', { successMessage: 'Student succesfully updated!' });
+      }, function(error) {
               //otherwise display the error
               $scope.loading=false;
               $scope.error = 'Unable to save student!\n' + error;
-      });
-  };
+            });
+    };
+
     $scope.submitForInterview = function() {
       $scope.loading = true;
       var id = $stateParams.studentId;
@@ -317,66 +322,66 @@ angular.module('students').controller('StudentsController', ['$scope', '$locatio
       $scope.student.recruiterComments.techKnowledge =  ((document.querySelector('input[name=techKnowledgeRadios]:checked')===null)?0:document.querySelector('input[name=techKnowledgeRadios]:checked').value);
       $scope.student.recruiterComments.candidacy =  ((document.querySelector('input[name=candidacyRadios]:checked')===null)?0:document.querySelector('input[name=candidacyRadios]:checked').value);
       $scope.student.inline = false;
-    
-    Students.update(id, $scope.student).then(function(reponse){
 
-      $scope.loading=false;
-      $state.go('employeeDashboard.selectForInterview',{studentId: id });
-    }, function(error) {
+      Students.update(id, $scope.student).then(function(reponse){
+
+        $scope.loading=false;
+        $state.go('employeeDashboard.selectForInterview',{studentId: id });
+      }, function(error) {
               //otherwise display the error
               $scope.loading=false;
               $scope.error = 'Unable to save student!\n' + error;
-      });
-  };
+            });
+    };
 
     $scope.remove = function() {
-        if (!confirm("Delete this student?"))
-        {
-          return;
-        }
-
-        $scope.loading = true;
-        confirm("Are you sure you want to delete this student?");
-
-        var id = $stateParams.studentId;
-        Students.delete(id)
-        .then(function(response) {
-          $scope.loading = false;
-          $state.go('employeeDashboard.employeeCandidateList', {sucessMessage: 'Student successfully deleted!'});
-        }, function(error) {
-          $scope.error = 'Unable to delete student with id "' + id + '"\n' + error;
-          $scope.loading = false;
-        });
-      };
-      
-$scope.deleteFromList = function (student) {
-  var student_to_delete = student;
-  var id=student_to_delete._id;
-  var index= $scope.listings.indexOf(student);
-
-
-  Students.delete(id).then (function (success) {
-    $scope.listings.splice(index, 1);
-  });
-};
-   
-
-      /* Bind the success message to the scope if it exists as part of the current state */
-      if($stateParams.successMessage) {
-        $scope.success = $stateParams.successMessage;
+      if (!confirm("Delete this student?"))
+      {
+        return;
       }
 
+      $scope.loading = true;
+      confirm("Are you sure you want to delete this student?");
+
+      var id = $stateParams.studentId;
+      Students.delete(id)
+      .then(function(response) {
+        $scope.loading = false;
+        $state.go('employeeDashboard.employeeCandidateList', {sucessMessage: 'Student successfully deleted!'});
+      }, function(error) {
+        $scope.error = 'Unable to delete student with id "' + id + '"\n' + error;
+        $scope.loading = false;
+      });
+    };
+
+    $scope.deleteFromList = function (student) {
+      var student_to_delete = student;
+      var id=student_to_delete._id;
+      var index= $scope.listings.indexOf(student);
+
+
+      Students.delete(id).then (function (success) {
+        $scope.listings.splice(index, 1);
+      });
+    };
+
+
+    /* Bind the success message to the scope if it exists as part of the current state */
+    if($stateParams.successMessage) {
+      $scope.success = $stateParams.successMessage;
+    }
+
   }//end of function
-]).filter('startFrom', function(){
-  return function(data,start){
-    if (!data || !data.length) {return;}
-    start = 0 + start;
-    return data.slice(start);
-  };
-})
-.filter('reverse', function(){
-  return function(items){
-    if (!items || !items.length) {return;}
-    return items.slice().reverse();
-  };
-});
+  ]).filter('startFrom', function(){
+    return function(data,start){
+      if (!data || !data.length) {return;}
+      start = 0 + start;
+      return data.slice(start);
+    };
+  })
+  .filter('reverse', function(){
+    return function(items){
+      if (!items || !items.length) {return;}
+      return items.slice().reverse();
+    };
+  });
