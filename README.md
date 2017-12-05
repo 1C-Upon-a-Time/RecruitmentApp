@@ -1,12 +1,27 @@
 ## 																										Easy Recruit - Team 1C
 Our deployed web application: http://exxon-easy-recruit.herokuapp.com/
 
+Our github: https://github.com/1C-Upon-a-Time/RecruitmentApp
+
 ## Resources used:
 * Stack overflow
 * w3schools.com
+* Yeoman generated Mean Stack
 * youtube.com
 * codeacademy.com
 * Mozilla Development MDN
+* Bootstrap
+* Angularjs
+
+## Project Features
+*  Student information entry & storage.
+*  Recruiter user/admin accounts and login.
+*  Searchable, sortable student list.
+*  Editable student profile page with comments and ratings.
+*  Ability for student to schedule interview from pre-set time.
+*  Interview scheduling sends email to student.
+*  Ability to email a single student or selected group.
+
 
 ## Set up
 
